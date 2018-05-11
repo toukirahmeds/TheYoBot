@@ -1,0 +1,28 @@
+{
+  "name": "chatassistant",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "client": "cd ./assets && ng build --watch",
+    "server": "nodemon ./bin/www",
+    "start": "npm-run-all -p client server"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "fbgraph": "^1.4.4",
+    "jade": "~1.11.0",
+    "mongoose": "^5.0.10",
+    "mongoose-assist": "^1.0.1",
+    "morgan": "~1.9.0",
+    "ngx-facebook": "^2.4.0",
+    "response-utilities": "^1.0.0",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
+  }
+}
