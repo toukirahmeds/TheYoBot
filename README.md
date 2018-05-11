@@ -1,2 +1,2 @@
-# chatAssistant
-Chat Messenger Bot
+# TheYoBot
+The Yo Bot Project
