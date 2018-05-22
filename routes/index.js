@@ -17,6 +17,9 @@ router.use("/user", require('./user'));
 router.use("/template", require('./template'));
 router.use("/automation", require('./automation'));
 router.use("/page", require('./page'));
+router.use("/membership", require('./membership'));
+router.use("/broadcast", require('./broadcast'));
+router.use("/payment", require('./payment'));
 router.use("/webhook", require('./webhook'));
 /*=====  End of Declaration of Routes  ======*/
 
