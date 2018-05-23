@@ -13,6 +13,15 @@ import { FuseNavigationService } from './core/components/navigation/navigation.s
 import { FuseSampleModule } from './main/content/sample/sample.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+
+/*==========================================
+=            Custom App Modules            =
+==========================================*/
+import { SharedModuleModule } from './shared-module';
+
+/*=====  End of Custom App Modules  ======*/
+
+
 const appRoutes: Routes = [
     {
         path      : '**',
@@ -32,7 +41,8 @@ const appRoutes: Routes = [
         SharedModule,
         TranslateModule.forRoot(),
         FuseMainModule,
-        FuseSampleModule
+        FuseSampleModule,
+        SharedModuleModule
     ],
     providers   : [
         FuseSplashScreenService,

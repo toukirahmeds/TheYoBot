@@ -1,0 +1,17 @@
+<ng-container *ngTemplateOutlet="data && data.template? data.template: default"></ng-container>
+
+<ng-template #default>
+	<hr>
+	<div fxLayout>
+		<div fxFlex="50">
+			<button mat-button class="cancel-button" (click)="onCancel()">
+				Cancel
+			</button>
+		</div>
+		<div fxFlex="50">
+			<button mat-button class="confirm-button" (click)="onConfirm()">
+				Confirm
+			</button>
+		</div>
+	</div>
+</ng-template>

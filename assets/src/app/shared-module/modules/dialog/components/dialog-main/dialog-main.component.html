@@ -1,0 +1,5 @@
+<app-dialog-header [data]="data && data.header? data.header : {}" (confirmed)="onConfirm($event)" (cancelled)="onCancel($event)" *ngIf="!(data && data.header && data.header.exists == false)"></app-dialog-header>
+<app-dialog-body [data]="data && data.body? data.body : {}" (confirmed)="onConfirm()" (cancelled)="onCancel($event)" *ngIf="!(data && data.body && data.body.exists == false)"></app-dialog-body>
+<app-dialog-footer [data]="data && data.footer? data.footer: {}" (confirmed)="onConfirm($event)" (cancelled)="onCancel($event)" *ngIf="!(data && data.footer && data.footer.exists == false)"></app-dialog-footer>
+
+

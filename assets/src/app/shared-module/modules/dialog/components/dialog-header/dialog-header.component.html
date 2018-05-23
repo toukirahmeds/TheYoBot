@@ -1,0 +1,12 @@
+<ng-container *ngTemplateOutlet="data && data.template? data.template : default"></ng-container>
+
+<ng-template #default>
+	<div fxLayout>
+		<div fxFlex="70">
+			
+		</div>
+		<div fxFlex="30">
+			<button mat-button><mat-icon>close</mat-icon></button>
+		</div>
+	</div>
+</ng-template>
