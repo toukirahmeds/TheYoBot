@@ -15,6 +15,7 @@
     "express": "~4.15.5",
     "fbgraph": "^1.4.4",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.0.10",
     "mongoose-assist": "^1.0.1",
     "morgan": "~1.9.0",

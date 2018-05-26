@@ -5,7 +5,11 @@
 	},
 	"jwt" : {
 		"accessTokenSecret" : "I am the secret for access token.",
-		"refreshTokenSecret" : "I am the secret for refresh token"
+		"accessTokenExpiresIn" : "2h",
+		"refreshTokenSecret" : "I am the secret for refresh token.",
+		"refreshTokenExpiresIn" : "6h",
+		"authorizationCodeSecret" : "I am the secret for authorization code.",
+		"authorizationCodeExpiresIn" : "10h"
 	},
 	"app" : {
 		"fbAppId" : "144561372878271",

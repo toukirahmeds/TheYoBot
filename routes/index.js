@@ -14,6 +14,7 @@ const responseHelper = require("response-utilities");
 =============================================*/
 // router.use(express.static(path.join('../assets','dist')));
 router.use("/user", require('./user'));
+router.use("/authenticate", require('../helpers/oauth2/oauth2ExpressRoutes'));
 router.use("/template", require('./template'));
 router.use("/automation", require('./automation'));
 router.use("/page", require('./page'));
