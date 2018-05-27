@@ -14,7 +14,7 @@ const config = require("../../../config/config.json");
 
 
 module.exports = (client, user, scope, callback)=>{
-	callback(jwt.sign({
+	callback(null, jwt.sign({
 		"client" : client,
 		"user" : user,
 		"scope" : scope

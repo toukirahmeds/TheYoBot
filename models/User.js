@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
 	"fbAccessToken" : {
 		"type" : String,
 		"required" : true
+	},
+	"status" : {
+		"type" : String,
+		"required" : true,
+		"enum" : ["activated", "deactivated"]
 	}
 },{
 	"timestamps" : true
