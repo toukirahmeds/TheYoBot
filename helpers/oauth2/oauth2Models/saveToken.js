@@ -7,6 +7,8 @@ const Oauth2RefreshToken = require("../models/Oauth2RefreshToken");
 
 
 module.exports = (token, client, user, callback)=>{
+	console.log("Save token");
+	console.log(token, client, user);
 	Oauth2AccessToken.create({
 		"accessToken" : token.accessToken,
 		"expires" : token.accessTokenExpiresAt,
@@ -17,27 +19,40 @@ module.exports = (token, client, user, callback)=>{
 		if(error){
 			callback(error, null);
 		}else{
-			Oauth2RefreshToken.create({
-				"refreshToken" : token.refreshToken,
-				"expires" : token.refreshTokenExpiresAt,
-				"scope" : token.scope,
-				"user" : user._id,
-				"oauth2Client" : client._id
-			},(error, oauth2RefreshTokenDoc)=>{
-				if(error){
-					callback(error, null);
-				}else{
-					callback(null, {
-						"accessToken" : oauth2AccessTokenDoc.accessToken.toString(),
-						"accessTokenExpiresAt" : oauth2AccessTokenDoc.expires,
-						"refreshToken" : oauth2RefreshTokenDoc.refreshToken.toString(),
-						"refreshTokenExpiresAt" : oauth2RefreshTokenDoc.expires,
-						"scope": oauth2AccessTokenDoc.scope,
-						"client": client,
-						"user" : user
-					});
-				}
-			});
+			console.log("accesstoken saved");
+			if(token.refreshToken){
+				Oauth2RefreshToken.create({
+					"refreshToken" : token.refreshToken,
+					"expires" : token.refreshTokenExpiresAt,
+					"scope" : token.scope,
+					"user" : user._id,
+					"oauth2Client" : client._id
+				},(error, oauth2RefreshTokenDoc)=>{
+					if(error){
+						callback(error, null);
+					}else{
+						callback(null, {
+							"accessToken" : oauth2AccessTokenDoc.accessToken.toString(),
+							"accessTokenExpiresAt" : oauth2AccessTokenDoc.expires,
+							"refreshToken" : oauth2RefreshTokenDoc.refreshToken.toString(),
+							"refreshTokenExpiresAt" : oauth2RefreshTokenDoc.expires,
+							"scope": oauth2AccessTokenDoc.scope,
+							"client": client,
+							"user" : user
+						});
+					}
+				});
+			}else{
+				console.log("no refresh token");
+				callback(null, {
+					"accessToken" : oauth2AccessTokenDoc.accessToken,
+					"accessTokenExpiresAt" : oauth2AccessTokenDoc.expires,
+					"scope": oauth2AccessTokenDoc.scope,
+					"client": client,
+					"user" : user
+				});
+			}
+			
 		}
 	});
 };

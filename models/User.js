@@ -3,16 +3,28 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
 	"fbId":{
 		"type" : String,
-		"required" : true,
 		"unique" : true
+	},
+	"username" : {
+		"type" : String,
+		"unique" : true,
+		"required" : true
+	},
+	"password" : {
+		"type" : String,
+		"required" : true
+	},
+	"email" : {
+		"type" : String,
+		"unique" : true,
+		"required" : true
 	},
 	"name":{
 		"type" : String,
 		"required" : true
 	},
 	"fbAccessToken" : {
-		"type" : String,
-		"required" : true
+		"type" : String
 	},
 	"status" : {
 		"type" : String,
@@ -25,4 +37,4 @@ const userSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema, "Users");

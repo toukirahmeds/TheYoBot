@@ -18,3 +18,13 @@ const mongooseAssist = require("mongoose-assist");
 =====================================================*/
 mongooseAssist.connect(config.db.url);
 /*=====  End of Connect to the mongodb server  ======*/
+
+
+/*=============================================
+=            Seeding of auth2 data            =
+=============================================*/
+require("../helpers/oauth2/seed");
+
+
+/*=====  End of Seeding of auth2 data  ======*/
+

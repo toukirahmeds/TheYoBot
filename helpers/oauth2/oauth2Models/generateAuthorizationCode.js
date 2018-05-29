@@ -13,6 +13,7 @@ const config = require("../../../config/config.json");
 
 
 module.exports = (client, user, scope, callback)=>{
+	console.log("GENERATE AUTHORIZATION CODe");
 	callback(null, jwt.sign({
 		"client" : client,
 		"user" : user,

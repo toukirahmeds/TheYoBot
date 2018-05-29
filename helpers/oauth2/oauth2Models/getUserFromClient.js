@@ -1,16 +1,26 @@
+
+
+
 /*========================================
 =            Import of models            =
 ========================================*/
-const User = require("../../../models/User");
+const Oauth2Client = require("../models/Oauth2Client");
 /*=====  End of Import of models  ======*/
 
 
 module.exports = (client, callback)=>{
-	User.findById(client.user,(error, userDoc)=>{
+	console.log("GET USER from client");
+	// console.log(client);
+	Oauth2Client.findById(client.id).populate({
+		"model" : "User",
+		"path" : "user"
+	}).exec((error, clientDoc)=>{
 		if(error){
 			callback(error, null);
+		}else if(clientDoc){
+			callback(null, clientDoc.user);
 		}else{
-			callback(null, userDoc[0]);
+			callback(null, false);
 		}
 	});
 };

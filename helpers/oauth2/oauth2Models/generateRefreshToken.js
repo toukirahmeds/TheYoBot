@@ -15,9 +15,16 @@ const config = require("../../../config/config.json");
 
 
 module.exports = (client, user, scope, callback)=>{
-	callback(null, jwt.sign({
-		"client" : client,
-		"user" : user,
-		"scope" : scope
-	}, config.jwt.refreshTokenSecret, config.jwt.refreshTokenExpiresIn ));
+	console.log("Generate refresh token");
+	callback(
+		null, 
+		jwt.sign({
+			"client" : client,
+			"user" : user,
+			"scope" : scope
+			}, 
+			config.jwt.refreshTokenSecret, 
+			{"expiresIn":config.jwt.refreshTokenExpiresIn}
+		)
+	);
 };

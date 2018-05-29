@@ -14,11 +14,11 @@ const Oauth2ClientSchema = new mongoose.Schema({
 		"type" : String,
 		"required" : true
 	},
-	"redirectUri" : {
-		"type" : String
+	"redirectUris" : {
+		"type" : Array
 	},
 	"grantTypes" : {
-		"type" : String
+		"type" : Array
 	},
 	"scope" : {
 		"type" : String
@@ -32,4 +32,4 @@ const Oauth2ClientSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Oauth2Client", Oauth2ClientSchema);
+module.exports = mongoose.model("Oauth2Client", Oauth2ClientSchema,"Oauth2Clients");

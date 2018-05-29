@@ -8,6 +8,7 @@ module.exports = new oauth2Server({
 		"getAccessToken" : require("./oauth2Models/getAccessToken"),
 		"getClient" : require("./oauth2Models/getClient"),
 		"getRefreshToken" : require("./oauth2Models/getRefreshToken"),
+		"getAuthorizationCode" : require("./oauth2Models/getAuthorizationCode"),
 		"getUser" : require("./oauth2Models/getUser"),
 		"getUserFromClient" : require("./oauth2Models/getUserFromClient"),
 		"revokeAuthorizationCode" : require("./oauth2Models/revokeAuthorizationCode"),

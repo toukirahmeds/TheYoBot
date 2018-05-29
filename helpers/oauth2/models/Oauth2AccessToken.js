@@ -26,4 +26,4 @@ const oauth2AccessTokenSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Oauth2AccessToken", oauth2AccessTokenSchema);
+module.exports = mongoose.model("Oauth2AccessToken", oauth2AccessTokenSchema, "Oauth2AccessTokens");

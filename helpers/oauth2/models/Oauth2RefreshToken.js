@@ -25,4 +25,4 @@ const Oauth2RefreshTokenSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Oauth2RefreshToken", Oauth2RefreshTokenSchema);
+module.exports = mongoose.model("Oauth2RefreshToken", Oauth2RefreshTokenSchema,"Oauth2RefreshTokens");

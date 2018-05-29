@@ -1,3 +1,4 @@
 module.exports = (user, client, scope, callback)=>{
-	callback(null, scope);
+	console.log("validate scope");
+	callback(null, true);
 };

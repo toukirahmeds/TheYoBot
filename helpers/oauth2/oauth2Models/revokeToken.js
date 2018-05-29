@@ -7,6 +7,7 @@ const Oauth2AccessToken = require("../models/Oauth2AccessToken");
 
 
 module.exports = (accessToken, callback)=>{
+	console.log("REVOKE TOKEN");
 	Oauth2AccessToken.remove({
 		"accessToken" : accessToken
 	},(error, accessTokenDoc)=>{

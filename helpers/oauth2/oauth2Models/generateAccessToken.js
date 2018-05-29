@@ -14,9 +14,16 @@ const config = require("../../../config/config.json");
 
 
 module.exports = (client, user, scope, callback)=>{
-	callback(null, jwt.sign({
-		"client" : client,
-		"user" : user,
-		"scope" : scope
-	}, config.jwt.accessTokenSecret, config.jwt.access, accessTokenExpiresIn));
+	console.log("GENERATE ACCESS TOKEN");
+	callback(
+		null, 
+		jwt.sign({
+			"client" : client,
+			"user" : user,
+			"scope" : scope
+			}, 
+			config.jwt.accessTokenSecret, 
+			{"expiresIn":config.jwt.accessTokenExpiresIn}
+		)
+	);
 };

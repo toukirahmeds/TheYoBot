@@ -6,6 +6,7 @@ const User = require("../../../models/User");
 
 
 module.exports = (username, password, callback)=>{
+	console.log("GET USER");
 	User.find({
 		"username" : username,
 		"password" : password

@@ -39,7 +39,16 @@ const Oauth2Client = require("./models/Oauth2Client");
 =            Router for login            =
 ========================================*/
 router.post("/authenticate", (req, res)=>{
-
+	let request = new Request(req);
+	let response = new Response(res);
+	console.log("REACHED");
+	oauth2.token(request, response, (error, token)=>{
+		if(error){
+			console.log("ERROR FOUND");
+		}else{
+			console.log("TOKEN FOUND");
+		}
+	});
 });
 
 
@@ -60,10 +69,10 @@ router.post("/logout", (req, res)=>{
 =            Router to get authorization            =
 ===================================================*/
 router.get("/authorize", (req, res)=>{
-	console.log(req.body);
+	console.log(req.query);
 	Oauth2Client.findOne({
-		"clientId" : req.body.clientId,
-		"clientSecret" : req.body.clientSecret
+		"clientId" : req.query.clientId,
+		"clientSecret" : req.query.clientSecret
 	},{
 		"_id" : true,
 		"name" : true
@@ -89,16 +98,23 @@ router.get("/authorize", (req, res)=>{
 =            Router to authorize            =
 ===========================================*/
 router.post("/authorize", (req, res)=>{
-	console.log(req.body);
+	// console.log(req.body);
 	const request = new Request(req);
 	const response = new Response(res);
-	oauth2.authorize(request, response, (error, authorizeDoc)=>{
+	console.log("Authorize post");
+	const options = {
+		"handle" : (request, response)=>{
+			console.log("THIS IS THE HANDLER");
+			return true;
+		}
+	};
+	oauth2.authorize(request, response, options, (error, authorizeDoc)=>{
 		if(error){
 			console.log("ERROR FOUND");
-			// res.status(error.code || 500).json(error);
+			res.status(error.code || 500).json(error);
 		}else{
 			console.log("NO error");
-			// res.status(200).json(authorizeDoc);
+			res.status(200).json(authorizeDoc);
 		}
 	});
 });

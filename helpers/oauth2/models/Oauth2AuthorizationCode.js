@@ -29,4 +29,4 @@ const Oauth2AuthorizationCodeSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Oauth2AuthorizationCode", Oauth2AuthorizationCodeSchema);
+module.exports = mongoose.model("Oauth2AuthorizationCode", Oauth2AuthorizationCodeSchema, "Oauth2AuthorizationCodes");

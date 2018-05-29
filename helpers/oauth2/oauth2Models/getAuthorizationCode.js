@@ -10,6 +10,8 @@ const User = require("../../../models/User");
 
 
 module.exports = (authorizationCode, callback)=>{
+	console.log("GET Authorization Code");
+	console.log(authorizationCode);
 	Oauth2AuthorizationCode.find({
 		"authorizationCode" : authorizationCode
 	}).populate({

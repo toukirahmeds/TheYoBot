@@ -1,7 +1,7 @@
 {
 	"db" : {
 		"type" : "MongoDB",
-		"url" : "mongodb://localhost:27017/chatAssistant"
+		"url" : "mongodb://localhost:27017/TheYoBot"
 	},
 	"jwt" : {
 		"accessTokenSecret" : "I am the secret for access token.",
