@@ -17,9 +17,11 @@ module.exports = (clientId, clientSecret, callback)=>{
 		}else if(clientDoc[0]){
 			console.log("Client Found");
 			callback(null, {
+				"_id" : clientDoc[0]._id,
 				"id" : clientDoc[0]._id.toString(),
 				"redirectUris" : clientDoc[0].redirectUris,
-				"grants" : clientDoc[0].grantTypes
+				"grants" : clientDoc[0].grantTypes,
+				"scope" : clientDoc[0].scope
 			});
 		}else{
 			console.log("Client Not Found");

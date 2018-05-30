@@ -25,6 +25,7 @@ module.exports = (accessToken, callback)=>{
 		}else{
 			let client = accessTokenDoc[0].oauth2Client;
 			client["id"] = client._id.toString();
+			console.log(client);
 			callback(null, {
 				"accessToken" : accessTokenDoc[0].accessToken,
 				"accessTokenExpiresAt"  : accessTokenDoc[0].expires,

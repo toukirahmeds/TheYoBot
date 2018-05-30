@@ -6,7 +6,8 @@ const Oauth2Client = require("./models/Oauth2Client");
 // 	"email" : "admin@gmail.com",
 // 	"password" : "adminPassword",
 // 	"status" :  "activated",
-// 	"name" : "Admin"
+// 	"name" : "Admin",
+// 	"scope" : "user:read,write"
 // },(error, userDoc)=>{
 // 	if(error){
 // 		console.log(error);
@@ -18,7 +19,8 @@ const Oauth2Client = require("./models/Oauth2Client");
 // 			"clientSecret" : "theyobotsecret",
 // 			"redirectUris" : ["https://www.theyobot.com"],
 // 			"user" : userDoc._id,
-// 			"grantTypes" : ["authorization_code","password","refresh_token","client_credentials"]
+// 			"grantTypes" : ["authorization_code","password","refresh_token","client_credentials"],
+// 			"scope" : "user:read,write"
 // 		},(error, clientDoc)=>{
 // 			if(error){
 // 				console.log(error);

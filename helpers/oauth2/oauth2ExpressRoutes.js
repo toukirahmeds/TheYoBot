@@ -42,12 +42,22 @@ router.post("/authenticate", (req, res)=>{
 	let request = new Request(req);
 	let response = new Response(res);
 	console.log("REACHED");
-	oauth2.token(request, response, (error, token)=>{
-		if(error){
-			console.log("ERROR FOUND");
-		}else{
-			console.log("TOKEN FOUND");
-		}
+	oauth2.token(request, response).then((token)=>{
+		console.log("TOKEN FOUND");
+		console.log(token);
+		res.status(200).json({
+			"accessToken" : token.accessToken,
+			"refreshToken" : token.refreshToken,
+			"user" : {
+				"username" : token.user.username,
+				"email" : token.user.email
+			},
+			"scope" : token.scope
+		});
+	}).catch((error)=>{
+		res.status(404).json({
+			"message" : "Unauthorized"
+		});
 	});
 });
 
@@ -108,14 +118,10 @@ router.post("/authorize", (req, res)=>{
 			return true;
 		}
 	};
-	oauth2.authorize(request, response, options, (error, authorizeDoc)=>{
-		if(error){
-			console.log("ERROR FOUND");
-			res.status(error.code || 500).json(error);
-		}else{
-			console.log("NO error");
-			res.status(200).json(authorizeDoc);
-		}
+	oauth2.authorize(request, response, options).then((error, authorizeDoc)=>{
+		res.status(200).json(authorizeDoc);
+	}).catch((error)=>{
+		res.status(error.code || 500).json(error);
 	});
 });
 

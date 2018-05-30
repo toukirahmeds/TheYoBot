@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema({
 	"fbAccessToken" : {
 		"type" : String
 	},
+	"scope" : {
+		"type" : String
+	},
 	"status" : {
 		"type" : String,
 		"required" : true,
