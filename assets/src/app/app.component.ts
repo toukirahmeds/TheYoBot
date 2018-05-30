@@ -8,8 +8,7 @@ import { FuseNavigationModel } from './navigation/navigation.model';
 import { locale as navigationEnglish } from './navigation/i18n/en';
 import { locale as navigationTurkish } from './navigation/i18n/tr';
 
-import { AppConfigurations } from './app-configurations';
-import { FbService } from './shared-module';
+import { FbService, AppConfigurations } from './app-main';
 
 @Component({
     selector   : 'fuse-root',

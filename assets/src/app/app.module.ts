@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 /*==========================================
 =            Custom App Modules            =
 ==========================================*/
-import { SharedModuleModule } from './shared-module';
+import {AppMainModule} from "./app-main/app-main.module";
 
 /*=====  End of Custom App Modules  ======*/
 
@@ -42,7 +42,7 @@ const appRoutes: Routes = [
         TranslateModule.forRoot(),
         FuseMainModule,
         FuseSampleModule,
-        SharedModuleModule
+        AppMainModule
     ],
     providers   : [
         FuseSplashScreenService,
