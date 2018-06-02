@@ -10,6 +10,7 @@ export class SignInComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  	console.log("THIS IS THE SIGN IN COMPONENT");
   }
 
 }

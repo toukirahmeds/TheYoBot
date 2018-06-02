@@ -18,11 +18,14 @@ import { TranslateModule } from '@ngx-translate/core';
 =            Custom App Modules            =
 ==========================================*/
 import {AppMainModule} from "./app-main/app-main.module";
-
 /*=====  End of Custom App Modules  ======*/
 
 
 const appRoutes: Routes = [
+    {
+        path : '',
+        loadChildren : "./app-main/app-main.module#AppMainModule"
+    },
     {
         path      : '**',
         redirectTo: 'sample'
