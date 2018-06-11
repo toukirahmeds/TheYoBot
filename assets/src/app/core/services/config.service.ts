@@ -70,7 +70,7 @@ export class FuseConfigService
     {
         // Set the settings from the given object
         this.settings = Object.assign({}, this.settings, settings);
-
+        
         // Trigger the event
         this.onSettingsChanged.next(this.settings);
     }

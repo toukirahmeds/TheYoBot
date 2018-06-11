@@ -8,7 +8,7 @@ import { FuseNavigationModel } from './navigation/navigation.model';
 import { locale as navigationEnglish } from './navigation/i18n/en';
 import { locale as navigationTurkish } from './navigation/i18n/tr';
 
-import { FbService, AppConfigurations } from './app-main';
+import { FbService, FBAppId } from './app-main';
 
 @Component({
     selector   : 'fuse-root',
@@ -41,6 +41,6 @@ export class AppComponent
         this.translationLoader.loadTranslations(navigationEnglish, navigationTurkish);
     
         // Init FB Service
-        this.fbService.initFb(AppConfigurations.FBAppId);
+        this.fbService.initFb(FBAppId);
     }
 }

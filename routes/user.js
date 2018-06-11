@@ -2,8 +2,6 @@
 =            Import of npm modules            =
 =============================================*/
 const router = require("express").Router();
-
-
 /*=====  End of Import of npm modules  ======*/
 
 
@@ -28,7 +26,7 @@ const User = require("../models/User");
 /*==========================================
 =            Router to get user            =
 ==========================================*/
-router.get("/:id", (req, res)=>{
+router.get("/details/:id", (req, res)=>{
 	User.findById(req.params.id, (error, userDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
@@ -46,7 +44,7 @@ router.get("/:id", (req, res)=>{
 /*===============================================
 =            Router to get user list            =
 ===============================================*/
-router.get("/", (req, res)=>{
+router.get("/list", (req, res)=>{
 	let searchQuery = mongooseAssist.initSearchQuery(req.query);
 	User.find(searchQuery.searchFields, searchQuery.queryFields).skip(searchQuery.from).limit(searchQuery.limit).exec((error, userList)=>{
 		if(error){

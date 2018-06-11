@@ -54,7 +54,8 @@ const appRoutes: Routes = [
     ],
     bootstrap   : [
         AppComponent
-    ]
+    ],
+    exports : [ SharedModule]
 })
 export class AppModule
 {

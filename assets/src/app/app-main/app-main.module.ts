@@ -3,6 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 
+/*========================================
+=            Import of config            =
+========================================*/
+
+import { FrontendRoutes } from './configs';
+
+/*=====  End of Import of config  ======*/
+
 /*=========================================
 =            Import of modules            =
 =========================================*/
@@ -16,27 +24,30 @@ import {BroadcastModule} from "./broadcast/broadcast.module";
 
 
 /*=====  End of Import of modules  ======*/
+// import { AppConfigurations } from './app-configurations';
+
 
 /*=============================================
 =            Defination of routes            =
 =============================================*/
+
 const appRoutes : Routes = [{
-  path : '',
+  path : FrontendRoutes.AuthFEUrl,
   loadChildren : './auth/auth.module#AuthModule'
 },{
-  path : 'my-profile',
+  path : FrontendRoutes.MyProfileFEUrl,
   loadChildren : './my-profile/my-profile.module#MyProfileModule'
 },{
-  path : 'analytics',
+  path : FrontendRoutes.AnalyticsFEUrl,
   loadChildren : './analytics/analytics.module#AnalyticsModule'
 },{
-  path : 'messenger-conversation',
+  path : FrontendRoutes.MessengerConversationFEUrl,
   loadChildren : './messenger-conversation/messenger-conversation.module#MessengerConversationModule'
 },{
-  path : 'post-conversation',
+  path : FrontendRoutes.PostConversationFEUrl,
   loadChildren : './post-conversation/post-conversation.module#PostConversationModule'
 },{
-  path : 'broadcast',
+  path : FrontendRoutes.BroadcastFEUrl,
   loadChildren : './broadcast/broadcast.module#BroadcastModule'
 }];
 

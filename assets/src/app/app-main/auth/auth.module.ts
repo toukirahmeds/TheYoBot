@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SharedModule } from '../../core/modules/shared.module';
 
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -10,6 +10,10 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { FbConnectComponent } from './fb-connect/fb-connect.component';
 
+import { AuthService } from './auth.service';
+
+
+import { SharedModuleModule } from '../shared-module';
 
 /*============================================
 =            Definition of Routes            =
@@ -35,8 +39,13 @@ const appRoutes : Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(appRoutes)
+    SharedModule,
+    RouterModule.forChild(appRoutes),
+    ReactiveFormsModule,
+    FormsModule,
+    SharedModuleModule
   ],
-  declarations: [SignUpComponent, SignInComponent, ForgotPasswordComponent, RecoverPasswordComponent, FbConnectComponent]
+  declarations: [SignUpComponent, SignInComponent, ForgotPasswordComponent, RecoverPasswordComponent, FbConnectComponent],
+  providers : [AuthService]
 })
 export class AuthModule { }
