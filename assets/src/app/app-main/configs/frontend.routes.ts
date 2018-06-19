@@ -19,31 +19,32 @@ export const FrontendRoutes = {
 ======================================================*/
 
 export const AuthFERoutes = {
-	"signIn" : "sign-in",
+	"signIn" : "",
 	"signUp" : "sign-up",
 	"forgotPassword" : "forgot-password",
 	"recoverPassword" : "recover-password"
 };
 
 export const PageFERoutes = {
+	"pageList" : "page-list",
 	"pageConnect" : "page-connect",
 	"pageCreate" : "page-create"
 };
 
 export const MessengerConversationFERoutes = {
-	"messengerConversationFlow" : ""
+	"messengerConversationFlow" : "conversation-flow"
 };
 
 export const PostConversationFERoutes = {
-	"postConversationFlow" : ""
+	"postConversationFlow" : "conversation-flow"
 };
 
 export const MyProfileFERoutes = {
-	"myProfileInfo" : ""
+	"myProfileInfo" : "profile"
 };
 
 export const BroadcastFERoutes = {
-	"broadcastFlow" : ""
+	"broadcastFlow" : "broadcast-flow"
 };
 	
 export const AnalyticsFERoutes = {

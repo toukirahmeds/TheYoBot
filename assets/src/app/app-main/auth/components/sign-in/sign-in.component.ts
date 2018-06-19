@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
 
-import { AuthService } from '../auth.service';
-import { fuseAnimations } from '../../../core/animations';
+import { AuthService } from '../../services/auth.service';
+import { fuseAnimations } from '../../../../core/animations';
 
 @Component({
   selector: 'app-sign-in',

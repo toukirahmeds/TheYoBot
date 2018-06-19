@@ -35,6 +35,9 @@ const appRoutes : Routes = [{
   path : FrontendRoutes.AuthFEUrl,
   loadChildren : './auth/auth.module#AuthModule'
 },{
+  path : FrontendRoutes.PageFEUrl,
+  loadChildren : './page/page.module#PageModule'
+},{
   path : FrontendRoutes.MyProfileFEUrl,
   loadChildren : './my-profile/my-profile.module#MyProfileModule'
 },{

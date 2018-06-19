@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { FBUserService } from '../../shared-module';
+import { FBUserService } from '../../../shared-module';
 
-import { AuthService } from '../auth.service';
-import { fuseAnimations } from '../../../core/animations';
+import { AuthService } from '../../services/auth.service';
+import { fuseAnimations } from '../../../../core/animations';
 
 @Component({
   selector: 'app-sign-up',

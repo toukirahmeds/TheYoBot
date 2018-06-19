@@ -5,11 +5,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PostConversationMainComponent } from './components/post-conversation-main/post-conversation-main.component';
 
+
+import { PostConversationFERoutes } from '../configs';
+
 /*============================================
 =            Defination of Routes            =
 ============================================*/
 const appRoutes : Routes = [{
-	path : '',
+	path : PostConversationFERoutes.postConversationFlow,
 	component : PostConversationMainComponent
 }];
 

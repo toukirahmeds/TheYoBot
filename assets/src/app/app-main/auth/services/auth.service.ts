@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
-import { HttpService } from "../shared-module";
-import { AuthBERoutes, UserBERoutes, FrontendRoutes } from "../configs";
+import { HttpService } from "../../shared-module";
+import { AuthBERoutes, UserBERoutes, FrontendRoutes } from "../../configs";
 
-import { FuseConfigService } from '../../core/services/config.service';
+import { FuseConfigService } from '../../../core/services/config.service';
 
 @Injectable()
 export class AuthService{
@@ -49,9 +49,10 @@ export class AuthService{
 		return this.httpService.sendRequest(HttpService.POST, AuthBERoutes.authenticate, {});
 	}
 
-	forgotPassword(forgotPasswordInfo : any) : Observable<any>{
+	sendPasswordRecoveryLink(forgotPasswordInfo : any) : Observable<any>{
 		return this.httpService.sendRequest(HttpService.POST, "", forgotPasswordInfo);
 	}
+
 
 	recoverPassword(recoverPasswordInfo : any) : Observable<any>{
 		return this.httpService.sendRequest(HttpService.POST, "", recoverPasswordInfo);

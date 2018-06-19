@@ -6,11 +6,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MessengerConversationMainComponent } from './components/messenger-conversation-main/messenger-conversation-main.component';
 
+import { MessengerConversationService } from './services/messenger-conversation.service';
+
+import { MessengerConversationFERoutes } from '../configs';
+
+
 /*============================================
 =            Definition of routes            =
 ============================================*/
 const appRoutes : Routes = [{
-	path : '',
+	path : MessengerConversationFERoutes.messengerConversationFlow,
 	component : MessengerConversationMainComponent
 }];
 
@@ -24,6 +29,7 @@ const appRoutes : Routes = [{
     CommonModule,
     RouterModule.forChild(appRoutes)
   ],
-  declarations: [MessengerConversationMainComponent]
+  declarations: [MessengerConversationMainComponent],
+  providers : [MessengerConversationService]
 })
 export class MessengerConversationModule { }
