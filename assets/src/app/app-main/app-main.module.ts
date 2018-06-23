@@ -20,7 +20,7 @@ import {AutomationModule} from "./automation/automation.module";
 import {MessageTemplateModule} from "./message-template/message-template.module";
 import {MessengerConversationModule} from "./messenger-conversation/messenger-conversation.module";
 import {PostConversationModule} from "./post-conversation/post-conversation.module";
-import {BroadcastModule} from "./broadcast/broadcast.module";
+// import {BroadcastModule} from "./broadcast/broadcast.module";
 
 
 /*=====  End of Import of modules  ======*/
@@ -67,8 +67,8 @@ const appRoutes : Routes = [{
     AutomationModule,
     MessageTemplateModule,
     MessengerConversationModule,
-    PostConversationModule,
-    BroadcastModule
+    PostConversationModule/*,
+    BroadcastModule*/
   ],
   declarations: [],
   exports : []

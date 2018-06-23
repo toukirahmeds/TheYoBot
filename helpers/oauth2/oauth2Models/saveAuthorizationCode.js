@@ -6,8 +6,6 @@ const Oauth2AuthorizationCode = require("../models/Oauth2AuthorizationCode");
 
 
 module.exports = (authorizationCode, client, user, callback)=>{
-	console.log("Save authorization code");
-	console.log(authorizationCode);
 	// Oauth2AuthorizationCode.create({
 	// 	"authorizationCode" : authorizationCode.authorizationCode,
 	// 	"expires" : authorizationCode.expiresAt,

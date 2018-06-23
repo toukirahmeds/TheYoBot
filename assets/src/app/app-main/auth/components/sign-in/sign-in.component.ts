@@ -36,9 +36,10 @@ export class SignInComponent implements OnInit {
   	});
   }
 
-  signIn(signInInfo:any){
-    this.authService.signIn(signInInfo).subscribe((response)=>{
+  signIn(){
+    this.authService.signIn(this.signInForm.value).subscribe((response)=>{
       console.log(response);
+      this.authService.saveFbAccessToken(response.body.user.fbAccessToken);
       this.authService.redirectToPage();
     },(errorResponse)=>{
       console.log(errorResponse);

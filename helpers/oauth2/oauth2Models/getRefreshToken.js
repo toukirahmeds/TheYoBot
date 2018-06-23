@@ -10,7 +10,6 @@ const User = require("../../../models/User");
 
 
 module.exports = (refreshToken, callback)=>{
-	console.log("GET Refresh Token");
 	Oauth2RefreshToken.find({
 		"refreshToken" : refreshToken
 	}).populate({

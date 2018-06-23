@@ -9,8 +9,6 @@ const Oauth2Client = require("../models/Oauth2Client");
 
 
 module.exports = (client, callback)=>{
-	console.log("GET USER from client");
-	// console.log(client);
 	Oauth2Client.findById(client.id).populate({
 		"model" : "User",
 		"path" : "user"

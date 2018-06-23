@@ -58,8 +58,8 @@
                     </mat-error> -->
                 </mat-form-field>
 
-                <div class="terms" fxLayout="row" fxLayoutAlign="center center">
-                    <img src="assets/images/customs/fb/continueWithFb.png">
+                <div class="terms pointer" fxLayout="row" fxLayoutAlign="center center">
+                    <img src="assets/images/customs/fb/continueWithFb.png" (click)="connectToFb()">
                 </div>
 
                 <div class="terms" fxLayout="row" fxLayoutAlign="center center">
@@ -70,7 +70,7 @@
                 </div>
 
                 <button mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
-                        [disabled]="userSignUpForm.invalid">
+                        [disabled]="userSignUpForm.invalid" (click)="signUp()">
                     CREATE AN ACCOUNT
                 </button>
 

@@ -11,8 +11,7 @@ const router = require("express").Router();
 =            Import of helpers            =
 =========================================*/
 const responseHelper = require("response-utilities");
-const mongooseAssist = require("mongoose-assist");
-const fbGraphHelper = require('../helpers/fbGraphHelper');
+const authenticate = require("../helpers/oauth2").authenticate;
 /*=====  End of Import of helpers  ======*/
 
 /*========================================
@@ -22,6 +21,15 @@ const Page = require("../models/Page");
 
 
 /*=====  End of Import of models  ======*/
+
+/*=============================================
+=            Import of controllers            =
+=============================================*/
+const PageController = require("../controllers/page.controller");
+
+
+/*=====  End of Import of controllers  ======*/
+
 
 
 /*==========================================
@@ -60,28 +68,27 @@ router.get("/", (req, res)=>{
 /*=============================================
 =            Router to create page            =
 =============================================*/
-router.post("/create", (req, res)=>{
-	fbGraphHelper.getLongLivedAccessToken(req.body.fbAccessToken, (error, llAccessToken)=>{
+router.post("/create", authenticate(),(req, res)=>{
+	PageController.searchPageByFbId(req.body.fbId,(error, pageSearchResult)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
-		}else{
-			req.body.fbAccessToken = llAccessToken;
-			let validation = mongooseAssist.initValidationSave(req.body, Page);
-			if(validation.errorFound){
-				return responseHelper.errorResponse(res, null);
+		}else if(pageSearchResult){
+			if(pageSearchResult.user.toString() === req.authentication.user._id.toString()){
+				return responseHelper.successResponse(res, "Page already exists and connecting to the page", pageSearchResult);
 			}else{
-				validation.newDocument.save((error, pageDoc)=>{
-					if(error){
-						return responseHelper.errorResponse(res, null);
-					}else{
-						return responseHelper.successResponse(res, "Page created successfully.", pageDoc);
-					}
-				});
+				return responseHelper.conflictResponse(res, "Sorry Page is already being used by another user.", null);	
 			}
-
+		}else{
+			req.body.user = req.authentication.user._id;
+			PageController.createPage(req.body,(error, pageDoc)=>{
+				if(error){
+					return responseHelper.errorResponse(res, null);
+				}else{
+					return responseHelper.successResponse(res, "Page created successfully.", pageDoc);
+				}
+			});
 		}
 	});
-	
 });
 
 

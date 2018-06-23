@@ -1,3 +1,12 @@
+/*=============================================
+=            Import of npm modules            =
+=============================================*/
+const bcrypt = require("bcrypt-nodejs");
+
+
+/*=====  End of Import of npm modules  ======*/
+
+
 /*========================================
 =            Import of models            =
 ========================================*/
@@ -6,15 +15,23 @@ const User = require("../../../models/User");
 
 
 module.exports = (username, password, callback)=>{
-	console.log("GET USER");
 	User.find({
-		"username" : username,
-		"password" : password
+		"$or" : [{
+			"username" : username
+		},{
+			"email" : username
+		}]
 	},(error, userDoc)=>{
 		if(error){
 			callback(error, null);
+		}else if(userDoc[0]){
+			if(bcrypt.compareSync(password, userDoc[0]['password'])){
+				callback(null, userDoc[0]);
+			}else{
+				callback(null, null);
+			}
 		}else{
-			callback(null, userDoc[0]);
+			callback(null, null);
 		}
 	});
 };

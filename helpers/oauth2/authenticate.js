@@ -30,8 +30,8 @@ const oauth2 = require("./oauth2");
 const config = require("../../config/config.json");
 /*=====  End of Import of config  ======*/
 
-module.exports = (options)=>{
-	let options = options || {};
+module.exports = (httpOptions)=>{
+	let options = httpOptions || {};
 	return (req, res, next)=>{
 		const request = new Request({
 			"headers" : {

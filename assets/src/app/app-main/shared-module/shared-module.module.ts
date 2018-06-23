@@ -5,6 +5,11 @@ import { DialogModule, DialogMainComponent } from "./modules/dialog";
 import { MatModule } from "./modules/mat-module";
 import { FbModule } from "./modules/fb-module";
 import { HttpUtilModule } from "./modules/http-util";
+import { Auth2Module } from "./modules/auth2";
+import { CacheModule } from "./modules/cache";
+// import { BottomSheetModule } from './modules/bottom-sheet';
+import { BottomSheetModule } from "./modules/bottom-sheet";
+
 
 @NgModule({
   imports: [
@@ -13,7 +18,9 @@ import { HttpUtilModule } from "./modules/http-util";
     MatModule,
     FlexLayoutModule,
     FbModule,
-    HttpUtilModule
+    HttpUtilModule,
+    Auth2Module,
+    CacheModule
   ],
   exports : [ DialogModule, MatModule, FlexLayoutModule, FbModule],
   declarations: [],

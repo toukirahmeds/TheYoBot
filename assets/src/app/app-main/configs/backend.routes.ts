@@ -3,14 +3,14 @@ import { BackendUrl } from "./configs";
 /*=====================================================
 =            Declaration of backend parent routes            =
 =====================================================*/
-const UserUrl = BackendUrl + "user/";
-const AuthenticationUrl = BackendUrl + "authentication/";
-const TemplateUrl = BackendUrl + "template/";
-const AutomationUrl = BackendUrl + "automation/";
-const PageUrl = BackendUrl + "page/";
-const MembershipUrl = BackendUrl + "membership/";
-const BroadcastUrl = BackendUrl + "broadcast/";
-const PaymentUrl = BackendUrl + "payment/";
+const UserUrl = BackendUrl + "/user/";
+const AuthenticationUrl = BackendUrl + "/authentication/";
+const TemplateUrl = BackendUrl + "/template/";
+const AutomationUrl = BackendUrl + "/automation/";
+const PageUrl = BackendUrl + "/page/";
+const MembershipUrl = BackendUrl + "/membership/";
+const BroadcastUrl = BackendUrl + "/broadcast/";
+const PaymentUrl = BackendUrl + "/payment/";
 /*=====  End of Declaration of backend parent routes  ======*/
 
 

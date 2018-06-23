@@ -10,7 +10,6 @@ const User = require("../../../models/User");
 
 
 module.exports = (accessToken, callback)=>{
-	console.log("GET ACCESS TOKEN");
 	Oauth2AccessToken.find({
 		"accessToken" : accessToken
 	}).populate({
@@ -25,7 +24,6 @@ module.exports = (accessToken, callback)=>{
 		}else{
 			let client = accessTokenDoc[0].oauth2Client;
 			client["id"] = client._id.toString();
-			console.log(client);
 			callback(null, {
 				"accessToken" : accessTokenDoc[0].accessToken,
 				"accessTokenExpiresAt"  : accessTokenDoc[0].expires,

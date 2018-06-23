@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
 	"status" : {
 		"type" : String,
 		"required" : true,
+		"default" : "activated",
 		"enum" : ["activated", "deactivated"]
 	}
 },{

@@ -14,6 +14,15 @@ const mongooseAssist = require("mongoose-assist");
 const fbGraphHelper = require('../helpers/fbGraphHelper');
 /*=====  End of Import of helpers  ======*/
 
+/*=========================================
+=            Import of configs            =
+=========================================*/
+const config = require("../config/config.json");
+
+
+/*=====  End of Import of configs  ======*/
+
+
 /*========================================
 =            Import of models            =
 ========================================*/
@@ -63,12 +72,10 @@ router.get("/list", (req, res)=>{
 =            Router to create user            =
 =============================================*/
 router.post("/create", (req, res)=>{
-	console.log(req.body);
 	fbGraphHelper.getLongLivedAccessToken(req.body.fbAccessToken, (error, llAccessToken)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			console.log("reached");
 			req.body.fbAccessToken = llAccessToken;
 			let validation = mongooseAssist.initValidationSave(req.body, User);
 			if(validation.errorFound){
@@ -78,16 +85,13 @@ router.post("/create", (req, res)=>{
 					if(error){
 						return responseHelper.errorResponse(res, null);
 					}else{
-						return responseHelper.successResponse(res, "User created successfully.", userDoc);
+						return responseHelper.successResponse(res, "User created successfully.", null);
 					}
 				});
 			}
 			
 		}
 	});
-
-	
-	
 });
 
 

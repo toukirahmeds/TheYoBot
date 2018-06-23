@@ -1,3 +1,16 @@
-<p>
-  bot-conversation-main works!
-</p>
+<ng-template #bottomMenuTemplate>
+	<mat-nav-list>
+	  <a  mat-list-item >
+	    <span mat-line (click)="editNode()">Edit Message</span>
+	  </a>
+
+	  <a  mat-list-item (click)="addChildNode('APPLE');">
+	    <span mat-line>Add Next Message</span>
+	  </a>
+
+	  <a  mat-list-item (click)="deleteNode();">
+	    <span mat-line>Delete This Message</span>
+	  </a>
+
+	</mat-nav-list>
+</ng-template>

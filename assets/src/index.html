@@ -181,9 +181,20 @@
         </style>
         <!-- / FUSE Splash Screen CSS -->
 
+        <script>
+            var global = global || window;
+            var Buffer = Buffer || [];
+            var process = process || {
+              env: { DEBUG: undefined },
+              version: []
+            };
+          </script>
+
 
         <!-- App Customs Starts Here -->
         <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css" />
         <!-- App Customers Ends Here -->
 
     </head>

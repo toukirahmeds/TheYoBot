@@ -56,12 +56,12 @@ export class FBUserService{
 	}
 
 
-	pageList(callback){
-		this.fbService.api("/me/accounts").then((response)=>{
-			console.log(response);
-			callback(null, response);
-		}).catch((error)=>{
-			callback(error, null);
-		});
-	}
+	// pageList(callback){
+	// 	this.fbService.api("/me/accounts").then((response)=>{
+	// 		console.log(response);
+	// 		callback(null, response);
+	// 	}).catch((error)=>{
+	// 		callback(error, null);
+	// 	});
+	// }
 }

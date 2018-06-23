@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
-import { HttpService } from "../../shared-module";
-import { AuthBERoutes, UserBERoutes, FrontendRoutes } from "../../configs";
+import { HttpService, CacheService } from "../../shared-module";
+import { AuthBERoutes, UserBERoutes, FrontendRoutes, PageFERoutes, FbAcessTokenKey } from "../../configs";
 
 import { FuseConfigService } from '../../../core/services/config.service';
 
@@ -11,6 +11,7 @@ import { FuseConfigService } from '../../../core/services/config.service';
 export class AuthService{
 	constructor(
 		private httpService : HttpService,
+		private cacheService : CacheService,
 		private router : Router,
 		private fuseConfigService : FuseConfigService
 	){
@@ -37,12 +38,20 @@ export class AuthService{
 	}
 
 	signIn(signInInfo : any): Observable<any>{
-		return this.httpService.sendRequest(HttpService.POST, AuthBERoutes.authenticate, signInInfo);
+		this.cacheService.clearCache();
+		return this.httpService.login(signInInfo);
+	}
+
+	saveFbAccessToken(token : string){
+		console.log(token);
+		this.cacheService.set(FbAcessTokenKey, token);
+		console.log(this.cacheService.get(FbAcessTokenKey));
 	}
 
 
 	signUp(signUpInfo : any): Observable<any>{
-		return this.httpService.sendRequest(HttpService.POST, UserBERoutes.create, signUpInfo);
+		console.log(UserBERoutes.create);
+		return this.httpService.signUp(UserBERoutes.create, signUpInfo);
 	}
 
 	signOut(): Observable<any>{
@@ -60,7 +69,7 @@ export class AuthService{
 
 
 	redirectToPage():void{
-		this.router.navigateByUrl(FrontendRoutes.PageFEUrl);
+		this.router.navigateByUrl(FrontendRoutes.PageFEUrl + "/" + PageFERoutes.pageList);
 	}
 
 	redirectToLogin():void{

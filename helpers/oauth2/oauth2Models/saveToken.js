@@ -7,8 +7,6 @@ const Oauth2RefreshToken = require("../models/Oauth2RefreshToken");
 
 
 module.exports = (token, client, user, callback)=>{
-	console.log("Save token");
-	console.log(token, client, user);
 	Oauth2AccessToken.create({
 		"accessToken" : token.accessToken,
 		"expires" : token.accessTokenExpiresAt,
@@ -19,7 +17,6 @@ module.exports = (token, client, user, callback)=>{
 		if(error){
 			callback(error, null);
 		}else{
-			console.log("accesstoken saved");
 			if(token.refreshToken){
 				Oauth2RefreshToken.create({
 					"refreshToken" : token.refreshToken,
@@ -43,7 +40,6 @@ module.exports = (token, client, user, callback)=>{
 					}
 				});
 			}else{
-				console.log("no refresh token");
 				callback(null, {
 					"accessToken" : oauth2AccessTokenDoc.accessToken,
 					"accessTokenExpiresAt" : oauth2AccessTokenDoc.expires,

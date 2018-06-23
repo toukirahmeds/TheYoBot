@@ -6,7 +6,6 @@ const Oauth2AuthorizationCode = require("../models/Oauth2AuthorizationCode");
 
 
 module.exports = (authorizationCode, callback)=>{
-	console.log("Revoke Authorization code");
 	Oauth2AuthorizationCode.remove({
 		"authorizationCode": authorizationCode.authorizationCode
 	}, (error, authorizationCodeDoc)=>{

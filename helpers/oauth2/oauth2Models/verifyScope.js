@@ -1,5 +1,4 @@
 module.exports = (accessToken, scope, callback)=>{
-	console.log("Verify scope");
 	if(accessToken.scope){
 		let requestedScope = scope.split(" ").map((elem)=>{
 			return elem.trim();

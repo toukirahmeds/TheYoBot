@@ -6,7 +6,6 @@ const Oauth2Client = require("../models/Oauth2Client");
 
 
 module.exports = (clientId, clientSecret, callback)=>{
-	console.log("GET Client");
 	let findObject = {"clientId" : clientId};
 	if(clientSecret){
 		findObject["clientSecret"] = clientSecret;
@@ -15,7 +14,6 @@ module.exports = (clientId, clientSecret, callback)=>{
 		if(error){
 			callback(error, null);
 		}else if(clientDoc[0]){
-			console.log("Client Found");
 			callback(null, {
 				"_id" : clientDoc[0]._id,
 				"id" : clientDoc[0]._id.toString(),
@@ -24,7 +22,6 @@ module.exports = (clientId, clientSecret, callback)=>{
 				"scope" : clientDoc[0].scope
 			});
 		}else{
-			console.log("Client Not Found");
 			callback(null,false);
 		}
 	});

@@ -15,7 +15,6 @@ const config = require("../../../config/config.json");
 
 
 module.exports = (client, user, scope, callback)=>{
-	console.log("Generate refresh token");
 	callback(
 		null, 
 		jwt.sign({

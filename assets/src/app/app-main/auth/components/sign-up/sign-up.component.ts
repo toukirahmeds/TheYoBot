@@ -6,6 +6,8 @@ import { FBUserService } from '../../../shared-module';
 
 import { AuthService } from '../../services/auth.service';
 import { fuseAnimations } from '../../../../core/animations';
+import { FBAppId } from '../../../configs';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -22,6 +24,7 @@ export class SignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.fbUserService.initFb(FBAppId);
     this.authService.setFuseConfigs();
   	this.initSignInForm();
   }
@@ -29,6 +32,7 @@ export class SignUpComponent implements OnInit {
   initSignInForm(){
   	this.userSignUpForm = this.formBuilder.group({
   		'email' : ['',[Validators.required]],
+      'username' : [''],
   		'mobile' : ['', [Validators.required]],
   		'password' : ['',[Validators.required]],
   		'fbAccessToken' : ['',[Validators.required]],
@@ -44,7 +48,10 @@ export class SignUpComponent implements OnInit {
   setFbInfo(name: string, fbId : string){
   	this.userSignUpForm.get('name').setValue(name);
   	this.userSignUpForm.get('fbId').setValue(fbId);
-  	// this.userSignUpForm.get('fbAccessToken').setValue(fbAccessToken);
+  }
+
+  setUsername(){
+    this.userSignUpForm.get('username').setValue(this.userSignUpForm.value.email.split("@")[0]);
   }
 
   getCurrentUserInfo(){
@@ -53,19 +60,22 @@ export class SignUpComponent implements OnInit {
   		if(error){
   			console.log(error);
   		}else{
-  			console.log(fbCurrentUserInfo);
+        this.setFbInfo(fbCurrentUserInfo.name, fbCurrentUserInfo.id);
   		}
   	});
   }
 
 
   loginFb(){
+    console.log("LOGIN FB");
   	this.fbUserService.login((error, loggedInStatus)=>{
   		if(error){
   			console.log(error);
   		}else{
-  			console.log(loggedInStatus);
-  			this.getCurrentUserInfo();
+        if(loggedInStatus.status === "connected"){
+          this.setFbAccessToken(loggedInStatus.authResponse.accessToken);
+          this.getCurrentUserInfo();
+        }
   		}
   	});
   }
@@ -76,14 +86,23 @@ export class SignUpComponent implements OnInit {
   		if(error){
   			console.log(error);
   		}else{
-  			console.log(loggedInStatus);
   			if(loggedInStatus.status === "connected"){
+          this.setFbAccessToken(loggedInStatus.authResponse.accessToken);
   				this.getCurrentUserInfo();
   			}else{
   				this.loginFb();
   			}
   		}
   	});
+  }
+
+
+
+  signUp(){
+    this.setUsername();
+    this.authService.signUp(this.userSignUpForm.value).subscribe((response)=>{
+      console.log(response);
+    });
   }
 
   

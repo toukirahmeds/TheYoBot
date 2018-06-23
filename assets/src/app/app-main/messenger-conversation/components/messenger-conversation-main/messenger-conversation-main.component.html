@@ -1,3 +1,20 @@
-<p>
-  messenger-conversation-main works!
-</p>
+<div class="page-layout simple fullwidth" fusePerfectScrollbar>
+
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-24" fxLayout="row" fxLayoutAlign="start center">
+        <h2>FB Messenger Conversation</h2>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24 mat-white-bg" style="height:100%">
+
+        <!-- <fuse-demo-content></fuse-demo-content> -->
+        <app-bot-conversation-main [parentInfo]="pageInfo"></app-bot-conversation-main>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>
+
+

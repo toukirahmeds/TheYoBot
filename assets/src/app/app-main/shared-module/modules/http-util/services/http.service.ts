@@ -1,7 +1,12 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import  "rxjs/Rx";
+
+import { TokenService, ScopeService } from '../../auth2';
+
+import { AuthBERoutes, ClientCredentials } from '../../../../configs';
+
 
 @Injectable()
 export class HttpService{
@@ -10,21 +15,16 @@ export class HttpService{
 	public static PUT : string = "PUT";
 	public static DELETE : string = "DELETE"; 
 
-	constructor(private http : HttpClient){}
+	constructor(
+		private http : HttpClient,
+		private tokenService : TokenService,
+		private scopeService : ScopeService
+	){}
 
 
 	private getHttpHeaders(){
-		let httpHeaders : HttpHeaders = new HttpHeaders();
-		httpHeaders.set("Content-Type","application/json");
-		let accessToken = localStorage.getItem("accessToken");
-		let refreshToken = localStorage.getItem("refreshToken");
-		if(accessToken){
-			httpHeaders.append("accessToken", accessToken);
-		}
-
-		if(refreshToken){
-			httpHeaders.append("refreshToken", refreshToken);
-		}
+		let accessToken = this.tokenService.getAccessToken();
+		let httpHeaders : HttpHeaders = new HttpHeaders().set("Content-Type","application/json").append("authorization", "Bearer " + accessToken);
 
 		return httpHeaders;
 
@@ -39,6 +39,8 @@ export class HttpService{
 			headers : this.getHttpHeaders()
 		};
 
+
+
 		if(params){
 			httpOptions['params'] = params
 		}
@@ -47,6 +49,7 @@ export class HttpService{
 	}
 
 	sendRequest(method : string, url : string, body : any):Observable<any>{
+		console.log("SEND HTTP REQUEST");
 		method = method.toUpperCase();
 		switch(method){
 			case HttpService.GET:
@@ -63,33 +66,70 @@ export class HttpService{
 
 	private sendGETRequest(url : string, body : any):Observable<any>{
 		let httpOptions = this.getHttpOptions(body);
-		return this.http.get(url, httpOptions).map((response)=>{
-			return response;
-		});
+		return this.http.get(url, httpOptions);
 	}
 
 	private sendPOSTRequest(url : string, body : any):Observable<any>{
+		console.log("SEND POST REQUEST");
 		let httpOptions = this.getHttpOptions();
-		return this.http.post(url, body, httpOptions).map((response)=>{
-			return response;
-		});
+		console.log(httpOptions);
+		return this.http.post(url, body, httpOptions);
 	}
 
 	private sendPUTRequest(url : string, body : any):Observable<any>{
 		let httpOptions = this.getHttpOptions();
-		return this.http.put(url, body, httpOptions).map((response)=>{
-			return response;
-		});
+		return this.http.put(url, body, httpOptions);
 	}
 
 	private sendDELETERequest(url : string, body : any):Observable<any>{
 		let httpOptions = this.getHttpOptions();
-		return this.http.delete(url, httpOptions).map((response)=>{
+		return this.http.delete(url, httpOptions);
+	}
+
+	signUp(signUpUrl : string, signUpInfo : any) : Observable<any>{
+		return this.http.post(signUpUrl, signUpInfo);
+	}
+
+	login(loginInfo : any): Observable<any>{
+		const httpHeaders = new HttpHeaders({
+			'Content-Type' : 'application/x-www-form-urlencoded'
+		});
+		const requestBody = new HttpParams()
+				.set("grant_type","password")
+				.append("client_id",ClientCredentials.clientId)
+				.append("client_secret",ClientCredentials.clientSecret)
+				.append("username",loginInfo.userIdentity)
+				.append("password",loginInfo.password);
+		
+		return this.http.post(AuthBERoutes.authenticate,requestBody,{headers : httpHeaders, observe:'response'}).map((response : any)=>{
+			this.setTokens(response.body.accessToken, new Date(response.body.accessTokenExpiresAt), response.body.refreshToken, new Date(response.body.refreshTokenExpiresAt));
 			return response;
+		},(errorResponse : any)=>{
+			return errorResponse;
 		});
 	}
 
-	refreshAccessToken(){
-
+	logout() : Observable<any>{
+		return this.http.post(AuthBERoutes.authenticate, {}).map((response)=>{
+			this.tokenService.clearTokens();
+			return response;
+		},(errorResponse)=>{
+			return errorResponse;
+		});
 	}
+
+	private refreshAccessToken():Observable<any>{
+		if(this.tokenService.getRefreshToken()){
+			return this.http.post(AuthBERoutes.authenticate, {});
+		}else{
+			return this.logout();
+		}
+	}
+
+	setTokens(accessToken : string, accessTokenExpireTime : Date, refreshToken : string, refreshTokenExpireTime : Date){
+		this.tokenService.setAccessToken(accessToken, accessTokenExpireTime);
+		this.tokenService.setRefreshToken(refreshToken, refreshTokenExpireTime);
+	}
+
+
 }

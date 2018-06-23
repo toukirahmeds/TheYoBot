@@ -14,7 +14,8 @@ export class FBPageService{
 
 	pageList(accessToken, callback){
 		this.fbService.api("/me/accounts", 'get', {
-			access_token : accessToken
+			access_token : accessToken,
+			fields : "id,name,picture,access_token"
 		}).then((response)=>{
 			callback(null, response);
 		}).catch((error)=>{

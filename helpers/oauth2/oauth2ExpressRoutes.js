@@ -41,16 +41,16 @@ const Oauth2Client = require("./models/Oauth2Client");
 router.post("/authenticate", (req, res)=>{
 	let request = new Request(req);
 	let response = new Response(res);
-	console.log("REACHED");
 	oauth2.token(request, response).then((token)=>{
-		console.log("TOKEN FOUND");
-		console.log(token);
 		res.status(200).json({
 			"accessToken" : token.accessToken,
+			"accessTokenExpiresAt" : token.accessTokenExpiresAt,
 			"refreshToken" : token.refreshToken,
+			"refreshTokenExpiresAt" : token.refreshTokenExpiresAt,
 			"user" : {
 				"username" : token.user.username,
-				"email" : token.user.email
+				"email" : token.user.email,
+				"fbAccessToken" : token.user.fbAccessToken
 			},
 			"scope" : token.scope
 		});

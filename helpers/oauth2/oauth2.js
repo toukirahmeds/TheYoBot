@@ -15,7 +15,7 @@ module.exports = new oauth2Server({
 		"revokeToken" : require("./oauth2Models/revokeToken"),
 		"saveAuthorizationCode" : require("./oauth2Models/saveAuthorizationCode"),
 		"saveToken" : require("./oauth2Models/saveToken"),
-		"validateScope" : require("./oauth2Models/validateScope"),
+		// "validateScope" : require("./oauth2Models/validateScope"),
 		"verifyScope" : require("./oauth2Models/verifyScope")
 	}
 });
