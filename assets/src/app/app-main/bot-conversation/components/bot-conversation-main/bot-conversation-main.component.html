@@ -4,13 +4,23 @@
 	    <span mat-line (click)="editNode()">Edit Message</span>
 	  </a>
 
-	  <a  mat-list-item (click)="addChildNode('APPLE');">
+	  <a  mat-list-item (click)="openAutomationModal('fbMessengerAutomationTemplate');">
 	    <span mat-line>Add Next Message</span>
 	  </a>
 
-	  <a  mat-list-item (click)="deleteNode();">
+	  <a  mat-list-item (click)="openAutomationModal('fbMessengerAutomationDeleteTemplate');">
 	    <span mat-line>Delete This Message</span>
 	  </a>
 
 	</mat-nav-list>
+</ng-template>
+
+
+<ng-template #fbMessengerAutomationTemplate>
+	<app-fb-messenger-automation [inputDoneClickEvent]="automationCreateEditEvent">
+	</app-fb-messenger-automation>
+</ng-template>
+
+<ng-template #fbMessengerAutomationDeleteTemplate>
+	<h2>Delete Automaion</h2>
 </ng-template>

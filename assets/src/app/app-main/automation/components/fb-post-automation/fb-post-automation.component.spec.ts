@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthomationNodeComponent } from './authomation-node.component';
+import { FbPostAutomationComponent } from './fb-post-automation.component';
 
-describe('AuthomationNodeComponent', () => {
-  let component: AuthomationNodeComponent;
-  let fixture: ComponentFixture<AuthomationNodeComponent>;
+describe('FbPostAutomationComponent', () => {
+  let component: FbPostAutomationComponent;
+  let fixture: ComponentFixture<FbPostAutomationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthomationNodeComponent ]
+      declarations: [ FbPostAutomationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuthomationNodeComponent);
+    fixture = TestBed.createComponent(FbPostAutomationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

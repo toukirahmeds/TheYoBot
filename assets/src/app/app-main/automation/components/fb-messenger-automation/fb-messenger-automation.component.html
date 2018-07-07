@@ -1,0 +1,87 @@
+<form class="mat-white-bg  p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
+      fxFlex="1 0 auto" name="form" [formGroup]="automationForm">
+
+    <div class="h2 mb-24">Automation Form</div>
+
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+        <mat-form-field fxFlex="50">
+        	<mat-select placeholder="Trigger Type" formControlName="trigger.triggerType">
+        		<mat-option  *ngFor="let triggerType of triggerTypes;" [value]="triggerType.value">{{triggerType.name}}</mat-option>
+        	</mat-select>
+            <!-- <mat-error *ngIf="formErrors.firstName.required">
+                First Name is required!
+            </mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" *ngIf="automationForm.controls['trigger.triggerType'].value === 'keyword'">
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let keyword of keywords; let ind = index; " [selectable]="true"
+                         [removable]="true" (removed)="removeKeyword(ind)">
+                  {{keyword}}
+                  <mat-icon matChipRemove >cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Type keyword and enter"
+                       [matChipInputFor]="chipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="true"
+                       (matChipInputTokenEnd)="addKeyword($event)">
+            </mat-chip-list>
+            <!-- <mat-error *ngIf="formErrors.lastName.required">
+                Last Name is required!
+            </mat-error> -->
+        </mat-form-field>
+        <mat-form-field fxFlex="50" *ngIf="automationForm.controls['trigger.triggerType'].value === 'button'">
+        	<mat-select matInput placeholder="Trigger Type" [formControl]="template">
+        		<mat-option >Keyword</mat-option>
+        	</mat-select>
+            <!-- <mat-error *ngIf="formErrors.lastName.required">
+                Last Name is required!
+            </mat-error> -->
+        </mat-form-field>
+
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" [formGroup]="automationForm.controls.template">
+    	<div fxLayout="column" fxFlex="100">
+    		<div fxLayout="row">
+		        <mat-form-field fxFlex="50">
+		        	<mat-select placeholder="Select Template Type" formControlName="templateType">
+		        		<mat-option value="generic">Generic</mat-option>
+		        		<mat-option value="list">List</mat-option>
+		        		<mat-option value="media">Media</mat-option>
+		        	</mat-select>
+		            <!-- <mat-error *ngIf="formErrors.firstName.required">
+		                First Name is required!
+		            </mat-error> -->
+		        </mat-form-field>
+    			
+    		</div>
+    		<div fxLayout="row">
+		        <mat-form-field fxFlex="100">
+		        	<input matInput formControlName="title" placeholder="Type title here" />
+		        </mat-form-field>
+    			
+    		</div>
+    		<div fxLayout="row">
+		        <mat-form-field fxFlex="100">
+		        	<textarea matInput formControlName="message" placeholder="Type message here"></textarea>
+		        </mat-form-field>
+    			
+    		</div>
+    		
+    	</div>
+
+
+        
+
+    </div>
+
+    
+
+    
+
+    
+
+</form>
+

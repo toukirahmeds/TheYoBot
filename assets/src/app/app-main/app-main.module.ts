@@ -16,7 +16,7 @@ import { FrontendRoutes } from './configs';
 =========================================*/
 import {SharedModuleModule} from "./shared-module/shared-module.module";
 import {AuthModule} from "./auth/auth.module";
-import {AutomationModule} from "./automation/automation.module";
+// import {AutomationModule} from "./automation/automation.module";
 import {MessageTemplateModule} from "./message-template/message-template.module";
 import {MessengerConversationModule} from "./messenger-conversation/messenger-conversation.module";
 import {PostConversationModule} from "./post-conversation/post-conversation.module";
@@ -64,7 +64,6 @@ const appRoutes : Routes = [{
     SharedModuleModule,
     RouterModule.forChild(appRoutes),
     AuthModule,
-    AutomationModule,
     MessageTemplateModule,
     MessengerConversationModule,
     PostConversationModule/*,

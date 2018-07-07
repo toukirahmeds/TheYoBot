@@ -8,8 +8,8 @@ const automationSchema = new mongoose.Schema({
 	},
 	"type":{
 		"type" : String,
-		"default" : "messenger",
-		"enum" : ["messenger","post"]
+		"default" : "fbMessenger",
+		"enum" : ["fbMessenger","fbPost"]
 	},
 	"trigger" : {
 		"triggerType" : {
@@ -17,7 +17,7 @@ const automationSchema = new mongoose.Schema({
 			"default" : "keyword",
 			"enum" : ["keyword", "button", "comment"]
 		},
-		"triggerKeyword" : {
+		"triggerKeywords" : {
 			"type" : Array,
 			"default" : []
 		}
@@ -37,6 +37,10 @@ const automationSchema = new mongoose.Schema({
 	"previousAutomation" : {
 		"type" : mongoose.Schema.Types.ObjectId,
 		"ref" : "Automation"
+	},
+	"user" : {
+		"type" : mongoose.Schema.Types.ObjectId,
+		"ref" : "User"
 	}
 },{
 	"timestamps" : true

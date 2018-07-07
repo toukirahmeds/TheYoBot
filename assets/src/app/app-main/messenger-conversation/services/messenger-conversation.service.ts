@@ -36,5 +36,7 @@ export class MessengerConversationService{
     getPageInfo():any{
         return this.cacheService.get(PageInfoKey);
     }
+
+    
 	
 }

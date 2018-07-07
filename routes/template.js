@@ -19,7 +19,7 @@ const Template = require("../models/Template");
 /*==============================================
 =            Router to get template            =
 ==============================================*/
-router.get("/:id", (req, res)=>{
+router.get("/details/:id", (req, res)=>{
 	Template.findById(req.params.id, (error, templateDoc)=>{
 		if(error){
 			return responseUtilities.errorResponse(res, null);
@@ -36,7 +36,7 @@ router.get("/:id", (req, res)=>{
 /*===================================================
 =            Router to get template list            =
 ===================================================*/
-router.get("/", (req, res)=>{
+router.get("/list", (req, res)=>{
 	let searchQuery = mongooseAssist.initSearchQuery(req.query);
 	Template.find(searchQuery.searchFields, searchQuery.queryFields).skip(searchQuery.from).limit(100).exec((error, templateList)=>{
 		if(error){

@@ -8,8 +8,8 @@ const templateSchema = new mongoose.Schema({
 	},
 	"type" : {
 		"type" : String,
-		"default" : "messenger",
-		"enum" : ["messenger","post"]
+		"default" : "fbMessenger",
+		"enum" : ["fbMessenger","post"]
 	},
 	"templateType" : {
 		"type" : String,
@@ -26,6 +26,10 @@ const templateSchema = new mongoose.Schema({
 	},
 	"attachment" : {
 		"type" : Object
+	},
+	"user" : {
+		"type" : mongoose.Schema.Types.ObjectId,
+		"ref" : "User"
 	}
 	// "messageWithButtons" : {
 	// 	"type" : String

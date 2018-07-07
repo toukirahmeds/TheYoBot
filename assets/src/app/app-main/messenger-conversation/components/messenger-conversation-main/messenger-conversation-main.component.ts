@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessengerConversationService } from '../../services/messenger-conversation.service';
+import { FBMessengerType } from '../../../data/automation.types';
 
 
 @Component({
@@ -9,6 +10,7 @@ import { MessengerConversationService } from '../../services/messenger-conversat
 })
 export class MessengerConversationMainComponent implements OnInit {
 	public pageInfo : any = {};
+  public conversationType : string = FBMessengerType;
   constructor(
   	private messengerConversationService : MessengerConversationService
   ) { }

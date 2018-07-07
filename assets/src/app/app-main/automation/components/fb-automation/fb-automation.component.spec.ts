@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BotCoversationFullComponent } from './bot-coversation-full.component';
+import { FbAutomationComponent } from './fb-automation.component';
 
-describe('BotCoversationFullComponent', () => {
-  let component: BotCoversationFullComponent;
-  let fixture: ComponentFixture<BotCoversationFullComponent>;
+describe('FbAutomationComponent', () => {
+  let component: FbAutomationComponent;
+  let fixture: ComponentFixture<FbAutomationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BotCoversationFullComponent ]
+      declarations: [ FbAutomationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BotCoversationFullComponent);
+    fixture = TestBed.createComponent(FbAutomationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

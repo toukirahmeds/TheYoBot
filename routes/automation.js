@@ -11,7 +11,7 @@ const router  = require("express").Router();
 =========================================*/
 const mongooseAssist = require("mongoose-assist");
 const responseUtilities = require("response-utilities");
-
+const authenticate = require("../helpers/oauth2").authenticate;
 
 /*=====  End of Import of helpers  ======*/
 
@@ -24,16 +24,28 @@ const Automation = require("../models/Automation");
 
 /*=====  End of Import of models  ======*/
 
+/*=============================================
+=            Import of controllers            =
+=============================================*/
+const TemplateController = require("../controllers/template.controller");
+const AutomationController = require("../controllers/automation.controller");
+
+/*=====  End of Import of controllers  ======*/
+
+
 
 /*================================================
 =            Router to get automation            =
 ================================================*/
-router.get("/:id", (req, res)=>{
-	Automation.findById(req.params.id, (error, automationDoc)=>{
+router.get("/details/:pageId", authenticate(), (req, res)=>{
+	Automation.find({
+		"page" : req.params.pageId,
+		"user" : req.authentication.user._id
+	}, (error, automationDoc)=>{
 		if(error){
 			return responseUtilities.errorResponse(res, null);
 		}else{
-			return responseUtilities.successResponse(res, "Automation data found.", automationDoc);
+			return responseUtilities.successResponse(res, "Automation data found.", automationDoc[0]);
 		}
 	});
 });
@@ -45,11 +57,16 @@ router.get("/:id", (req, res)=>{
 /*=====================================================
 =            Router to get automation list            =
 =====================================================*/
-router.get("/", (req, res)=>{
+router.get("/list/:pageId/:automationType", authenticate(),(req, res)=>{
+	// console.log("GET AUTOMATION LIST");
+	// console.log(req.params.pageId);
+	// console.log(req.params.automationType);
 	let searchQuery = mongooseAssist.initSearchQuery(req.query);
 	Automation.find({
 		"$and" : [ searchQuery.searchFields, {
-			'page' : req.query.page
+			'page' : req.params.pageId,
+			'type' : req.params.automationType,
+			'user' : req.authentication.user._id
 		}]
 	}, searchQuery.queryFields).skip(searchQuery.from).limit(100).populate({
 		path : "template",
@@ -69,20 +86,47 @@ router.get("/", (req, res)=>{
 /*===================================================
 =            Router to create automation            =
 ===================================================*/
-router.post("/create", (req, res)=>{
-	let validation = mongooseAssist.initValidationSave(req.body, Automation);
-	if(validation.errorFound){
-		console.log(validation.errors);
-		return responseUtilities.errorResponse(res, null);
-	}else{
-		validation.newDocument.save((error, automationDoc)=>{
+router.post("/create", authenticate(), (req, res)=>{
+	req.body.user = req.authentication.user._id;
+	if(req.body.template._id){
+		req.body.template = req.body.template._id;
+		AutomationController.createAutomation(req.body, (error, automationDoc)=>{
 			if(error){
 				return responseUtilities.errorResponse(res, null);
 			}else{
 				return responseUtilities.successResponse(res, "Automation created successfully.", automationDoc);
 			}
 		});
+	}else{
+		req.body.template.user = req.authentication.user._id;
+		TemplateController.createTemplate(req.body.template,(error, templateDoc)=>{
+			if(error){
+				return responseUtilities.errorResponse(res, null);
+			}else{
+				req.body.template = templateDoc._id;
+				AutomationController.createAutomation(req.body, (error, automationDoc)=>{
+					if(error){
+						return responseUtilities.errorResponse(res, null);
+					}else{
+						return responseUtilities.successResponse(res, "Automation created successfully.", automationDoc);
+					}
+				});
+			}
+		});
 	}
+	// let validation = mongooseAssist.initValidationSave(req.body, Automation);
+	// if(validation.errorFound){
+	// 	console.log(validation.errors);
+	// 	return responseUtilities.errorResponse(res, null);
+	// }else{
+	// 	validation.newDocument.save((error, automationDoc)=>{
+	// 		if(error){
+	// 			return responseUtilities.errorResponse(res, null);
+	// 		}else{
+	// 			return responseUtilities.successResponse(res, "Automation created successfully.", automationDoc);
+	// 		}
+	// 	});
+	// }
 });
 
 
@@ -92,8 +136,11 @@ router.post("/create", (req, res)=>{
 /*===================================================
 =            Router to update automation            =
 ===================================================*/
-router.put("/update/:id", (req, res)=>{
-	Automation.findByIdAndUpdate(req.params.id, req.body, (error, automationDoc)=>{
+router.put("/update", authenticate(), (req, res)=>{
+	Automation.update({
+		"_id" : req.body._id,
+		"user" : req.authentication.user._id
+	}, req.body, (error, automationDoc)=>{
 		if(error){
 			return responseUtilities.errorResponse(res, null);
 		}else{
@@ -108,8 +155,11 @@ router.put("/update/:id", (req, res)=>{
 /*===================================================
 =            Router to delete automation            =
 ===================================================*/
-router.delete("/delete/:id", (req, res)=>{
-	Automation.findByIdAndRemove(req.params.id, (error)=>{
+router.delete("/delete/:pageId", authenticate(), (req, res)=>{
+	Automation.remove({
+		"_id" : req.params.pageId,
+		"user" : req.authentication.user._id
+	}, (error)=>{
 		if(error){
 			return responseUtilities.errorResponse(res, null);
 		}else{
