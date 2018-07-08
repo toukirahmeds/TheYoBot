@@ -40,16 +40,15 @@ export class VisTreeService{
 	}
 
 
-	addNode(label : string, parentId:any){
-		let nodeId = this.nodes.length + 1;
+	addNode(id : string, label : string, parentId:any){
 		this.nodes.push({
-			id : nodeId,
-			label : label + this.nodes.length
+			id : id,
+			label : label
 		});
 
 		this.edges.push({
 			from : parentId,
-			to : nodeId
+			to : id
 		});
 	}
 

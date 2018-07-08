@@ -4,7 +4,7 @@ const mongooseAssist = require("mongoose-assist");
 
 
 module.exports.createTemplate = (templateInfo, callback)=>{
-	let validation = mongooseAssist.initValidationSave(req.body, Template);
+	let validation = mongooseAssist.initValidationSave(templateInfo, Template);
 
 	if(validation.errorFound){
 		callback("Errors", null);

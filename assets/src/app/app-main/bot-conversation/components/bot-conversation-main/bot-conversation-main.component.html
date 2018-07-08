@@ -17,7 +17,7 @@
 
 
 <ng-template #fbMessengerAutomationTemplate>
-	<app-fb-messenger-automation [inputDoneClickEvent]="automationCreateEditEvent">
+	<app-fb-messenger-automation [inputDoneClickEvent]="automationInputEvent" [previousAutomation]="clickedAutomation" (doneClicked)="automationFormDone($event)">
 	</app-fb-messenger-automation>
 </ng-template>
 

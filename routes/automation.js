@@ -58,9 +58,6 @@ router.get("/details/:pageId", authenticate(), (req, res)=>{
 =            Router to get automation list            =
 =====================================================*/
 router.get("/list/:pageId/:automationType", authenticate(),(req, res)=>{
-	// console.log("GET AUTOMATION LIST");
-	// console.log(req.params.pageId);
-	// console.log(req.params.automationType);
 	let searchQuery = mongooseAssist.initSearchQuery(req.query);
 	Automation.find({
 		"$and" : [ searchQuery.searchFields, {
@@ -101,6 +98,7 @@ router.post("/create", authenticate(), (req, res)=>{
 		req.body.template.user = req.authentication.user._id;
 		TemplateController.createTemplate(req.body.template,(error, templateDoc)=>{
 			if(error){
+				console.log(error);
 				return responseUtilities.errorResponse(res, null);
 			}else{
 				req.body.template = templateDoc._id;
@@ -114,19 +112,6 @@ router.post("/create", authenticate(), (req, res)=>{
 			}
 		});
 	}
-	// let validation = mongooseAssist.initValidationSave(req.body, Automation);
-	// if(validation.errorFound){
-	// 	console.log(validation.errors);
-	// 	return responseUtilities.errorResponse(res, null);
-	// }else{
-	// 	validation.newDocument.save((error, automationDoc)=>{
-	// 		if(error){
-	// 			return responseUtilities.errorResponse(res, null);
-	// 		}else{
-	// 			return responseUtilities.successResponse(res, "Automation created successfully.", automationDoc);
-	// 		}
-	// 	});
-	// }
 });
 
 
@@ -136,9 +121,9 @@ router.post("/create", authenticate(), (req, res)=>{
 /*===================================================
 =            Router to update automation            =
 ===================================================*/
-router.put("/update", authenticate(), (req, res)=>{
+router.put("/update/:pageId", authenticate(), (req, res)=>{
 	Automation.update({
-		"_id" : req.body._id,
+		"_id" : req.params.pageId,
 		"user" : req.authentication.user._id
 	}, req.body, (error, automationDoc)=>{
 		if(error){

@@ -2,7 +2,7 @@ const mongooseAssist = require("mongoose-assist");
 const Automation = require("../models/Automation");
 
 module.exports.createAutomation = (automationInfo, callback)=>{
-	let validation = mongooseAssist.initValidationSave(req.body, Automation);
+	let validation = mongooseAssist.initValidationSave(automationInfo, Automation);
 	if(validation.errorFound){
 		callback("ERRORS", null);
 	}else{

@@ -26,13 +26,28 @@ export class AutomationService{
 	}
 
 
-	deleteAutomation(automation :any):Observable<any>{
-		return this.httpService.sendRequest(HttpService.DELETE, AutomationBERoutes.delete + "/" + automation._id, automation);
+	deleteAutomation(automationId :any):Observable<any>{
+		return this.httpService.sendRequest(HttpService.DELETE, AutomationBERoutes.delete + "/" + automationId, {});
 	}
 
-	createWelcomeMessage():Observable<any>{
+	createWelcomeMessage(pageId : string):Observable<any>{
 		return this.httpService.sendRequest(HttpService.POST, AutomationBERoutes.create, {
-			
+			"page" : pageId,
+			"type" : "fbMessenger",
+			"trigger" : {
+				"triggerType" : "keyword",
+				"triggerKeywords" : []
+			},
+			"template" : {
+				"page" : pageId,
+				"type" : "fbMessenger",
+				"templateType" : "generic",
+				"title" : "Welcome Message",
+				"message" : "Welcome to our page"
+			},
+			"position" : 0,
+			"previousPosition" : 0,
+			"previousAutomation" : null
 		});
 	}
 

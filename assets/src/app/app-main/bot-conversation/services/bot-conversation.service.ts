@@ -42,16 +42,27 @@ export class BotConversationService{
 		return this.automationService.getAutomationList(conversationType, this.getParentInfo()._id, {});
 	}
 
-	private createAutomation():Observable<any>{
-		return this.automationService.createAutomation({});
+
+	initConversation():Observable<any>{
+		return this.automationService.createWelcomeMessage(this.getParentInfo()._id);
+	};
+
+	createAutomation(automationInfo : any):Observable<any>{
+		automationInfo["page"] = this.getParentInfo()._id;
+		// console.log(automationInfo);
+		if(automationInfo.template && !automationInfo.template.page){
+			automationInfo.template.page = this.getParentInfo()._id;
+		}
+		// console.log(automationInfo);
+		return this.automationService.createAutomation(automationInfo);
 	}
 
-	private updateAutomation(): Observable<any>{
+	updateAutomation(): Observable<any>{
 		return this.automationService.updateAutomation({});
 	}
 
-	deleteAutomation():Observable<any>{
-		return this.automationService.deleteAutomation({});
+	deleteAutomation(automationId : string):Observable<any>{
+		return this.automationService.deleteAutomation(automationId);
 	}
 
 

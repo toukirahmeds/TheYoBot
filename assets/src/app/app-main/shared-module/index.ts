@@ -5,3 +5,4 @@ export * from './modules/http-util';
 export * from './modules/mat-module';
 export * from './modules/cache';
 export * from './modules/bottom-sheet';
+export * from './modules/auth2';

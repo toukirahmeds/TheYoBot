@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, ElementRef, ViewChild, Template
 import { VisTreeService } from '../../services/vis-tree.service';
 import { BotConversationService } from '../../services/bot-conversation.service';
 import { DialogService } from '../../../shared-module';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-bot-conversation-main',
@@ -17,7 +18,9 @@ export class BotConversationMainComponent implements OnInit {
   private container : any = this.elementRef.nativeElement;
   private onClickProperties : any;
   public automationCreateEditEvent : EventEmitter<boolean> = new EventEmitter<boolean>();
+  public automationInputEvent : EventEmitter<boolean> = new EventEmitter<boolean>();
   public automationList : any[] = [];
+  public clickedAutomation : any = {};
 
 
 
@@ -30,7 +33,7 @@ export class BotConversationMainComponent implements OnInit {
 
   ngOnInit() {
     this.botConversationService.setParentInfo(this.parentInfo);
-	  this.initConversationFlow();
+	  // this.initConversationFlow();
     this.getAutomationList();  	
   }
 
@@ -39,9 +42,16 @@ export class BotConversationMainComponent implements OnInit {
       console.log(response);
       this.automationList = response.data;
       if(this.automationList.length === 0){
-        // this.botConversationService.
+        this.botConversationService.initConversation().subscribe((response)=>{
+          console.log(response);
+          this.getAutomationList();
+        },(errorResponse)=>{
+          console.log(errorResponse);
+        });
+
       }else{
-        
+        console.log(this.automationList);
+        this.initConversationFlow();
       }
     },(errorResponse)=>{
       console.log(errorResponse);
@@ -54,20 +64,38 @@ export class BotConversationMainComponent implements OnInit {
   }
 
   setTreeData(){
-      this.visTreeService.setNodes([
-          {id: 1, label: 'Welcome', color : 'red'}/*,
-          {id: 2, label: 'Node 2'},
-          {id: 3, label: 'Node 3'},
-          {id: 4, label: 'Node 4'},
-          {id: 5, label: 'Node 5'}*/
-      ]);
+      // this.visTreeService.setNodes([
+      //     {id: 1, label: 'Welcome', color : 'red'},
+      //     {id: 2, label: 'Node 2'},
+      //     {id: 3, label: 'Node 3'},
+      //     {id: 4, label: 'Node 4'},
+      //     {id: 5, label: 'Node 5'}
+      // ]);
 
-      this.visTreeService.setEdges([
-           /*{from: 1, to: 3},
-           {from: 1, to: 2},
-           {from: 2, to: 4},
-           {from: 2, to: 5}*/
-      ]);
+      this.visTreeService.setNodes(this.automationList.map((elem)=>{
+        return {
+          id : elem._id,
+          label : elem.template && elem.template.title?elem.template.title : "No Title"
+        };
+      }));
+
+
+      // this.visTreeService.setEdges([
+      //      {from: 1, to: 3},
+      //      {from: 1, to: 2},
+      //      {from: 2, to: 4},
+      //      {from: 2, to: 5}
+      // ]);
+      this.visTreeService.setEdges(this.automationList.map((elem)=>{
+        if(elem.previousAutomation){
+          return {
+            from : elem.previousAutomation,
+            to : elem._id
+          };
+        }else{
+          return null;
+        }
+      }).filter(elem=>elem!==null));
   }
 
   initTree(){
@@ -76,6 +104,9 @@ export class BotConversationMainComponent implements OnInit {
       this.visTreeService.setVisTreeClickEvent((properties)=>{
         this.onClickProperties = properties;
         if(this.onClickProperties.nodes.length){
+          this.clickedAutomation = _.find(this.automationList, (elem)=>{
+            return elem._id.toString() === this.onClickProperties.nodes[0].toString();
+          });
           this.openBottomMenu();
         }
       });
@@ -92,19 +123,71 @@ export class BotConversationMainComponent implements OnInit {
     });
   }
 
+  automationFormDone(automationInfo : any){
+    if(automationInfo._id){
+
+    }else{
+      this.createAutomation(automationInfo);
+    }
+  }
+
+  createAutomation(automationInfo : any){
+    this.botConversationService.createAutomation(automationInfo).subscribe((response)=>{
+      this.addChildNode(response.data._id, automationInfo.template.title, automationInfo.previousAutomation);
+      this.automationCreateEditEvent.emit(true);
+    },(errorResponse)=>{
+      console.log(errorResponse);
+    });
+  }
+
+  editAutomation(automationInfo : any){
+
+  }
+
+  deleteAutomation(callback){
+    this.botConversationService.deleteAutomation(this.clickedAutomation._id).subscribe((response)=>{
+      callback(true);
+    },(errorResponse)=>{
+      callback(false);
+    });
+  }
+
 
   openAutomationModal(templateRef : any){
     let confirm = (callback)=>{
+      if(templateRef === "fbMessengerAutomationTemplate"){
+        this.automationInputEvent.emit(true);
+        this.automationCreateEditEvent.subscribe((response)=>{
+          if(response) callback(true);
+          else callback(false);
+        });
 
+      }else{
+        this.deleteAutomation((result)=>{
+
+          if(result){
+            this.deleteNode();
+            callback(true); 
+          }
+          else callback(false);
+        });        
+      }
     };
     let cancel = (callback)=>{
-
+      console.log("CANCEL CLICKED");
     };
     this.botConversationService.openAutomationModal({
       width : '750px',
       data : {
         body : {
           template : this[templateRef]
+        },
+        header : {
+          exists : false
+        },
+        callback : {
+          confirm : confirm,
+          cancel : cancel
         }
       }
     });
@@ -113,8 +196,8 @@ export class BotConversationMainComponent implements OnInit {
   
 
 
-  addChildNode(label:string){
-    this.visTreeService.addNode(label, this.onClickProperties.nodes[0]);
+  addChildNode(id: string, label:string, parentId : string){
+    this.visTreeService.addNode(id, label, parentId);
     this.initTree();
     this.botConversationService.closeBottomSheet();
     
@@ -127,14 +210,9 @@ export class BotConversationMainComponent implements OnInit {
   }
 
   deleteNode(){
-      this.visTreeService.deleteNode(this.onClickProperties.nodes[0]);
+      this.visTreeService.deleteNode(this.clickedAutomation._id.toString());
       this.initTree();
       this.botConversationService.closeBottomSheet();
   }
-
-
-
-
- 
 
 }

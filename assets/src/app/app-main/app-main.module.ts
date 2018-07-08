@@ -22,6 +22,8 @@ import {MessengerConversationModule} from "./messenger-conversation/messenger-co
 import {PostConversationModule} from "./post-conversation/post-conversation.module";
 // import {BroadcastModule} from "./broadcast/broadcast.module";
 
+import { AppMainService } from './services/app-main.service';
+
 
 /*=====  End of Import of modules  ======*/
 // import { AppConfigurations } from './app-configurations';
@@ -70,6 +72,7 @@ const appRoutes : Routes = [{
     BroadcastModule*/
   ],
   declarations: [],
-  exports : []
+  providers : [ AppMainService ],
+  exports : [  ]
 })
 export class AppMainModule { }

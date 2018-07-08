@@ -14,11 +14,11 @@ import { TriggerTypes } from '../../../data/automation-trigger.types';
 })
 export class FbMessengerAutomationComponent implements OnInit {
   @Input('automation') automation : Automation;
+  @Input('previousAutomation') previousAutomation : Automation;
   @Input('inputDoneClickEvent') inputDoneClickEvent : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() doneClicked : EventEmitter<any> = new EventEmitter<any>();
   public automationForm : FormGroup;
   public templateForm : FormGroup;
-  public previousAutomation : Automation;
   public keywords : string[] = [];
   public separatorKeysCodes : number[]= [ENTER];
   public triggerTypes : any[] = TriggerTypes;
@@ -49,7 +49,7 @@ export class FbMessengerAutomationComponent implements OnInit {
 
 
   initAutomationForm(automation : Automation = new Automation()){
-  	this.automationForm = this.formBuilder.group({
+    this.automationForm = this.formBuilder.group({
       "_id" : [automation._id],
       "page" : [automation.page],
       "type" : [automation.type],
@@ -57,8 +57,8 @@ export class FbMessengerAutomationComponent implements OnInit {
       "trigger.triggerKeywords" : [automation.trigger.triggerKeywords],
       "template" : this.getTemplateGroup(),
       "position" : [automation.position],
-      "previousPosition" : [automation.previousPosition],
-      "previousAutomation" : [automation.previousAutomation]
+      "previousPosition" : [automation.previousPosition? automation.previousPosition: this.previousAutomation.position],
+      "previousAutomation" : [automation.previousAutomation? automation.previousAutomation: this.previousAutomation._id]
     });
   }
 
@@ -66,7 +66,6 @@ export class FbMessengerAutomationComponent implements OnInit {
 
 
   addKeyword($event){
-    console.log($event);
     if($event.value.trim().toLowerCase()){
       this.keywords.push($event.value.trim().toLowerCase());
     }
@@ -80,7 +79,15 @@ export class FbMessengerAutomationComponent implements OnInit {
 
 
   onDoneClicked(){
-    this.doneClicked.emit(this.automationForm.value);
+    let automationInfo = this.automationForm.value;
+    if(!automationInfo._id){
+      delete automationInfo._id;
+    }
+
+    if(!automationInfo.template._id){
+      delete automationInfo.template._id;
+    }
+    this.doneClicked.emit(automationInfo);
   }
 
 }
