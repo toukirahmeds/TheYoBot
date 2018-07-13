@@ -9,7 +9,7 @@ const templateSchema = new mongoose.Schema({
 	"type" : {
 		"type" : String,
 		"default" : "fbMessenger",
-		"enum" : ["fbMessenger","post"]
+		"enum" : ["fbMessenger","fbPost","fbMessengerDefault","fbPostDefault"]
 	},
 	"templateType" : {
 		"type" : String,
@@ -27,39 +27,24 @@ const templateSchema = new mongoose.Schema({
 	"attachment" : {
 		"type" : Object
 	},
+	"quickReplies" : {
+		"contentType" : {
+			"type" : String
+		},
+		"title" : {
+			"type" : String
+		},
+		"payload" : {
+			"type" : String
+		},
+		"imageUrl" : {
+			"type" : String
+		}
+	},
 	"user" : {
 		"type" : mongoose.Schema.Types.ObjectId,
 		"ref" : "User"
 	}
-	// "messageWithButtons" : {
-	// 	"type" : String
-	// },
-	// "youtubeUrl" : {
-	// 	"type" : String
-	// },
-	// "imageUrl" : {
-	// 	"type" : String
-	// },
-	// "buttons" : [{
-	// 	"title" : {
-	// 		"type" : String
-	// 	},
-	// 	"type" : {
-	// 		"type" : String,
-	// 		"default":"sendMessage",
-	// 		"enum" : ["sendMessage","sendToUrl"]
-	// 	},
-	// 	"buttonType" : {
-	// 		"type" : String,
-	// 		"default" : "postback",
-	// 		"enum" : ["payment", "phone_number", "game_play", "account_link", "account_unlink",
-	// 				  "postback", "element_share", "web_url"]
-	// 	},
-	// 	"buttonActions" : {
-	// 		"type" : Object,
-	// 		"default" : {}
-	// 	}				
-	// }]
 },{
 	"timestamps" : true
 });

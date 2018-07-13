@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 
 
 const MyBusinessSchema = new mongoose.Schema({
+	"name" :{
+		"type" : String,
+		"required" : true
+	},
 	"contactInfo" : {
 		"primaryPhone" : {
 			"type" : String

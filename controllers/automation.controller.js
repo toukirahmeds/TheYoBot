@@ -17,6 +17,8 @@ module.exports.createAutomation = (automationInfo, callback)=>{
 	}
 };
 
-// module.exports.updateAutomation = (automationInfo, callback)=>{
-// 	automationInfo["page"]
-// };
+
+module.exports.createManyAutomations = (automationList, callback)=>{
+	
+};
+

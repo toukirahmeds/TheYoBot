@@ -18,3 +18,7 @@ module.exports.createTemplate = (templateInfo, callback)=>{
 		});
 	}
 }
+
+module.exports.createManyTemplates = (templateList, callback)=>{
+	
+};

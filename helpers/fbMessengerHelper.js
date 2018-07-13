@@ -32,7 +32,7 @@ const getFbGraphEndpoint = (objectId, edge, accessToken)=>{
 
 
 
-module.exports.createPagePersistentMenu = (pageId, pageAccessToken, requestBody, callback)=>{
+module.exports.createPagePersistentMenu = (pageAccessToken, requestBody, callback)=>{
 	if(requestBody){
 		request({
 			"method" : "POST",
@@ -52,4 +52,23 @@ module.exports.createPagePersistentMenu = (pageId, pageAccessToken, requestBody,
 		callback(null,null);
 	}
 	
+};
+
+module.exports.whitelistAppDomainForPage = (appDomains, pageAccessToken, callback)=>{
+	request({
+			"method" : "POST",
+			"url" : getFbGraphUrl("/me/messenger_profile", pageAccessToken, {}),
+			"headers" : {
+				"Content-Type" : "application/json"
+			},
+			"json" : {
+				"whitelisted_domains": appDomains
+			}
+		},(error, response, body)=>{
+			if(error){
+				callback(error,null);
+			}else{
+				callback(null, body);
+			}
+		});
 };

@@ -59,13 +59,11 @@ module.exports.unsubscribeAppToPage = (pageId, accessToken, callback)=>{
 	});
 };
 
-module.exports.updatePageMessengerPersistentMenu = (pageId, pageCategory, accessToken, callback)=>{
-	fbMessengerHelper.createPagePersistentMenu(pageId, accessToken,fbPageCategoryHelper.getPersistentMenu(pageCategory), (error, updatedPersistentMenuInfo)=>{
-		if(error){
-			callback(error, null);
-		}else{
-			callback(null, updatedPersistentMenuInfo);
-		}
-	});
+module.exports.updatePageMessengerPersistentMenu = (pageCategory, accessToken, callback)=>{
+	fbMessengerHelper.createPagePersistentMenu(accessToken,fbPageCategoryHelper.getPersistentMenu(pageCategory), callback);
+};
+
+module.exports.whiteListAppDomainMessenger = (appDomains, pageAccessToken, callback)=>{
+	fbMessengerHelper.whitelistAppDomainForPage(appDomains, pageAccessToken, callback);
 };
 

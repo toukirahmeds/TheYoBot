@@ -26,6 +26,10 @@ const fbMessageSubscriberSchema = new mongoose.Schema({
 	"gender" : {
 		"type" : String
 	},
+	"honorific" : {
+		"type" : String,
+		"enum" : ["Mr","Ms"]
+	},
 	"isPaymentEnabled" : {
 		"type" : Boolean
 	},
@@ -44,6 +48,14 @@ const fbMessageSubscriberSchema = new mongoose.Schema({
 		"type" : Number,
 		"default" : 0
 	},
+	"badRecordsCount":{
+		"type" : Number,
+		"default" : 0
+	},
+	"blocked" : {
+		"type" : Boolean,
+		"default" : false
+	}, 
 	"customer" : {
 		"type" : mongoose.Schema.Types.ObjectId,
 		"ref" : "Customer"

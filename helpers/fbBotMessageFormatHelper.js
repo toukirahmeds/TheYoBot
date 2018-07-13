@@ -54,6 +54,7 @@ const Customer = {
 
 //Business
 const Business = {
+	 BusinessName : "%{{BusinessName}}",
 	 BusinessFullLocation : "%{{BusinessLocation}}",
 	 BusinessStreet : "%{{BusinessStreet}}",
 	 BusinessCity  :"%{{BusinessCity}}",

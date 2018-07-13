@@ -13,9 +13,9 @@ const FoodBusiness = {
 
 
 
-//Residence Business
-const ResidenceBusinessCategory = "ResidenceBusinessCategory";
-const ResidenceBusiness = {
+//Hotel Business
+const HotelBusinessCategory = "HotelBusinessCategory";
+const HotelBusiness = {
 	Hotel : "hotel",
  	HotelAndLodging : "hotel & lodging",
  	HotelResort : "hotel resort",
@@ -91,7 +91,7 @@ const getFoodBusinessPersistentMenu = ()=>{
 		};
 };
 
-const getResidenceBusinessPersistentMenu = ()=>{
+const getHotelBusinessPersistentMenu = ()=>{
 	return {
 		  "persistent_menu":[
 		    {
@@ -247,8 +247,8 @@ const getMenu = (businessCategory)=>{
 		case FoodBusinessCategory:
 			return getFoodBusinessPersistentMenu();
 			break;
-		case ResidenceBusinessCategory:
-			return getResidenceBusinessPersistentMenu();
+		case HotelBusinessCategory:
+			return getHotelBusinessPersistentMenu();
 			break;
 		case TravelBusinessCategory:
 			return getTravelBusinessPersistentMenu();
@@ -279,23 +279,23 @@ const getCategory = (category)=>{
 		case FoodBusiness.FoodTruck:
 			return FoodBusinessCategory;
 			break;
-		case ResidenceBusiness.Hotel:
-			return ResidenceBusinessCategory;
+		case HotelBusiness.Hotel:
+			return HotelBusinessCategory;
 			break;
-		case ResidenceBusiness.HotelAndLodging:
-			return ResidenceBusinessCategory;
+		case HotelBusiness.HotelAndLodging:
+			return HotelBusinessCategory;
 			break;
-		case ResidenceBusiness.HotelResort:
-			return ResidenceBusinessCategory;
+		case HotelBusiness.HotelResort:
+			return HotelBusinessCategory;
 			break;
-		case ResidenceBusiness.Motel:
-			return ResidenceBusinessCategory;
+		case HotelBusiness.Motel:
+			return HotelBusinessCategory;
 			break;
-		case ResidenceBusiness.Inn:
-			return ResidenceBusinessCategory;
+		case HotelBusiness.Inn:
+			return HotelBusinessCategory;
 			break;
-		case ResidenceBusiness.Hostel:
-			return ResidenceBusinessCategory;
+		case HotelBusiness.Hostel:
+			return HotelBusinessCategory;
 			break;
 		case TravelBusiness.TravelAndTransportation:
 			return TravelBusinessCategory;

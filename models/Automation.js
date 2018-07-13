@@ -9,7 +9,7 @@ const automationSchema = new mongoose.Schema({
 	"type":{
 		"type" : String,
 		"default" : "fbMessenger",
-		"enum" : ["fbMessenger","fbPost"]
+		"enum" : ["fbMessenger","fbPost", "fbMessengerDefault", "fbPostDefault"]
 	},
 	"trigger" : {
 		"triggerType" : {
