@@ -1,5 +1,19 @@
 const lodash = require("lodash");
 
+/*=============================================
+=            Import of controllers            =
+=============================================*/
+const FbMessageSubscriberController = require("../controllers/fbMessageSubscriber.controller");
+const CustomerController = require("../controllers/customer.controller");
+const BusinessController = require("../controllers/business.controller");
+const OrderController = require("../controllers/order.controller");
+const InvoiceController = require("../controllers/invoice.controller");
+const ProductController = require("../controllers/product.controller");
+const ServiceController = require("../controllers/service.controller");
+
+/*=====  End of Import of controllers  ======*/
+
+
 /*=====================================
 =            bot variables            =
 =====================================*/
@@ -102,29 +116,73 @@ const Service = {
 
 
 const getFbMessageSubscriberFormatted = (subscriberInfo, message)=>{
-
+	FbMessageSubscriberController.getInfoUsingPage(subscriberInfo.page, (error, fbSubscriberInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, fbSubscriberInfo);
+		}
+	});
 };
 
-const getCustomerFormatted = (subscriberInfo, message)=>{};
+const getCustomerFormatted = (subscriberInfo, message)=>{
+	CustomerController.getInfoUsingPage(subscriberInfo.page, (error, customerInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, customerInfo);
+		}
+	});
+};
 
 const getBusinessFormatted = (subscriberInfo, message)=>{
-
+	BusinessController.getInfoUsingPage(subscriberInfo.page, (error, businessInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, businessInfo);
+		}
+	});
 };
 
 const getProductFormatted = (subscriberInfo, message)=>{
-
+	ProductController.getInfoUsingPage(subscriberInfo.page, (error, productInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, productInfo);
+		}
+	});
 };
 
 const getServiceFormatted = (subscriberInfo, message)=>{
-
+	ServiceController.getInfoUsingPage(subscriberInfo.page, (error, serviceInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, serviceInfo);
+		}
+	});
 };
 
 const getOrderFormatted = (subscriberInfo, message)=>{
-
+	OrderController.getInfoUsingPage(subscriberInfo.page, (error, orderInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, orderInfo);
+		}
+	});
 };
 
 const getInvoiceFormatted = (subscriberInfo, message)=>{
-
+	InvoiceController.getInfoUsingPage(subscriberInfo.page, (error, invoiceInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, invoiceInfo);
+		}
+	});
 };
 
 const variableExistsIn = (collectionName)=>{
