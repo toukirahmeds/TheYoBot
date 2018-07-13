@@ -28,3 +28,12 @@ require("../helpers/oauth2/seed");
 
 /*=====  End of Seeding of auth2 data  ======*/
 
+
+/*=======================================
+=            Seeding of data            =
+=======================================*/
+//Default fb templates
+
+
+/*=====  End of Seeding of data  ======*/
+

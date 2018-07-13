@@ -35,7 +35,10 @@ const TravelBusiness = {
 
 //Retail Business
 const RetailBusinessCategory = "RetailBusinessCategory";
-
+const RetailBusiness = {
+	Retail : 'retail company',
+	ShoppingAndRetail : 'shopping & retail'
+};
 
 /*=====  End of Page Categories  ======*/
 const getFoodBusinessPersistentMenu = ()=>{
@@ -188,6 +191,56 @@ const getTravelBusinessPersistentMenu = ()=>{
 		};
 };
 
+const getRetailBusinessPersistentMenu = ()=>{
+	return {
+		  "persistent_menu":[
+		    {
+		      "locale":"default",
+		      "composer_input_disabled": false,
+		      "call_to_actions":[
+		        {
+		          "title":"Products",
+		          "type":"nested",
+		          "call_to_actions":[
+		            {
+		              "title":"Clothing",
+		              "type":"postback",
+		              "payload":"CLOTHING"
+		            },
+		            {
+		              "title" : "Electronics",
+		              "type" : "postback",
+		              "payload" : "BAR"
+		            },
+		            {
+		              "title":"Household",
+		              "type":"postback",
+		              "payload":"HOUSEHOLD"
+		            }
+		          ]
+		        },
+		        {
+		          "title":"Contact Us",
+		          "type":"nested",
+		          "call_to_actions":[
+		            {
+		              "title":"Our Address",
+		              "type":"postback",
+		              "payload":"ADDRESS"
+		            },
+		            {
+		              "title":"Contact Info",
+		              "type":"postback",
+		              "payload":"CONTACT_INFO"
+		            }
+		          ]
+		        }
+		      ]
+		    }
+		  ]
+		};
+};
+
 
 const getMenu = (businessCategory)=>{
 	switch (businessCategory) {
@@ -199,6 +252,9 @@ const getMenu = (businessCategory)=>{
 			break;
 		case TravelBusinessCategory:
 			return getTravelBusinessPersistentMenu();
+			break;
+		case RetailBusinessCategory:
+			return getRetailBusinessPersistentMenu();
 			break;
 		default:
 			return null;
@@ -252,6 +308,12 @@ const getCategory = (category)=>{
 			break;
 		case TravelBusiness.TravelCompany:
 			return TravelBusinessCategory;
+			break;
+		case RetailBusiness.Retail:
+			return RetailBusinessCategory;
+			break;
+		case RetailBusiness.ShoppingAndRetail:
+			return RetailBusinessCategory;
 			break;
 		default:
 			return null;

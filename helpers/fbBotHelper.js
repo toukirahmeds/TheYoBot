@@ -8,6 +8,9 @@ const fbUserHelper = require("./fbUserHelper");
 /*=====  End of Import of helpers  ======*/
 
 
+
+
+
 /*========================================
 =            Import of models            =
 ========================================*/
@@ -18,12 +21,12 @@ const FbMessageSubscriber = require('../models/FbMessageSubscriber');
 
 
 const formatTemplateMessage = (subscriberInfo, message)=>{
-	if(message.indexOf("{{firstName}}")>=0){
-		message = message.replace("{{firstName}}", subscriberInfo.firstName);
+	if(message.indexOf("{{FirstName}}")>=0){
+		message = message.replace("{{FirstName}}", subscriberInfo.firstName);
 	}
 
-	if(message.indexOf("{{lastName}}")>=0){
-		message = message.replace("{{lastName}}", subscriberInfo.lastName);
+	if(message.indexOf("{{LastName}}")>=0){
+		message = message.replace("{{LastName}}", subscriberInfo.lastName);
 	}
 
 	if(message.indexOf("{{salutation}}")>=0){
@@ -39,7 +42,7 @@ const findAutomation = (pageId, message, subscriberInfo, callback)=>{
 		// callback(null, false);
 		Automation.find({
 			"previousAutomation" : subscriberInfo.currentMessengerAutomation,
-			"trigger.triggerKeyword" : keyword
+			"trigger.triggerKeywords" : keyword
 		}).populate({
 			"path" : "template",
 			"model" : "Template"

@@ -39,7 +39,17 @@ const fbMessageSubscriberSchema = new mongoose.Schema({
 	"page" : {
 		"type" : mongoose.Schema.Types.ObjectId,
 		"ref" : "Page"
+	},
+	"visitedSoFar" : {
+		"type" : Number,
+		"default" : 0
+	},
+	"customer" : {
+		"type" : mongoose.Schema.Types.ObjectId,
+		"ref" : "Customer"
 	}
+},{
+	"timestamps" : true
 });
 
 
