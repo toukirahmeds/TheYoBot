@@ -57,8 +57,9 @@ export class BotConversationService{
 		return this.automationService.createAutomation(automationInfo);
 	}
 
-	updateAutomation(): Observable<any>{
-		return this.automationService.updateAutomation({});
+	updateAutomation(automationInfo : any): Observable<any>{
+		automationInfo["page"] = this.getParentInfo()._id;
+		return this.automationService.updateAutomation(automationInfo);
 	}
 
 	deleteAutomation(automationId : string):Observable<any>{

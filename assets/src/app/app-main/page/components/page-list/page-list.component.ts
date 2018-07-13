@@ -25,7 +25,7 @@ export class PageListComponent implements OnInit {
   			if(response.data){
   				this.pageList = response.data;
   			}
-        console.clear();
+        // console.clear();
       }
     });
 

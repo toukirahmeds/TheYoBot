@@ -10,6 +10,7 @@ import { MessengerConversationMainComponent } from './components/messenger-conve
 import { MessengerConversationService } from './services/messenger-conversation.service';
 
 import { MessengerConversationFERoutes } from '../configs';
+import { PersistentMenuComponent } from './components/persistent-menu/persistent-menu.component';
 
 
 /*============================================
@@ -18,6 +19,9 @@ import { MessengerConversationFERoutes } from '../configs';
 const appRoutes : Routes = [{
 	path : MessengerConversationFERoutes.messengerConversationFlow,
 	component : MessengerConversationMainComponent
+},{
+	path : MessengerConversationFERoutes.persistentMenu,
+	component : PersistentMenuComponent
 }];
 
 
@@ -31,7 +35,7 @@ const appRoutes : Routes = [{
     RouterModule.forChild(appRoutes),
     BotConversationModule
   ],
-  declarations: [MessengerConversationMainComponent],
+  declarations: [MessengerConversationMainComponent, PersistentMenuComponent],
   providers : [MessengerConversationService]
 })
 export class MessengerConversationModule { }

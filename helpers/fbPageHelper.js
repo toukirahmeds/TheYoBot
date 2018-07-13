@@ -4,6 +4,15 @@ const config = require('../config/config.json');
 const GRAPH_URL = 'https://graph.facebook.com';
 const GRAPH_OAUTH_ACCESS_TOKEN_URL = '/oauth/access_token';
 
+/*======================================================
+=            Import of fbPageCategoryHelper            =
+======================================================*/
+const fbPageCategoryHelper = require("./fbPageCategoryHelper");
+const fbMessengerHelper = require("./fbMessengerHelper");
+
+/*=====  End of Import of fbPageCategoryHelper  ======*/
+
+
 const getFbGraphParams = (accessToken, params = {})=>{
 	let urlParams = "?";
 	urlParams += "client_id="+config.app.fbAppId;
@@ -31,7 +40,7 @@ const getFbGraphEndpoint = (objectId, edge, accessToken)=>{
 
 
 module.exports.subscribeAppToPage = (pageId, accessToken, callback)=>{
-	request.post(getFbGraphEndpoint(pageId,'subscription', accessToken), (error, response,body)=>{
+	request.post(getFbGraphEndpoint(pageId,'subscribed_apps', accessToken), (error, response,body)=>{
 		if(error){
 			console.log(error);
 		}else{
@@ -39,3 +48,24 @@ module.exports.subscribeAppToPage = (pageId, accessToken, callback)=>{
 		}
 	});
 };
+
+module.exports.unsubscribeAppToPage = (pageId, accessToken, callback)=>{
+	request.delete(getFbGraphEndpoint(pageId,'subscribed_apps', accessToken), (error, response,body)=>{
+		if(error){
+			console.log(error);
+		}else{
+			console.log(body);
+		}
+	});
+};
+
+module.exports.updatePageMessengerPersistentMenu = (pageId, pageCategory, accessToken, callback)=>{
+	fbMessengerHelper.createPagePersistentMenu(pageId, accessToken,fbPageCategoryHelper.getPersistentMenu(pageCategory), (error, updatedPersistentMenuInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, updatedPersistentMenuInfo);
+		}
+	});
+};
+

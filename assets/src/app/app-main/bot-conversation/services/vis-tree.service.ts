@@ -26,11 +26,16 @@ export class VisTreeService{
 				},
 				nodes : {
 					shape : 'box',
-					size : 100
+					size : 400,
+					color : '#dee8f7'
 				},
 				interaction:{
 					zoomView : true,
-					hover: true
+					hover: true,
+					hoverConnectedEdges : true,
+					dragView : true,
+					dragNodes: true,
+					navigationButtons : true
 				},
 				layout : {
 					hierarchical : true
@@ -40,7 +45,8 @@ export class VisTreeService{
 	}
 
 
-	addNode(id : string, label : string, parentId:any){
+	addNode(id : string, label : string, parentId:any, edgeLabel : string){
+		console.log(edgeLabel);
 		this.nodes.push({
 			id : id,
 			label : label
@@ -48,7 +54,8 @@ export class VisTreeService{
 
 		this.edges.push({
 			from : parentId,
-			to : id
+			to : id,
+			label : edgeLabel
 		});
 	}
 

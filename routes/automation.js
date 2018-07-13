@@ -121,12 +121,13 @@ router.post("/create", authenticate(), (req, res)=>{
 /*===================================================
 =            Router to update automation            =
 ===================================================*/
-router.put("/update/:pageId", authenticate(), (req, res)=>{
+router.put("/update/:automationId", authenticate(), (req, res)=>{
 	Automation.update({
-		"_id" : req.params.pageId,
+		"_id" : req.params.automationId,
 		"user" : req.authentication.user._id
 	}, req.body, (error, automationDoc)=>{
 		if(error){
+			console.log(error);
 			return responseUtilities.errorResponse(res, null);
 		}else{
 			return responseUtilities.successResponse(res, "Automation data updated.", null);
@@ -140,9 +141,9 @@ router.put("/update/:pageId", authenticate(), (req, res)=>{
 /*===================================================
 =            Router to delete automation            =
 ===================================================*/
-router.delete("/delete/:pageId", authenticate(), (req, res)=>{
+router.delete("/delete/:automationId", authenticate(), (req, res)=>{
 	Automation.remove({
-		"_id" : req.params.pageId,
+		"_id" : req.params.automationId,
 		"user" : req.authentication.user._id
 	}, (error)=>{
 		if(error){

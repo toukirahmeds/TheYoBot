@@ -16,17 +16,20 @@ import { FrontendRoutes } from './configs';
 =========================================*/
 import {SharedModuleModule} from "./shared-module/shared-module.module";
 import {AuthModule} from "./auth/auth.module";
-// import {AutomationModule} from "./automation/automation.module";
-import {MessageTemplateModule} from "./message-template/message-template.module";
+import {PageModule} from "./page/page.module";
 import {MessengerConversationModule} from "./messenger-conversation/messenger-conversation.module";
-import {PostConversationModule} from "./post-conversation/post-conversation.module";
-// import {BroadcastModule} from "./broadcast/broadcast.module";
-
+import {FbPostModule} from './fb-post/fb-post.module';
+import {MyProfileModule} from './my-profile/my-profile.module';
+import {MyBusinessModule} from './my-business/my-business.module';
+import {AnalyticsModule} from './analytics/analytics.module';
+import {ProductModule} from './product/product.module';
+import {OrdersModule} from './orders/orders.module';
+import {InvoiceModule} from './invoice/invoice.module';
 import { AppMainService } from './services/app-main.service';
 
 
+
 /*=====  End of Import of modules  ======*/
-// import { AppConfigurations } from './app-configurations';
 
 
 /*=============================================
@@ -49,11 +52,20 @@ const appRoutes : Routes = [{
   path : FrontendRoutes.MessengerConversationFEUrl,
   loadChildren : './messenger-conversation/messenger-conversation.module#MessengerConversationModule'
 },{
-  path : FrontendRoutes.PostConversationFEUrl,
-  loadChildren : './post-conversation/post-conversation.module#PostConversationModule'
+  path : FrontendRoutes.FBPostConversationFEUrl,
+  loadChildren : './fb-post/fb-post.module#FbPostModule'
 },{
-  path : FrontendRoutes.BroadcastFEUrl,
-  loadChildren : './broadcast/broadcast.module#BroadcastModule'
+  path : FrontendRoutes.MyBusinessFEUrl,
+  loadChildren : './my-business/my-business.module#MyBusinessModule'
+},{
+  path : FrontendRoutes.ProductFEUrl,
+  loadChildren : './product/product.module#ProductModule'
+},{
+  path : FrontendRoutes.OrderFEUrl,
+  loadChildren : './orders/orders.module#OrdersModule'
+},{
+  path : FrontendRoutes.InvoiceFEUrl,
+  loadChildren: './invoice/invoice.module#InvoiceModule'
 }];
 
 
@@ -66,10 +78,15 @@ const appRoutes : Routes = [{
     SharedModuleModule,
     RouterModule.forChild(appRoutes),
     AuthModule,
-    MessageTemplateModule,
+    PageModule,
     MessengerConversationModule,
-    PostConversationModule/*,
-    BroadcastModule*/
+    FbPostModule,
+    // MyProfileModule,
+    AnalyticsModule,
+    MyBusinessModule,
+    ProductModule,
+    OrdersModule,
+    InvoiceModule
   ],
   declarations: [],
   providers : [ AppMainService ],

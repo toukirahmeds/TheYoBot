@@ -134,6 +134,7 @@ export class FuseNavbarVerticalComponent implements OnInit, OnDestroy
                 this.activateFolded();
             }
         }
+
     }
 
     ngOnDestroy()

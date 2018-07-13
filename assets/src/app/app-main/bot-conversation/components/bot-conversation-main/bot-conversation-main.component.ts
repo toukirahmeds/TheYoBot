@@ -21,6 +21,8 @@ export class BotConversationMainComponent implements OnInit {
   public automationInputEvent : EventEmitter<boolean> = new EventEmitter<boolean>();
   public automationList : any[] = [];
   public clickedAutomation : any = {};
+  public automationBeingEdited : any = {};
+  public newPosition : number = 0;
 
 
 
@@ -64,33 +66,21 @@ export class BotConversationMainComponent implements OnInit {
   }
 
   setTreeData(){
-      // this.visTreeService.setNodes([
-      //     {id: 1, label: 'Welcome', color : 'red'},
-      //     {id: 2, label: 'Node 2'},
-      //     {id: 3, label: 'Node 3'},
-      //     {id: 4, label: 'Node 4'},
-      //     {id: 5, label: 'Node 5'}
-      // ]);
-
       this.visTreeService.setNodes(this.automationList.map((elem)=>{
         return {
           id : elem._id,
-          label : elem.template && elem.template.title?elem.template.title : "No Title"
+          label : elem.template && elem.template.title?elem.template.title : "No Title",
+          title : elem.template && elem.template.message?elem.template.message : "No Message"
         };
       }));
 
-
-      // this.visTreeService.setEdges([
-      //      {from: 1, to: 3},
-      //      {from: 1, to: 2},
-      //      {from: 2, to: 4},
-      //      {from: 2, to: 5}
-      // ]);
       this.visTreeService.setEdges(this.automationList.map((elem)=>{
         if(elem.previousAutomation){
           return {
             from : elem.previousAutomation,
-            to : elem._id
+            to : elem._id,
+            label : elem['trigger']['triggerKeywords'].join(","),
+            title : "Triggered with the keywords " + elem['trigger']['triggerKeywords'].join(",")
           };
         }else{
           return null;
@@ -107,6 +97,7 @@ export class BotConversationMainComponent implements OnInit {
           this.clickedAutomation = _.find(this.automationList, (elem)=>{
             return elem._id.toString() === this.onClickProperties.nodes[0].toString();
           });
+          this.newPosition = this.automationList.length;
           this.openBottomMenu();
         }
       });
@@ -125,15 +116,18 @@ export class BotConversationMainComponent implements OnInit {
 
   automationFormDone(automationInfo : any){
     if(automationInfo._id){
-
+      this.editAutomation(automationInfo);
     }else{
       this.createAutomation(automationInfo);
     }
   }
 
+
   createAutomation(automationInfo : any){
     this.botConversationService.createAutomation(automationInfo).subscribe((response)=>{
-      this.addChildNode(response.data._id, automationInfo.template.title, automationInfo.previousAutomation);
+      automationInfo["_id"] = response.data._id;
+      this.automationList.push(automationInfo);
+      this.initConversationFlow();
       this.automationCreateEditEvent.emit(true);
     },(errorResponse)=>{
       console.log(errorResponse);
@@ -141,11 +135,27 @@ export class BotConversationMainComponent implements OnInit {
   }
 
   editAutomation(automationInfo : any){
-
+    this.botConversationService.updateAutomation(automationInfo).subscribe((response)=>{
+      console.log(response);
+      let automationIndex = _.findIndex(this.automationList,(elem)=>{
+          return elem._id.toString() === automationInfo._id.toString();
+      });
+      if(automationIndex>=0){
+        this.automationList[automationIndex] = automationInfo;
+        this.initConversationFlow();
+      }
+      this.automationCreateEditEvent.emit(true);
+    },(errorResponse)=>{ 
+      console.log(errorResponse);
+    });
   }
 
   deleteAutomation(callback){
     this.botConversationService.deleteAutomation(this.clickedAutomation._id).subscribe((response)=>{
+      _.remove(this.automationList,(elem)=>{
+        return elem._id.toString() === this.clickedAutomation._id.toString();
+      });
+      this.initConversationFlow();
       callback(true);
     },(errorResponse)=>{
       callback(false);
@@ -153,34 +163,47 @@ export class BotConversationMainComponent implements OnInit {
   }
 
 
-  openAutomationModal(templateRef : any){
+  openAutomationModal(type : string){
+    let templateRef;
+    if(type === 'create'){
+      templateRef = this.fbMessengerAutomationTemplate;
+      this.automationBeingEdited = null;
+    }else if(type === 'edit'){
+      templateRef = this.fbMessengerAutomationTemplate;
+      this.automationBeingEdited = JSON.parse(JSON.stringify(this.clickedAutomation));
+    }else if(type === 'delete'){
+      templateRef = this.fbMessengerAutomationDeleteTemplate;
+    }
     let confirm = (callback)=>{
-      if(templateRef === "fbMessengerAutomationTemplate"){
+      if(type === "create" || type === "edit"){
         this.automationInputEvent.emit(true);
         this.automationCreateEditEvent.subscribe((response)=>{
-          if(response) callback(true);
+          if(response){
+            callback(true);
+            this.botConversationService.closeBottomSheet();
+          }
           else callback(false);
         });
 
-      }else{
+      }else if(type === "delete"){
         this.deleteAutomation((result)=>{
 
           if(result){
-            this.deleteNode();
             callback(true); 
+            this.botConversationService.closeBottomSheet();
           }
           else callback(false);
         });        
       }
     };
     let cancel = (callback)=>{
-      console.log("CANCEL CLICKED");
+      // console.log("CANCEL CLICKED");
     };
     this.botConversationService.openAutomationModal({
       width : '750px',
       data : {
         body : {
-          template : this[templateRef]
+          template : templateRef
         },
         header : {
           exists : false
@@ -196,23 +219,23 @@ export class BotConversationMainComponent implements OnInit {
   
 
 
-  addChildNode(id: string, label:string, parentId : string){
-    this.visTreeService.addNode(id, label, parentId);
-    this.initTree();
-    this.botConversationService.closeBottomSheet();
+  // addChildNode(nodeInfo : any):void{
+  //   this.visTreeService.addNode(nodeInfo._id, nodeInfo.template.title, nodeInfo.previousAutomation, nodeInfo["trigger.triggerKeywords"].join(","));
+  //   this.initTree();
+  //   this.botConversationService.closeBottomSheet();
     
-  }
+  // }
 
-  editNode(){
-    this.visTreeService.editNode(this.onClickProperties.nodes[0], "New NAME");
-    this.initTree();
-    this.botConversationService.closeBottomSheet();
-  }
+  // editNode(){
+  //   this.visTreeService.editNode(this.onClickProperties.nodes[0], "New NAME");
+  //   this.initTree();
+  //   this.botConversationService.closeBottomSheet();
+  // }
 
-  deleteNode(){
-      this.visTreeService.deleteNode(this.clickedAutomation._id.toString());
-      this.initTree();
-      this.botConversationService.closeBottomSheet();
-  }
+  // deleteNode(){
+  //     this.visTreeService.deleteNode(this.clickedAutomation._id.toString());
+  //     this.initTree();
+  //     this.botConversationService.closeBottomSheet();
+  // }
 
 }

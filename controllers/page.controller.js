@@ -9,6 +9,7 @@ const Page = require("../models/Page");
 =========================================*/
 
 const fbGraphHelper = require('../helpers/fbGraphHelper');
+const fbPageHelper = require('../helpers/fbPageHelper');
 const mongooseAssist = require("mongoose-assist");
 
 /*=====  End of Import of helpers  ======*/
@@ -38,18 +39,79 @@ module.exports.createPage = (pageInfo, callback)=>{
 			pageInfo.fbAccessToken = llAccessToken;
 			let validation = mongooseAssist.initValidationSave(pageInfo, Page);
 			if(validation.errorFound){
+				console.log(validation);
 				callback(validation.errorFound, null);
 			}else{
 				validation.newDocument.save((error, pageDoc)=>{
 					if(error){
 						callback(error, null);
 					}else{
+						subscribeAppToPage(pageInfo.fbId, llAccessToken, (error, pageSubscriptionInfo)=>{
+							
+							if(error){
+								console.log(error);
+							}else{
+								console.log(pageSubscriptionInfo);
+							}
+						});
+						pageMessengerPersistentMenu(pageInfo.fbId, pageInfo.category, llAccessToken, (error, updatedPersistentMenuInfo)=>{
+							if(error){
+								console.log(error);
+							}else{
+								console.log(updatedPersistentMenuInfo);
+							}
+						});
 						callback(null, pageDoc);
 					}
 				});
+
+				
 			}
 
 		}
 	});
 };
+
+const updatePageInfo = module.exports.updatePage = (pageInfo, callback)=>{
+ 	Page.update({
+ 		"fbId" : pageInfo.fbId
+ 	}, pageInfo, (error, updatedPageInfo)=>{
+ 		if(error){
+ 			callback(error, null);
+ 		}else{
+ 			callback(null, updatedPageInfo);
+ 		}
+ 	});
+};
+
+const subscribeAppToPage = module.exports.subscribeAppToPage = (pageId, accessToken, callback)=>{
+	fbPageHelper.subscribeAppToPage(pageId, accessToken, (error, pageSubscriptionInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, pageSubscriptionInfo);
+		}
+	});
+};
+
+const unsubscribeAppToPage = module.exports.unsubscribeAppToPage = (pageId, accessToken, callback)=>{
+	fbPageHelper.unsubscribeAppToPage(pageId, accessToken, (error, pageSubscriptionInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, pageSubscriptionInfo);
+		}
+	});
+};
+
+const pageMessengerPersistentMenu = module.exports.pageMessengerPersistentMenu = (pageId, pageCategory, accessToken, callback)=>{
+	fbPageHelper.updatePageMessengerPersistentMenu(pageId, pageCategory, accessToken, (error, updatedPersistentMenuInfo)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			callback(null, updatedPersistentMenuInfo);
+		}
+	});
+}
+
 

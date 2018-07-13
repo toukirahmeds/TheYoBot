@@ -1,14 +1,14 @@
 <ng-template #bottomMenuTemplate>
 	<mat-nav-list>
 	  <a  mat-list-item >
-	    <span mat-line (click)="editNode()">Edit Message</span>
+	    <span mat-line (click)="openAutomationModal('edit');">Edit Message</span>
 	  </a>
 
-	  <a  mat-list-item (click)="openAutomationModal('fbMessengerAutomationTemplate');">
+	  <a  mat-list-item (click)="openAutomationModal('create');">
 	    <span mat-line>Add Next Message</span>
 	  </a>
 
-	  <a  mat-list-item (click)="openAutomationModal('fbMessengerAutomationDeleteTemplate');">
+	  <a  mat-list-item (click)="openAutomationModal('delete');">
 	    <span mat-line>Delete This Message</span>
 	  </a>
 
@@ -17,7 +17,7 @@
 
 
 <ng-template #fbMessengerAutomationTemplate>
-	<app-fb-messenger-automation [inputDoneClickEvent]="automationInputEvent" [previousAutomation]="clickedAutomation" (doneClicked)="automationFormDone($event)">
+	<app-fb-messenger-automation [inputDoneClickEvent]="automationInputEvent" [previousAutomation]="clickedAutomation" [automation]="automationBeingEdited" [position]="newPosition" (doneClicked)="automationFormDone($event)" >
 	</app-fb-messenger-automation>
 </ng-template>
 

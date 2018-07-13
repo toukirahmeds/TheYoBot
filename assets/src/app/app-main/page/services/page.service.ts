@@ -66,6 +66,7 @@ export class PageService{
 		return {
 			"name" : pageInfo.name,
 			"fbId" : pageInfo.id,
+			"category" : pageInfo.category,
 			"fbAccessToken" : pageInfo.access_token
 		};
 	}

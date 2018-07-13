@@ -5,11 +5,15 @@ export const FrontendRoutes = {
 	AuthFEUrl : "",
 	PageFEUrl : "page",
 	MessengerConversationFEUrl : "messenger-conversation",
-	PostConversationFEUrl : "post-conversation",
+	FBPostConversationFEUrl : "fb-post",
 	MyProfileFEUrl : "my-profile",
 	AnalyticsFEUrl : "analytics",
 	BroadcastFEUrl : "broadcast",
-	PaymentFEUrl : "payment"
+	PaymentFEUrl : "payment",
+	MyBusinessFEUrl : "my-business",
+	ProductFEUrl : "product",
+	OrderFEUrl : "orders",
+	InvoiceFEUrl : "invoice"
 };
 /*=====  End of Declaration of frontend parent routes  ======*/
 
@@ -32,11 +36,13 @@ export const PageFERoutes = {
 };
 
 export const MessengerConversationFERoutes = {
-	"messengerConversationFlow" : "conversation-flow"
+	"messengerConversationFlow" : "conversation-flow",
+	"persistentMenu" : "persistent-menu"
 };
 
-export const PostConversationFERoutes = {
-	"postConversationFlow" : "conversation-flow"
+export const FbPostConversationFERoutes = {
+	"postConversationFlow" : "conversation-flow",
+	"postList" : "post-list"
 };
 
 export const MyProfileFERoutes = {
@@ -48,5 +54,26 @@ export const BroadcastFERoutes = {
 };
 	
 export const AnalyticsFERoutes = {
-	"analytics" : ""
+	"dailyVisitors" : "daily-visitors",
+	"monthlyVisitors" : "monthly-visitors",
+	"monthlySalesChart" : "monthly-sales-chart",
+	"monthlyRevenueChart" : "monthly-revenue-chart"
+};
+
+export const MyBusinessFERoutes = {
+	"profile" : "profile",
+	"serviceLocations" : "service-locations"
+};
+
+export const ProductFERoutes = {
+	"productList" : "product-list",
+	"topProducts" : "top-products"
+};
+
+export const OrderFERoutes = {
+	"orderList" : "order-list"
+};
+
+export const InvoiceFERoutes = {
+	"invoiceList" : "invoice-list"
 };

@@ -1,4 +1,5 @@
 const mongooseAssist = require("mongoose-assist");
+// const mongoose = require("mongoose");
 const Automation = require("../models/Automation");
 
 module.exports.createAutomation = (automationInfo, callback)=>{
@@ -16,4 +17,6 @@ module.exports.createAutomation = (automationInfo, callback)=>{
 	}
 };
 
-// module.exports.getAutomation = 
+// module.exports.updateAutomation = (automationInfo, callback)=>{
+// 	automationInfo["page"]
+// };

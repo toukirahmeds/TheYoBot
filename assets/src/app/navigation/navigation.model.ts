@@ -1,5 +1,16 @@
 import { FuseNavigationModelInterface } from '../core/components/navigation/navigation.model';
 
+import {
+    FrontendRoutes,
+    MyBusinessFERoutes,
+    MessengerConversationFERoutes,
+    FbPostConversationFERoutes,
+    AnalyticsFERoutes,
+    ProductFERoutes,
+    OrderFERoutes,
+    InvoiceFERoutes
+} from '../app-main/configs';
+
 export class FuseNavigationModel implements FuseNavigationModelInterface
 {
     public model: any[];
@@ -8,43 +19,149 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
     {
         this.model = [
             {
-                'id'      : 'applications',
-                'title'   : 'Applications',
-                'translate': 'NAV.APPLICATIONS',
-                'type'    : 'group',
-                'children': [
-                    /*{
-                        'id'   : 'sample',
-                        'title': 'Sample',
-                        'translate': 'NAV.SAMPLE.TITLE',
-                        'type' : 'item',
-                        'icon' : 'email',
-                        'url'  : '/sample',
-                        'badge': {
-                            'title': 25,
-                            'translate': 'NAV.SAMPLE.BADGE',
-                            'bg'   : '#F44336',
-                            'fg'   : '#FFFFFF'
-                        }
-                    },*/{
+                'id' : 'businessSettings',
+                'title' : 'Business',
+                'type' : 'group',
+                'children' : [
+                    {
+                        'id':'myBusiness',
+                        'title' : 'My Business',
+                        'type' : 'collapse',
+                        'icon' : 'business',
+                        'children' : [
+                            {
+                                'id' : 'myBusinessProfile',
+                                'title' : 'Profile',
+                                'type' : 'item',
+                                'icon' : 'info',
+                                'url' : FrontendRoutes.MyBusinessFEUrl + "/" + MyBusinessFERoutes.profile
+                            },{
+                                'id' : 'serviceLocations',
+                                'title' : 'Service Locations',
+                                'type' : 'item',
+                                'icon' : 'location_on',
+                                'url' : FrontendRoutes.MyBusinessFEUrl + "/" + MyBusinessFERoutes.serviceLocations
+                            }
+                        ]
+                    },{
                         'id' : 'analytics',
                         'title' : 'Analytics',
-                        // 'translate' : 'NAV.SAMPLE.TITLE',
-                        'type' : 'item',
-                        'icon' : 'graphic_eq',
-                        'url' : '/analytics'
+                        'type' : 'collapse',
+                        'icon' : 'show_chart',
+                        'children' : [
+                            {
+                                'id' : 'dailyVisitorsChart',
+                                'title' : 'Daily Visitors',
+                                'type' : 'item',
+                                'icon' : 'transfer_within_a_station',
+                                'url' : FrontendRoutes.AnalyticsFEUrl + "/" + AnalyticsFERoutes.dailyVisitors
+                            },{
+                                'id' : 'monthlyVisitorsChart',
+                                'title' : 'Monthly Visitors',
+                                'type' : 'item',
+                                'icon' : 'accessibility',
+                                'url' : FrontendRoutes.AnalyticsFEUrl + "/" + AnalyticsFERoutes.monthlyVisitors
+                            },{
+                                'id' : 'monthlySalesChart',
+                                'title' : 'Monthly Sales',
+                                'type' : 'item',
+                                'icon' : 'shopping_cart',
+                                'url' : FrontendRoutes.AnalyticsFEUrl + "/" + AnalyticsFERoutes.monthlySalesChart
+                            },{
+                                'id' : 'monthlyRevenueChart',
+                                'title' : 'Monthly Revenue',
+                                'type' : 'item',
+                                'icon' : 'attach_money',
+                                'url' : FrontendRoutes.AnalyticsFEUrl + "/" + AnalyticsFERoutes.monthlyRevenueChart
+                            }
+                        ]
                     },{
-                        'id' : 'messengerConversation',
-                        'title' : 'Messenger Conversation',
-                        'type' : 'item',
-                        'icon' : 'chat_bubble_outline',
-                        'url' : '/messenger-conversation'
+                        'id' : 'products',
+                        'title' : 'Products',
+                        'type' : 'collapse',
+                        'icon' : 'shop',
+                        'children' : [
+                            {
+                                'id' : 'productList',
+                                'title' : 'Product List',
+                                'type' : 'item',
+                                'icon' : 'list',
+                                'url' : FrontendRoutes.ProductFEUrl + "/" + ProductFERoutes.productList
+                            },{
+                                'id' : 'topProducts',
+                                'title' : 'Top Products',
+                                'type' : 'bar_chart',
+                                'url' : FrontendRoutes.ProductFEUrl + "/" + ProductFERoutes.topProducts
+                            }/*,{
+                                'id' : 'monthlyTopProductSales',
+                                'title' : 'Top Products Monthly Sales',
+                                'type' : 'item',
+                                'url' : '/products/top-products-monthly-sales'
+                            }*/
+
+                        ]
                     },{
-                        'id' : 'postConversation',
-                        'title' : 'Post Conversation',
+                        'id' : 'orders',
+                        'title' : 'Orders',
+                        'type' : 'collapse',
+                        'icon' : 'shopping_basket',
+                        'children' : [{
+                            'id' : 'pendingOrders',
+                            'title' : 'Pending Orders',
+                            'type' : 'item',
+                            'icon' : 'list',
+                            'url' : FrontendRoutes.OrderFEUrl + "/" + OrderFERoutes.orderList
+                        }/*,{
+                            'id' : 'completed orders',
+                            'title' : 'Completed Orders',
+                            'type' : 'item',
+                            'url' : '/orders/completed-orders'
+                        }*/]
+                    },{
+                        'id' : 'invoices',
+                        'title' : 'Invoices',
                         'type' : 'item',
-                        'icon' :  'art_track',
-                        'url' : '/post-conversation'
+                        'icon' : 'attach_money',
+                        'url' : FrontendRoutes.InvoiceFEUrl + "/" + InvoiceFERoutes.invoiceList
+                    }
+                ]
+            },
+            {
+                'id'      : 'botSettings',
+                'title'   : 'Bot Settings',
+                // 'translate': 'NAV.APPLICATIONS',
+                'type'    : 'group',
+                'children': [
+                    {
+                        'id':'fbMessenger',
+                        'title' : 'FB Messenger',
+                        'type' : 'collapse',
+                        'icon':'chat_bubble_outline',
+                        'children' : [{
+                            'id' : 'conversation-flow',
+                            'title' : 'Conversation Flow',
+                            'type' : 'item',
+                            'icon' : 'message',
+                            'url' : FrontendRoutes.MessengerConversationFEUrl + "/" + MessengerConversationFERoutes.messengerConversationFlow
+                        },{
+                            'id' : 'fbMessengerPersistentMenu',
+                            'title' : 'Persistent Menu',
+                            'type' : 'item',
+                            'icon' : 'menu',
+                            'url' : FrontendRoutes.MessengerConversationFEUrl + "/" + MessengerConversationFERoutes.persistentMenu
+                        }]
+                    },{
+                        'id':'fbPost',
+                        'title' : 'FB Post',
+                        'type' : 'collapse',
+                        'icon' : 'view_headline',
+                        'children' : [{
+                            'id' : 'conversation-flow',
+                            'title' : 'Post List',
+                            'type' : 'item',
+                            'icon' : 'list',
+                            'url' : FrontendRoutes.FBPostConversationFEUrl + "/" + FbPostConversationFERoutes.postList
+                        }]
                     }
                 ]
             }

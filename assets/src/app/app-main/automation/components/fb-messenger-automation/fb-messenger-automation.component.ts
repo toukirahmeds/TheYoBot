@@ -14,6 +14,7 @@ import { TriggerTypes } from '../../../data/automation-trigger.types';
 })
 export class FbMessengerAutomationComponent implements OnInit {
   @Input('automation') automation : Automation;
+  @Input('position') position : number = 0;
   @Input('previousAutomation') previousAutomation : Automation;
   @Input('inputDoneClickEvent') inputDoneClickEvent : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() doneClicked : EventEmitter<any> = new EventEmitter<any>();
@@ -27,7 +28,8 @@ export class FbMessengerAutomationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initAutomationForm();
+    console.log(this.automation);
+    this.initAutomationForm(this.automation?this.automation:new Automation());
     this.inputDoneClickEvent.subscribe((clicked)=>{
       if(clicked){
         this.onDoneClicked();
@@ -55,11 +57,14 @@ export class FbMessengerAutomationComponent implements OnInit {
       "type" : [automation.type],
       "trigger.triggerType" : [automation.trigger.triggerType],
       "trigger.triggerKeywords" : [automation.trigger.triggerKeywords],
-      "template" : this.getTemplateGroup(),
-      "position" : [automation.position],
+      "template" : this.getTemplateGroup(automation.template),
+      "position" : [automation.position?automation.position:this.position],
       "previousPosition" : [automation.previousPosition? automation.previousPosition: this.previousAutomation.position],
       "previousAutomation" : [automation.previousAutomation? automation.previousAutomation: this.previousAutomation._id]
     });
+    if(automation.trigger.triggerKeywords){
+      this.keywords = automation.trigger.triggerKeywords;
+    }
   }
 
   
@@ -70,11 +75,13 @@ export class FbMessengerAutomationComponent implements OnInit {
       this.keywords.push($event.value.trim().toLowerCase());
     }
     $event.input.value = '';
+    this.automationForm.controls["trigger.triggerKeywords"].setValue(this.keywords);
 
   }
 
   removeKeyword(ind:number){
     this.keywords.splice(ind,1);
+    this.automationForm.controls["trigger.triggerKeywords"].setValue(this.keywords);
   }
 
 
@@ -87,6 +94,12 @@ export class FbMessengerAutomationComponent implements OnInit {
     if(!automationInfo.template._id){
       delete automationInfo.template._id;
     }
+    automationInfo["trigger"] = new Object();
+    automationInfo["trigger"]["triggerType"] = automationInfo["trigger.triggerType"];
+    delete automationInfo["trigger.triggerType"];
+    automationInfo["trigger"]["triggerKeywords"] = automationInfo["trigger.triggerKeywords"];
+    delete automationInfo["trigger.triggerKeywords"];
+
     this.doneClicked.emit(automationInfo);
   }
 
