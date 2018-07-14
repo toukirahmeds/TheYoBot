@@ -26,9 +26,13 @@ const fbMessageSubscriberSchema = new mongoose.Schema({
 	"gender" : {
 		"type" : String
 	},
-	"honorific" : {
+	"salutation" : {
 		"type" : String,
 		"enum" : ["Mr","Ms"]
+	},
+	"honorific" : {
+		"type" : String,
+		"enum" : ["Sir","Madam"]
 	},
 	"isPaymentEnabled" : {
 		"type" : Boolean
@@ -42,9 +46,25 @@ const fbMessageSubscriberSchema = new mongoose.Schema({
 	},
 	"page" : {
 		"type" : mongoose.Schema.Types.ObjectId,
-		"ref" : "Page"
+		"ref" : "Page",
+		"required" : true
 	},
 	"visitedSoFar" : {
+		"type" : Number,
+		"default" : 0
+	},
+	"language":{
+		"primary" : {
+			"type" : String
+		},
+		"secondary" :{
+			"type" : String
+		},
+		"currentLanguage" : {
+			"type" : String
+		}
+	},
+	"mistakesCount" : {
 		"type" : Number,
 		"default" : 0
 	},

@@ -1,9 +1,10 @@
 /*=======================================
 =            Page Categories            =
 =======================================*/
+
 //Food Business
-const FoodBusinessCategory = "FoodBusinessCategory";
-const FoodBusiness = {
+const FoodBusinessCategory = module.exports.FoodBusinessCategory = "FoodBusinessCategory";
+const FoodBusiness = module.exports.FoodBusiness = {
 	Restaurant : "restaurant",
     FastFoodRestaurant : "fast food restaurant",
     FoodAndBeverage : "food & beverage",
@@ -14,8 +15,8 @@ const FoodBusiness = {
 
 
 //Hotel Business
-const HotelBusinessCategory = "HotelBusinessCategory";
-const HotelBusiness = {
+const HotelBusinessCategory = module.exports.HotelBusinessCategory = "HotelBusinessCategory";
+const HotelBusiness = module.exports.HotelBusiness = {
 	Hotel : "hotel",
  	HotelAndLodging : "hotel & lodging",
  	HotelResort : "hotel resort",
@@ -25,8 +26,8 @@ const HotelBusiness = {
 };
 
 //Travel & Transportation Business
-const TravelBusinessCategory = "TravelBusinessCategory";
-const TravelBusiness = {
+const TravelBusinessCategory = module.exports.TravelBusinessCategory = "TravelBusinessCategory";
+const TravelBusiness = module.exports.TravelBusiness = {
 	TravelAndTransportation : 'travel & transportation',
 	TravelAgency : 'travel agency',
 	transportationService : 'transportation service',
@@ -34,11 +35,12 @@ const TravelBusiness = {
 };
 
 //Retail Business
-const RetailBusinessCategory = "RetailBusinessCategory";
-const RetailBusiness = {
+const RetailBusinessCategory = module.exports.RetailBusinessCategory = "RetailBusinessCategory";
+const RetailBusiness = module.exports.RetailBusiness = {
 	Retail : 'retail company',
 	ShoppingAndRetail : 'shopping & retail'
 };
+
 
 /*=====  End of Page Categories  ======*/
 const getFoodBusinessPersistentMenu = ()=>{
@@ -262,7 +264,7 @@ const getMenu = (businessCategory)=>{
 	}
 }
 
-const getCategory = (category)=>{
+const getCategory = module.exports.getCategory = (category)=>{
 	switch (category.trim().toLowerCase()) {
 		case FoodBusiness.Restaurant:
 			return FoodBusinessCategory;

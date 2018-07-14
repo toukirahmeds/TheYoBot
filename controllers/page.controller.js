@@ -1,3 +1,10 @@
+/*=============================================
+=            Import of npm modules            =
+=============================================*/
+const mongoose = require("mongoose");
+/*=====  End of Import of npm modules  ======*/
+
+
 /*========================================
 =            Import of models            =
 ========================================*/
@@ -18,9 +25,28 @@ const TemplateController = require("../controllers/template.controller");
 
 const fbGraphHelper = require('../helpers/fbGraphHelper');
 const fbPageHelper = require('../helpers/fbPageHelper');
+const fbPageCategoryHelper = require('../helpers/fbPageCategoryHelper');
 const mongooseAssist = require("mongoose-assist");
 
 /*=====  End of Import of helpers  ======*/
+
+/*===================================================
+=            Import of default seed data            =
+===================================================*/
+const HotelBusinessMessageConversation = require("../defaultData/hotelBusinessMessageConversation");
+const FoodBusinessMessageConversation = require("../defaultData/foodBusinessMessageConversation");
+const TravelBusinessMessageConversation = require("../defaultData/travelBusinessMessageConversation");
+const RetailBusinessMessageConversation = require("../defaultData/retailBusinessMessageConversation");
+
+/*=====  End of Import of default seed data  ======*/
+
+/*======================================
+=            Custom Helpers            =
+======================================*/
+const commonCallback = (error, successData)=>{
+	if(error) console.error(error);
+};
+/*=====  End of Custom Helpers  ======*/
 
 
 
@@ -28,15 +54,7 @@ const mongooseAssist = require("mongoose-assist");
 module.exports.searchPageByFbId = (fbId, callback)=>{
 	Page.find({
 		"fbId" : fbId
-	}, (error, pageDocs)=>{
-		if(error){
-			callback(error, null);
-		}else if(pageDocs.length){
-			callback(null, pageDocs[0]);
-		}else{
-			callback(null, null);
-		}
-	});
+	}, callback);
 };
 
 module.exports.createPage = (pageInfo, callback)=>{
@@ -53,42 +71,27 @@ module.exports.createPage = (pageInfo, callback)=>{
 					if(error){
 						callback(error, null);
 					}else{
-						subscribeAppToPage(pageInfo.fbId, llAccessToken, (error, pageSubscriptionInfo)=>{
-							
-							if(error){
-								console.log(error);
-							}else{
-								console.log(pageSubscriptionInfo);
-							}
-						});
-						pageMessengerPersistentMenu(pageInfo.fbId, pageInfo.category, llAccessToken, (error, updatedPersistentMenuInfo)=>{
-							if(error){
-								console.log(error);
-							}else{
-								console.log(updatedPersistentMenuInfo);
-							}
-						});
+						subscribeAppToPage(pageDoc.fbId, llAccessToken, commonCallback);
+						pageMessengerPersistentMenu(pageInfo.category, llAccessToken, commonCallback);
+						createPredefinedConversation(pageDoc, commonCallback);
+						pageMessengerWhitelistDomains(["https://www.theyobot.com"], llAccessToken, commonCallback);
 						callback(null, pageDoc);
+					
 					}
 				});
 
 				
 			}
+			
 
 		}
 	});
 };
 
-const updatePageInfo = module.exports.updatePage = (pageInfo, callback)=>{
+const updatePageInfoUsingFbId = module.exports.updatePage = (pageInfo, callback)=>{
  	Page.update({
  		"fbId" : pageInfo.fbId
- 	}, pageInfo, (error, updatedPageInfo)=>{
- 		if(error){
- 			callback(error, null);
- 		}else{
- 			callback(null, updatedPageInfo);
- 		}
- 	});
+ 	}, pageInfo, callback);
 };
 
 const subscribeAppToPage = module.exports.subscribeAppToPage = (pageId, accessToken, callback)=>{
@@ -100,13 +103,45 @@ const unsubscribeAppToPage = module.exports.unsubscribeAppToPage = (pageId, acce
 };
 
 const pageMessengerPersistentMenu = module.exports.pageMessengerPersistentMenu = (pageCategory, accessToken, callback)=>{
-	fbPageHelper.updatePageMessengerPersistentMenu(pageId, pageCategory, accessToken, callback);
+	fbPageHelper.updatePageMessengerPersistentMenu(pageCategory, accessToken, callback);
 }
 
-const pageMessengerWhitelistUrls = module.exports.pageMessengerWhitelistDomains = (appDomains, pageAccessToken, callback)=>{
+const pageMessengerWhitelistDomains = module.exports.pageMessengerWhitelistDomains = (appDomains, pageAccessToken, callback)=>{
 	fbPageHelper.whiteListAppDomainMessenger(appDomains, pageAccessToken, callback);
 };
 
-const createPredefinedConversation = module.exports.createPredefinedAutomation = (pageInfo, callback)=>{
-
+const createPredefinedConversation = module.exports.createPredefinedConversation = (pageInfo, callback)=>{
+	if( fbPageCategoryHelper.getCategory(pageInfo.category) === fbPageCategoryHelper.HotelBusinessCategory){
+		createDefaultConversation(pageInfo, HotelBusinessMessageConversation, callback);
+	}else if( fbPageCategoryHelper.getCategory(pageInfo.category) === fbPageCategoryHelper.FoodBusinessCategory){
+		createDefaultConversation(pageInfo, FoodBusinessMessageConversation, callback);
+	}else if( fbPageCategoryHelper.getCategory(pageInfo.category) === fbPageCategoryHelper.TravelBusinessCategory){
+		createDefaultConversation(pageInfo, TravelBusinessMessageConversation, callback);
+	}else if( fbPageCategoryHelper.getCategory(pageInfo.category) === fbPageCategoryHelper.RetailBusinessCategory){
+		createDefaultConversation(pageInfo, RetailBusinessMessageConversation, callback);
+	}
 };
+
+
+const createDefaultConversation = (pageInfo, defaultConversation, callback)=>{
+	const templateList = [];
+	const automationList = [];
+	for(let i=0; i<defaultConversation.length; i++){
+		defaultConversation[i]["template"]["_id"] = new mongoose.Types.ObjectId();
+		defaultConversation[i]["template"]["page"] = pageInfo._id;
+		defaultConversation[i]["template"]["user"] = pageInfo.user;
+		defaultConversation[i]["automation"]["_id"] = new mongoose.Types.ObjectId();
+		defaultConversation[i]["automation"]["page"] = pageInfo._id;
+		defaultConversation[i]["automation"]["user"] = pageInfo.user;
+		defaultConversation[i]["automation"]["template"] = defaultConversation[i]["template"]["_id"];
+		if(defaultConversation[i]["automation"]["position"] !== defaultConversation[i]["automation"]["previousPosition"]){
+			defaultConversation[i]["automation"]["previousAutomation"] = defaultConversation[ defaultConversation[i]["automation"]["previousPosition"] ]["automation"]["_id"];
+		}
+		templateList.push(defaultConversation[i]["template"]);
+		automationList.push(defaultConversation[i]["automation"]);
+	}
+	TemplateController.createManyTemplates(templateList, callback);
+	AutomationController.createManyAutomations(automationList, callback);	
+}
+
+

@@ -14,6 +14,10 @@ const pageSchema = new mongoose.Schema({
 		"type" : String,
 		"required" : true
 	},
+	"fbAccessTokenExpiresAt" : {
+		"type" : Date,
+		"required" : true
+	}, 
 	"category" : {
 		"type" : String,
 		"required" : true

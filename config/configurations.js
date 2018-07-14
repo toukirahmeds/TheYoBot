@@ -23,7 +23,7 @@ mongooseAssist.connect(config.db.url);
 /*=============================================
 =            Seeding of auth2 data            =
 =============================================*/
-require("../helpers/oauth2/seed");
+// require("../helpers/oauth2/seed");
 
 
 /*=====  End of Seeding of auth2 data  ======*/
@@ -32,7 +32,7 @@ require("../helpers/oauth2/seed");
 /*=======================================
 =            Seeding of data            =
 =======================================*/
-//Default fb templates
+// require("../seeds");
 
 
 /*=====  End of Seeding of data  ======*/

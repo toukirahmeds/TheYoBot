@@ -53,7 +53,7 @@ const CustomerSchema = new mongoose.Schema({
 	},
 	"childrensInfo" : {
 		"type" : Array
-	}
+	},
 	"boughtTimes" : {
 		"type" : Number,
 		"default" : 0

@@ -72,7 +72,7 @@ router.post("/create", authenticate(),(req, res)=>{
 	PageController.searchPageByFbId(req.body.fbId,(error, pageSearchResult)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
-		}else if(pageSearchResult){
+		}else if(pageSearchResult[0]){
 			if(pageSearchResult.user.toString() === req.authentication.user._id.toString()){
 				return responseHelper.successResponse(res, "Page already exists and connecting to the page", pageSearchResult);
 			}else{

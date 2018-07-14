@@ -28,18 +28,20 @@ const templateSchema = new mongoose.Schema({
 		"type" : Object
 	},
 	"quickReplies" : {
-		"contentType" : {
-			"type" : String
-		},
-		"title" : {
-			"type" : String
-		},
-		"payload" : {
-			"type" : String
-		},
-		"imageUrl" : {
-			"type" : String
-		}
+		"type" : [{
+			"contentType" : {
+				"type" : String
+			},
+			"title" : {
+				"type" : String
+			},
+			"payload" : {
+				"type" : String
+			},
+			"imageUrl" : {
+				"type" : String
+			}
+		}]
 	},
 	"user" : {
 		"type" : mongoose.Schema.Types.ObjectId,

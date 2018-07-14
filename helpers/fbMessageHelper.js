@@ -84,21 +84,6 @@ const getSendMessageRequest = (accessToken, messageType, recipientId, template)=
 	};
 }
 
-module.exports.sendMessage = (accessToken, messageType, recipientId, templates, callback)=>{
-	// console.log("SEND MESSAGE");
-	// console.log(templates);
-	templates.forEach((template)=>{
-		// console.log(getSendMessageRequest(accessToken, messageType, recipientId, template));
-		request.post(getSendMessageRequest(accessToken, messageType, recipientId, template), (error, response, body)=>{
-			if(error){
-				console.log("ERROR FOUND");
-				console.log(error);
-				callback(true);
-			}else{
-				console.log("Message Sent");
-				console.log(body);
-				callback(true);
-			}
-		});
-	});
+module.exports.sendMessage = (pageAccessToken, messageType, recipientId, messageTemplate, callback)=>{
+	request.post(getSendMessageRequest(pageAccessToken, messageType, recipientId, messageTemplate), callback);
 }

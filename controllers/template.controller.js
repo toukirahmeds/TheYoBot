@@ -9,16 +9,10 @@ module.exports.createTemplate = (templateInfo, callback)=>{
 	if(validation.errorFound){
 		callback("Errors", null);
 	}else{
-		validation.newDocument.save((error, templateDoc)=>{
-			if(error){
-				callback(error, null);
-			}else{
-				callback(null, templateDoc);
-			}
-		});
+		validation.newDocument.save(callback);
 	}
 }
 
 module.exports.createManyTemplates = (templateList, callback)=>{
-	
+	Template.create(templateList, callback);
 };

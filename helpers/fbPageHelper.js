@@ -40,23 +40,11 @@ const getFbGraphEndpoint = (objectId, edge, accessToken)=>{
 
 
 module.exports.subscribeAppToPage = (pageId, accessToken, callback)=>{
-	request.post(getFbGraphEndpoint(pageId,'subscribed_apps', accessToken), (error, response,body)=>{
-		if(error){
-			console.log(error);
-		}else{
-			console.log(body);
-		}
-	});
+	request.post(getFbGraphEndpoint(pageId,'subscribed_apps', accessToken), callback);
 };
 
 module.exports.unsubscribeAppToPage = (pageId, accessToken, callback)=>{
-	request.delete(getFbGraphEndpoint(pageId,'subscribed_apps', accessToken), (error, response,body)=>{
-		if(error){
-			console.log(error);
-		}else{
-			console.log(body);
-		}
-	});
+	request.delete(getFbGraphEndpoint(pageId,'subscribed_apps', accessToken), callback);
 };
 
 module.exports.updatePageMessengerPersistentMenu = (pageCategory, accessToken, callback)=>{

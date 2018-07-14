@@ -31,7 +31,7 @@ const config = require('../config/config.json');
 ==============================================*/
 router.get("/", (req, res)=>{
 	console.log(req.query);
-	res.send(req.query['hub.challenge']);
+	res.status(200).send(req.query['hub.challenge']);
 	// responseHelper.successResponse(res, "Successfully received by webhook", null);
 });
 
@@ -55,8 +55,8 @@ router.post("/", (req, res)=>{
 						"recipient_id" : senderId,
 						"message_id" : message.mid
 					});
-					fbBotHelper.sendPageReply(recipientId, senderId, message, (result)=>{
-						console.log(result);
+					fbBotHelper.sendPageMessengerReply(recipientId, senderId, message, (error, sentResultDoc)=>{
+						if(error) console.error(error);
 					});
 					
 				}else if(req.body.entry[0].messaging[0].delivery){

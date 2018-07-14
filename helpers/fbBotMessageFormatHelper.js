@@ -200,7 +200,7 @@ const variableExistsIn = (collectionName)=>{
 	}
 };
 
-const checkVariablesAndFormat = (subscriberInfo, message)=>{
+const checkVariablesAndFormat = (subscriberInfo, message, callback)=>{
 	let foundInFbMessageSubscriber = variableExistsIn(FbMessageSubscriber);
 	if(foundInFbMessageSubscriber){
 		message = getFbMessageSubscriberFormatted(subscriberInfo, message);

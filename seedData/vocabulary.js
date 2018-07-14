@@ -1,0 +1,41 @@
+module.exports = [{
+	"name" : "yes",
+	"locale" : "en",
+	"english" : ["yes","ok","okay","hm","hmm","fine","sure","surely","aye","yeah","yea","yup","ofcourse","certainly","gladly","yep","well","definitely","alright","all right","of course","willingly","granted","positively","precisely"],
+	"bengali" : ["accha","assa","acca","achhaa","ha","haa","ho"],
+	"spanish" : [],
+	"deutsch" : [],
+	"hindi" : [],
+	"japanese" : [],
+	"french" : [],
+	"arabic" : [],
+	"chinese" : [],
+	"russian" : []
+},{
+	"name" : "no",
+	"locale" : "en",
+	"english" : ["no","nope","na","naa","nevermind","never"],
+	"bengali" : ["na","naa"],
+	"spanish" : [],
+	"deutsch" : [],
+	"hindi" : [],
+	"japanese" : [],
+	"french" : [],
+	"arabic" : [],
+	"chinese" : [],
+	"russian" : []
+},{
+	"name" : "slangWords",
+	"locale" : "en",
+	"english" : ["fuck","shit", "asshole", "bitch", "cunt","pimp","dick"],
+	"bengali" : ["magi","khanki","shalarput", "shala", "foinni", "fokinni", "halarput", "halarpoot",
+				"haramjada", "haramzada","kutta","kutti", "bolod"],
+	"spanish" : [],
+	"deutsch" : [],
+	"hindi" : [],
+	"japanese" : [],
+	"french" : [],
+	"arabic" : [],
+	"chinese" : [],
+	"russian" : []
+}];

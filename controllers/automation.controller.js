@@ -19,6 +19,13 @@ module.exports.createAutomation = (automationInfo, callback)=>{
 
 
 module.exports.createManyAutomations = (automationList, callback)=>{
-	
+	Automation.create(automationList, callback);
+};
+
+module.exports.getAutomationsWithTemplate = (query, callback)=>{
+	Automation.find(query).populate({
+		"path" : "template",
+		"model" : "Template"
+	}).exec(callback);
 };
 

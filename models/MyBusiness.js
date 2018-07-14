@@ -50,4 +50,4 @@ const MyBusinessSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("MyBusiness",);
+module.exports = mongoose.model("MyBusiness",MyBusinessSchema);

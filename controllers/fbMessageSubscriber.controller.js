@@ -1,13 +1,32 @@
 const FbMessageSubscriber = require("../models/FbMessageSubscriber");
 
-module.exports.getInfoUsingPage = (pageId, callback)=>{
+module.exports.getInfoUsingPsid = (psid, pageId, callback)=>{
 	FbMessageSubscriber.find({
+		"psid" : psid,
 		"page" : pageId
-	},(error, fbMessageSubscriberInfo)=>{
-		if(error){
-			callback(error, null);
-		}else{
-			callback(error, fbMessageSubscriberInfo[0]);
-		}
-	});
+	},callback);
 };
+
+module.exports.createFbMessageSubscriber = (fbMessageSubscriberInfo, callback)=>{
+	if(fbMessageSubscriberInfo["gender"].trim().toLowerCase() === "male"){
+		fbMessageSubscriberInfo["salutation"] = "Mr";
+		fbMessageSubscriberInfo["honorific"] = "Sir";
+	}else{
+		fbMessageSubscriberInfo["salutation"] = "Ms";
+		fbMessageSubscriberInfo["honorific"] = "Madam";
+	}
+	let validation = mongooseAssist.initValidationSave(fbMessageSubscriberInfo, FbMessageSubscriber);
+
+	if(validation.errorFound){
+		callback("Errors", null);
+	}else{
+		validation.newDocument.save(callback);
+	}
+};
+
+
+module.exports.updateFbMessageSubscriber = (fbMessageSubscriberId, updateData,  callback)=>{
+	FbMessageSubscriber.findByIdAndUpdate(fbMessageSubscriberId, updateData, callback);
+};
+
+

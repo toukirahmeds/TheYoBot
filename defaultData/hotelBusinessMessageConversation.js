@@ -136,8 +136,7 @@ module.exports = [{
 						"payload" : "reserve_executive_suites"
 					}]
 				}]
-			}]
-		},
+			},
 		"page" : "",
 		"user" : ""
 	},
@@ -153,8 +152,11 @@ module.exports = [{
 		"page" : "",
 		"user" : ""
 	}
+		
+	
+	
 },{
-	"templates" : {
+	"template" : {
 		"type" : "fbMessenger",
 		"templateType" : "generic",
 		"title" : "Service Not Available",
@@ -175,7 +177,7 @@ module.exports = [{
 		"user" : ""
 	}
 },{
-	"templates" : {
+	"template" : {
 		"type" : "fbMessenger",
 		"templateType" : "generic",
 		"title" : "Service Available",
