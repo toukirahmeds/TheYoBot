@@ -30,7 +30,7 @@ const config = require('../config/config.json');
 =            Router for get request            =
 ==============================================*/
 router.get("/", (req, res)=>{
-	console.log(req.query);
+	// console.log(req.query);
 	res.status(200).send(req.query['hub.challenge']);
 	// responseHelper.successResponse(res, "Successfully received by webhook", null);
 });

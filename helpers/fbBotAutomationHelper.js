@@ -1,64 +1,71 @@
 const AutomationController = require("../controllers/automation.controller");
 const fbBotMessageFormatHelper = require("./fbBotMessageFormatHelper");
 const fbBotMessengerSubscriberHelper = require("./fbBotMessengerSubscriberHelper");
-const fbUserHelper = require("./fbUserHelper");
+const promiseHelper = require("./promiseHelper");
 
-const checkAndGetReply = module.exports.checkAndGetReply = (subscriberInfo, message, pageAccessToken, callback)=>{
-	getNextFbMessengerReply(subscriberInfo, message, (error, messageTemplate)=>{
-		if(error){
-			callback(error, null);
-		}else{
-			fbMessageHelper.sendMessage(pageAccessToken, "RESPONSE", subscriberInfo.psid, messageTemplate, callback);
-		}
-	});
-};
 
 
 const getNextFbMessengerReply = module.exports.getNextFbMessengerReply = (subscriberInfo, message, callback)=>{
-	const keyword = message.trim().toLowerCase();
-	if(subscriberInfo.currentMessengerAutomation){
+	console.log(message);
+	let keyword = "";
+	if(message){
+		if(message.quick_reply && message.quick_reply.payload) keyword = message.quick_reply.payload.trim().toLowerCase();
+		else if(message.text) keyword = message.text.trim().toLowerCase();
+	}
+	// if(message.text) keyword = message.text.trim().toLowerCase();
+	if(subscriberInfo.currentMessengerAutomation && keyword){
 		AutomationController.getAutomationsWithTemplate({
 			"previousAutomation" : subscriberInfo.currentMessengerAutomation
 		},(error, automationList)=>{
 			if(error){
 				callback(error, null);
 			}else if(automationList[0] && automationList[0]["trigger"]["triggerKeywords"].indexOf(keyword)>=0){
-				getAutomationTriggerMatchedDecision(automationList[0], subscriberInfo, callback);
+				getAutomationTriggerMatchedDecision(automationList, subscriberInfo, callback);
 			}else{
-				getAutomationTriggerNotMatchedDecision(automationList[0], subscriberInfo, callback);
+				getAutomationTriggerNotMatchedDecision(automationList, subscriberInfo, callback);
 			}
 		});
 	}else{
 	    AutomationController.getAutomationsWithTemplate({
 	    	"page" :  subscriberInfo.page,
-	    	"position" : 0
+	    	"previousAutomation" : null
 	    },(error, automationList)=>{
 	    	if(error){
 	    		callback(error, null);
 	    	}else{
-	    		fbBotMessengerSubscriberHelper.updateFbMessageSubscriberAutomation(subscriberInfo._id, automationList[0]._id);
-	    		callback(null, automationList[0].template);
+	    		fbBotMessengerSubscriberHelper.updateFbMessageSubscriberAutomation(subscriberInfo._id, automationList[automationList.length-1]._id);
+	    		getNoCurrentAutomationDecision(automationList, subscriberInfo, callback);
 	    	}
 	    });
 	}
 };
 
-const getAutomationTriggerMatchedDecision = (automation, subscriberInfo)=>{
-	if(automation.template.message){
-		fbBotMessageFormatHelper.checkVariablesAndFormat(subscriberInfo, automation.template.message, (error, formattedMessage)=>{
-			if(error){
-				callback(error, null);
-			}else{
-				let messageTemplate = JSON.parse(JSON.stringify(automation.template));
-				messageTemplate["message"] = formattedMessage;
-				callback(null, messageTemplate);
-			}
-		});
+const getAutomationTriggerMatchedDecision = (automationList, subscriberInfo, callback)=>{
+	if(automationList[0].template.message){
+		getFormattedAutomationMessage(automationList, subscriberInfo, callback);
 
 	}else{
-		callback(null, automation.template);
+		callback(null, [automationList[0].template]);
 	}
-	fbBotMessengerSubscriberHelper.updateFbMessageSubscriberAutomation(subscriberInfo._id, automation._id);
+	fbBotMessengerSubscriberHelper.updateFbMessageSubscriberAutomation(subscriberInfo._id, automationList[0]._id);
+};
+
+
+const getNoCurrentAutomationDecision = (automationList, subscriberInfo, callback)=>{
+	getFormattedAutomationMessage(automationList, subscriberInfo, callback);
+};
+
+const getFormattedAutomationMessage = (automationList, subscriberInfo, callback)=>{
+	let promiseArray = [];
+	for(let i = 0; i< automationList.length; i++){
+		promiseArray.push(fbBotMessageFormatHelper.formatTemplateMessage(automationList[i].template.message, subscriberInfo));
+	}
+	Promise.all(promiseArray).then((result)=>{
+		callback(null,result.map((elem, index)=>{
+			automationList[index].template.message = elem;
+			return automationList[index].template;
+		}));
+	});
 };
 
 

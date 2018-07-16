@@ -1,4 +1,5 @@
 const MyBusiness = require("../models/MyBusiness");
+const mongooseAssist = require("mongoose-assist");
 
 module.exports.getInfoUsingPage = (pageId, callback)=>{
 	MyBusiness.find({

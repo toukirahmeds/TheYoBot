@@ -38,7 +38,6 @@ module.exports.getLongLivedAccessToken = (slAccessToken, callback)=>{
 		if(error){
 			callback(error, null);
 		}else{
-
 			let responseBody = JSON.parse(body);
 			callback(null, responseBody['access_token']);
 		}

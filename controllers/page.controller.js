@@ -63,6 +63,7 @@ module.exports.createPage = (pageInfo, callback)=>{
 			callback(error,null);
 		}else{
 			pageInfo.fbAccessToken = llAccessToken;
+			pageInfo.fbAccessTokenExpiresAt = getPageLongLivedAccessTokenExpiryDate();
 			let validation = mongooseAssist.initValidationSave(pageInfo, Page);
 			if(validation.errorFound){
 				callback(validation.errorFound, null);
@@ -86,6 +87,12 @@ module.exports.createPage = (pageInfo, callback)=>{
 
 		}
 	});
+};
+
+const getPageLongLivedAccessTokenExpiryDate = ()=>{
+	const dateToday = new Date();
+	const twoMonthsTotalMilliseconds = 1000*3600*24*60;
+	return expiryDate = new Date(dateToday.getTime() + twoMonthsTotalMilliseconds);
 };
 
 const updatePageInfoUsingFbId = module.exports.updatePage = (pageInfo, callback)=>{

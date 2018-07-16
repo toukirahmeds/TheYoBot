@@ -28,20 +28,7 @@ const templateSchema = new mongoose.Schema({
 		"type" : Object
 	},
 	"quickReplies" : {
-		"type" : [{
-			"contentType" : {
-				"type" : String
-			},
-			"title" : {
-				"type" : String
-			},
-			"payload" : {
-				"type" : String
-			},
-			"imageUrl" : {
-				"type" : String
-			}
-		}]
+		"type" : Array
 	},
 	"user" : {
 		"type" : mongoose.Schema.Types.ObjectId,

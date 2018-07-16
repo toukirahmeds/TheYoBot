@@ -19,14 +19,15 @@ const ServiceController = require("../controllers/service.controller");
 =====================================*/
 //Fb Message Subscriber
 const FbMessageSubscriber = {
-	FirstName : "%{{FirstName}}",
- 	LastName : "%{{LastName}}",
- 	FullName : "%{{FullName}}",
- 	Salutation : "%{{Salutation}}",
- 	Gender : "%{{Gender}}",
- 	CurrentTime : "%{{CurrentTime}}",
- 	LocationFullAddress : "%{{LocationFullAddress}}",
- 	ProfilePicture : "%{{ProfilePicture}}"
+	FirstName : ["%{{FirstName}}","firstName"],
+ 	LastName : ["%{{LastName}}","lastName"],
+ 	FullName : ["%{{FullName}}","fullName"],
+ 	Salutation : ["%{{Salutation}}","salutation"],
+ 	Honorific : ["%{{Honorific}}","honorific"],
+ 	Gender : ["%{{Gender}}","gender"],
+ 	ProfilePicture : ["%{{ProfilePicture}}", "profilePic"],
+ 	CurrentTime : ["%{{CurrentTime}}", null],
+ 	LocationFullAddress : ["%{{LocationFullAddress}}", null]
 };
 
 
@@ -115,14 +116,21 @@ const Service = {
 
 /*=====  End of bot variables  ======*/
 
+const matchedKeysIn = (message, collection)=>{
+	return Object.keys(collection).filter(elem => message.indexOf(collection[elem][0])>=0);
+};
 
-const getFbMessageSubscriberFormatted = (subscriberInfo, message)=>{
-	FbMessageSubscriberController.getInfoUsingPage(subscriberInfo.page, (error, fbSubscriberInfo)=>{
-		if(error){
-			callback(error, null);
-		}else{
-			callback(null, fbSubscriberInfo);
-		}
+const replaceVariablesInMessage = (message, collection, coreData)=>{
+	return matchedKeysIn(message, collection).reduce((accumulator, currentValue)=>{
+		return accumulator.replace(collection[currentValue][0], coreData[ collection[currentValue][1] ]);
+	}, message);
+};
+
+
+
+const getFbMessageSubscriberFormatted = (message, subscriberInfo)=>{
+	return new Promise((resolve, reject)=>{
+		resolve( replaceVariablesInMessage(message, FbMessageSubscriber, subscriberInfo) );
 	});
 };
 
@@ -186,54 +194,64 @@ const getInvoiceFormatted = (subscriberInfo, message)=>{
 	});
 };
 
-const variableExistsIn = (collectionName)=>{
-	let matchedKey;
-	if(lodash.find(Object.keys(collectionName), (elemKey)=>{
-		matchedKey = elemKey;
-		return message.indexOf(FbMessageSubscriber[elemKey])>=0;
-	})){
-		return {
-			"matchedKey" : matchedKey
-		};
-	}else{
-		return null;
-	}
+
+
+const checkVariablesAndFormat = (message, subscriberInfo)=>{
+	return getFbMessageSubscriberFormatted(message, subscriberInfo).then((result)=>{
+		return getFbMessageSubscriberFormatted(result, subscriberInfo);
+	});
+
+
+
+
+
+
+
+
+
+	// if(foundInFbMessageSubscriber){
+	// 	message = getFbMessageSubscriberFormatted(subscriberInfo, message);
+	// }
+
+	// let foundInCustomer = variableExistsIn(Customer);
+	// if(foundInCustomer){
+	// 	message = getCustomerFormatted(subscriberInfo, message);
+	// }
+	// let foundInBusiness = variableExistsIn(Business);
+	// if(foundInBusiness){
+	// 	message = getBusinessFormatted(subscriberInfo, message);
+	// }
+	// let foundInOrder = variableExistsIn(Order);
+	// if(foundInOrder){
+	// 	message = getOrderFormatted(subscriberInfo, message);
+	// }
+	// let foundInInvoice = variableExistsIn(Invoice);
+	// if(foundInInvoice){
+	// 	message = getInvoiceFormatted(subscriberInfo, message);
+	// }
+	// let foundInProduct = variableExistsIn(Product);
+	// if(foundInProduct){
+	// 	message = getProductFormatted(subscriberInfo, message);
+	// }
+	// let foundInService = variableExistsIn(Service);
+	// if(foundInService){
+	// 	message = getServiceFormatted(subscriberInfo, message);
+	// }
+	// return message;
+
+	// callback(null, message)
+	// return message;
 };
 
-const checkVariablesAndFormat = (subscriberInfo, message, callback)=>{
-	let foundInFbMessageSubscriber = variableExistsIn(FbMessageSubscriber);
-	if(foundInFbMessageSubscriber){
-		message = getFbMessageSubscriberFormatted(subscriberInfo, message);
-	}
 
-	let foundInCustomer = variableExistsIn(Customer);
-	if(foundInCustomer){
-		message = getCustomerFormatted(subscriberInfo, message);
-	}
-	let foundInBusiness = variableExistsIn(Business);
-	if(foundInBusiness){
-		message = getBusinessFormatted(subscriberInfo, message);
-	}
-	let foundInOrder = variableExistsIn(Order);
-	if(foundInOrder){
-		message = getOrderFormatted(subscriberInfo, message);
-	}
-	let foundInInvoice = variableExistsIn(Invoice);
-	if(foundInInvoice){
-		message = getInvoiceFormatted(subscriberInfo, message);
-	}
-	let foundInProduct = variableExistsIn(Product);
-	if(foundInProduct){
-		message = getProductFormatted(subscriberInfo, message);
-	}
-	let foundInService = variableExistsIn(Service);
-	if(foundInService){
-		message = getServiceFormatted(subscriberInfo, message);
-	}
-	return message;
-};
+const formatTemplateMessage = module.exports.formatTemplateMessage =  (message, subscriberInfo)=>{
+	return new Promise((resolve, reject)=>{
+		if(message){
+			checkVariablesAndFormat(message, subscriberInfo).then((result)=>{
+				resolve(result);
+			});
+		}
+		else resolve(message);
+	});
 
-
-const formatTemplateMessage = module.exports.formatTemplateMessage =  (subscriberInfo, message)=>{
-	return checkVariablesAndFormat(subscriberInfo, message);
 };

@@ -1,4 +1,5 @@
 const Customer = require("../models/Customer");
+const mongooseAssist = require("mongoose-assist");
 
 
 module.exports.getInfoUsingPage = (pageId, callback)=>{

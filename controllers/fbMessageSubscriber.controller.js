@@ -1,4 +1,5 @@
 const FbMessageSubscriber = require("../models/FbMessageSubscriber");
+const mongooseAssist = require("mongoose-assist");
 
 module.exports.getInfoUsingPsid = (psid, pageId, callback)=>{
 	FbMessageSubscriber.find({
