@@ -32,9 +32,17 @@ const saveFbMessageSubscriberInfo = module.exports.saveFbMessageSubscriberInfo =
 	fbMessageSubscriberController.createFbMessageSubscriber(subscriberInfo, callback);
 };
 
+const updateFbMessageSubscriber = module.exports.updateFbMessageSubscriber = (subscriberId, updateData)=>{
+	fbMessageSubscriberController.updateFbMessageSubscriber(subscriberId, updateData, commonCallback);
+};
+
+
 const updateFbMessageSubscriberCurrentLanguage = module.exports.updateFbMessageSubscriberCurrentLanguage = (subscriberId, currentLanguage, callback)=>{
 	fbMessageSubscriberController.updateFbMessageSubscriber(subscriberId, {
-		"language.currentLanguage" : currentLanguage 
+		"language" : {
+			"primary" : currentLanguage,
+			"currentLanguage" : currentLanguage
+		} 
 	}, commonCallback);	
 };
 
@@ -42,6 +50,14 @@ const updateFbMessageSubscriberAutomation = module.exports.updateFbMessageSubscr
 	fbMessageSubscriberController.updateFbMessageSubscriber(subscriberId, {
 		"currentMessengerAutomation" : automationId
 	}, commonCallback);
+};
+
+const updateFbMessageSubscriberLanguage = module.exports.updateFbMessageSubscriberLanguage = (subscriberId, languageUpdate)=>{
+	fbMessageSubscriberController.updateFbMessageSubscriber(subscriberId, languageUpdate, commonCallback);
+};
+
+const updateFbMessageSubscriberInfoQuery = module.exports.updateFbMessageSubscriberInfoQuery = (subscriberInfo, infoQuery)=>{
+	fbMessageSubscriberController.updateFbMessageSubscriber(subscriberId, infoQuery);
 };
 
 const mistakeMade = module.exports.mistakeMade = (subscriberInfo)=>{

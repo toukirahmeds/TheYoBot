@@ -1,49 +1,55 @@
 const AutomationController = require("../controllers/automation.controller");
 const fbBotMessageFormatHelper = require("./fbBotMessageFormatHelper");
 const fbBotMessengerSubscriberHelper = require("./fbBotMessengerSubscriberHelper");
-const promiseHelper = require("./promiseHelper");
-
+const franc = require("franc");
 
 
 const getNextFbMessengerReply = module.exports.getNextFbMessengerReply = (subscriberInfo, message, callback)=>{
 	console.log(message);
 	let keyword = "";
-	if(message){
-		if(message.quick_reply && message.quick_reply.payload) keyword = message.quick_reply.payload.trim().toLowerCase();
-		else if(message.text) keyword = message.text.trim().toLowerCase();
-	}
-	// if(message.text) keyword = message.text.trim().toLowerCase();
-	if(subscriberInfo.currentMessengerAutomation && keyword){
-		AutomationController.getAutomationsWithTemplate({
-			"previousAutomation" : subscriberInfo.currentMessengerAutomation
-		},(error, automationList)=>{
-			if(error){
-				callback(error, null);
-			}else if(automationList[0] && automationList[0]["trigger"]["triggerKeywords"].indexOf(keyword)>=0){
-				getAutomationTriggerMatchedDecision(automationList, subscriberInfo, callback);
-			}else{
-				getAutomationTriggerNotMatchedDecision(automationList, subscriberInfo, callback);
-			}
-		});
+	console.log("FRANC CHECK");
+
+	if(subscriberInfo.language && subscriberInfo.language.currentLanguage){
+		keyword = formatRequestKeyword(message);
+		if(subscriberInfo.currentMessengerAutomation && keyword){
+			AutomationController.getAutomationsWithTemplate({
+				"previousAutomation" : subscriberInfo.currentMessengerAutomation
+			},(error, automationList)=>{
+				if(error){
+					callback(error, null);
+				}else if(automationList[0] && automationList[0]["trigger"]["triggerKeywords"].indexOf(keyword)>=0){
+					getAutomationTriggerMatchedDecision(automationList, subscriberInfo, callback);
+				}else{
+					getAutomationTriggerNotMatchedDecision(automationList, subscriberInfo, callback);
+				}
+			});
+		}else{
+		    AutomationController.getAutomationsWithTemplate({
+		    	"page" :  subscriberInfo.page,
+		    	"previousAutomation" : null
+		    },(error, automationList)=>{
+		    	if(error){
+		    		callback(error, null);
+		    	}else{
+		    		fbBotMessengerSubscriberHelper.updateFbMessageSubscriberAutomation(subscriberInfo._id, automationList[automationList.length-1]._id);
+		    		getNoCurrentAutomationDecision(automationList, subscriberInfo, callback);
+		    	}
+		    });
+		}
+		
 	}else{
-	    AutomationController.getAutomationsWithTemplate({
-	    	"page" :  subscriberInfo.page,
-	    	"previousAutomation" : null
-	    },(error, automationList)=>{
-	    	if(error){
-	    		callback(error, null);
-	    	}else{
-	    		fbBotMessengerSubscriberHelper.updateFbMessageSubscriberAutomation(subscriberInfo._id, automationList[automationList.length-1]._id);
-	    		getNoCurrentAutomationDecision(automationList, subscriberInfo, callback);
-	    	}
-	    });
+		getLanguageSelectionDecision(subscriberInfo, message, callback);
 	}
+};
+
+const formatRequestKeyword = (message)=>{
+	if(message.quick_reply && message.quick_reply.payload) return message.quick_reply.payload.trim().toLowerCase();
+	else if(message.text) return message.text.trim().toLowerCase();
 };
 
 const getAutomationTriggerMatchedDecision = (automationList, subscriberInfo, callback)=>{
 	if(automationList[0].template.message){
 		getFormattedAutomationMessage(automationList, subscriberInfo, callback);
-
 	}else{
 		callback(null, [automationList[0].template]);
 	}
@@ -83,54 +89,78 @@ const getCannotRecogniseMessage = (subscriberInfo, callback)=>{
 	});
 };
 
+const getLanguageSelectionDecision = (subscriberInfo, message, callback)=>{
+	if(subscriberInfo.infoQuery){
+		const language = formatRequestKeyword(message);
+		if(subscriberInfo.infoQuery.trim().toLowerCase() === "languageSelection".trim().toLowerCase()){
+			subscriberInfo["infoQuery"] = null;
+			subscriberInfo["language"] = {
+				"primary" : language,
+				"currentLanguage" : language
+			};
+			fbBotMessengerSubscriberHelper.updateFbMessageSubscriber(subscriberInfo._id, subscriberInfo);
+			getNextFbMessengerReply(subscriberInfo, message, callback);
+		}
+	}else{
+		askLanguageSelection(subscriberInfo, callback);
+	}
+};
+
+const askLanguageSelection = (subscriberInfo, callback)=>{
+	fbBotMessengerSubscriberHelper.updateFbMessageSubscriber(subscriberInfo._id, {
+		"infoQuery" : "languageSelection"
+	});
+	getLanguageSelectionMessage(callback);
+};
+
 const getLanguageSelectionMessage = (callback)=>{
-	callback(null, {
+	callback(null, [{
 		"type" : "fbMessengerDefault",
 		"templateType" : "generic",
 		"title" : "Select Language",
 		"message" : "Please select your language",
 		"quickReplies" : [{
-			"contentType":"text",
+			"content_type":"text",
 	        "title":"English",
 	        "payload":"english"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Bengali",
 			"payload" : "bengali"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Spanish",
 			"payload" : "spanish"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Deutsch",
 			"payload" : "deutsch"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Hindi",
 			"payload" : "hindi"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Japanese",
 			"payload" : "japanese"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "French",
 			"payload" : "french"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Arabic",
 			"payload" : "arabic"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Chinese",
 			"payload" : "chinese"
 		},{
-			"contentType" : "text",
+			"content_type" : "text",
 			"title" : "Russian",
 			"payload" : "russian"
 		}]
-	});
+	}]);
 };
 
 const checkMultiLingual = (message, callback)=>{

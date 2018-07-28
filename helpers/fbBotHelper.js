@@ -13,25 +13,21 @@ const fbMessageHelper = require("./fbMessageHelper");
 const PageController = require("../controllers/page.controller");
 /*=====  End of Import of models  ======*/
 
-const sendMessengerReplies = (messageTemplates, pageAccessToken, subscriberInfo)=>{
-	const promiseArray = messageTemplates.map((elem)=>{
-		return new Promise((resolve, reject)=>{
-			fbMessageHelper.sendMessage(pageAccessToken, "RESPONSE", subscriberInfo.psid, elem, (error, response, body)=>{
-				setTimeout(()=>{
-					if(error) resolve(error);
-					else resolve(body);
-				},200)
-			});
-		});
-		
+const sendMessengerReplies = (messageTemplates, pageAccessToken, subscriberInfo, callback, messageTemplateCount)=>{
+	fbMessageHelper.sendMessage(pageAccessToken, "RESPONSE", subscriberInfo.psid, messageTemplates[0], (error, messageSentDoc)=>{
+		if(error){
+			callback(error, null);
+		}else{
+			messageTemplateCount--;
+			if(messageTemplateCount<=0){
+				callback(null, {
+					"success" : true
+				});
+			}else{
+				sendMessengerReplies(messageTemplates.slice(1, messageTemplates.length), pageAccessToken, subscriberInfo, callback, messageTemplateCount);
+			}
+		}		
 	});
-
-	promiseArray.reduce((promise, task)=>{
-		return promise = task.then((result)=>{
-			console.log(result);
-		});
-	}, Promise.resolve());
-
 };
 
 
@@ -40,17 +36,17 @@ const checkAndGetReply  = (subscriberInfo, message, pageAccessToken, callback)=>
 		if(error){
 			callback(error, null);
 		}else{	
-			console.log("FOUND BOT AUTOMATIONS");
-			console.log(messageTemplates[1]);
-			sendMessengerReplies(messageTemplates, pageAccessToken, subscriberInfo);
-			
+			sendMessengerReplies(messageTemplates, pageAccessToken, subscriberInfo, callback, messageTemplates.length);
 		}
 	});
 };
 
+// const askForLanguageSelect = (subscriberInfo, pageAccessToken, callback)=>{
+	
+// };
+
 
 module.exports.sendPageMessengerReply = (recipientId, senderId, message, callback)=>{
-	console.log(recipientId, senderId, message);
 	PageController.searchPageByFbId(recipientId, (error, pageDoc)=>{
 		if(error){
 			callback(error, null);

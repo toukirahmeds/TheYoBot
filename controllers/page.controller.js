@@ -16,6 +16,7 @@ const Page = require("../models/Page");
 =============================================*/
 const AutomationController = require("../controllers/automation.controller");
 const TemplateController = require("../controllers/template.controller");
+const MyBusinessController = require("../controllers/business.controller");
 /*=====  End of Import of controllers  ======*/
 
 
@@ -76,6 +77,7 @@ module.exports.createPage = (pageInfo, callback)=>{
 						pageMessengerPersistentMenu(pageInfo.category, llAccessToken, commonCallback);
 						createPredefinedConversation(pageDoc, commonCallback);
 						pageMessengerWhitelistDomains(["https://www.theyobot.com"], llAccessToken, commonCallback);
+						createPageBusinessInfo(pageDoc, commonCallback);
 						callback(null, pageDoc);
 					
 					}
@@ -83,8 +85,6 @@ module.exports.createPage = (pageInfo, callback)=>{
 
 				
 			}
-			
-
 		}
 	});
 };
@@ -150,5 +150,19 @@ const createDefaultConversation = (pageInfo, defaultConversation, callback)=>{
 	TemplateController.createManyTemplates(templateList, callback);
 	AutomationController.createManyAutomations(automationList, callback);	
 }
+
+
+const createPageBusinessInfo = (pageInfo, callback)=>{
+	MyBusinessController.createMyBusiness({
+		name : pageInfo.name,
+		category : pageInfo.category,
+		page : pageInfo._id,
+		user : pageInfo.user
+	}, callback);
+};
+
+const getPageAbout = module.exports.getPageAbout = (pageId, pageAccessToken, callback)=>{
+	// fbPageHelper.pageInfo(pageId, pageAccessToken, callback);
+};
 
 

@@ -55,18 +55,18 @@ const Customer = {
 
 //Business
 const Business = {
-	 BusinessName : "%{{BusinessName}}",
-	 BusinessFullLocation : "%{{BusinessLocation}}",
-	 BusinessStreet : "%{{BusinessStreet}}",
-	 BusinessCity  :"%{{BusinessCity}}",
-	 BusinessState : "%{{BusinessState}}",
-	 BusinessCountry : "%{{BusinessCountry}}",
-	 BusinessEmail : "%{{BusinessEmail}}",
-	 BusinessPhone  :"%{{BusinessPhone}}",
-	 BusinessCategory  :"%{{BusinessCategory}}",
-	 BusinessTiming  :"%{{BusinessTiming}}",
-	 AcceptablePaymentMethods  :"%{{AcceptablePaymentMethods}}",
-	 PaymentMethodDiscount : "%{{PaymentMethodDiscount}}"
+	 BusinessName : ["%{{BusinessName}}","name"],
+	 BusinessFullLocation : ["%{{BusinessFullLocation}}","businessLocations"],
+	 BusinessStreet : ["%{{BusinessStreet}}",null],
+	 BusinessCity  :["%{{BusinessCity}}", null],
+	 BusinessState : ["%{{BusinessState}}", null],
+	 BusinessCountry : ["%{{BusinessCountry}}",null],
+	 BusinessEmail : ["%{{BusinessEmail}}",null],
+	 BusinessPhone  : ["%{{BusinessPhone}}",null],
+	 BusinessCategory  : ["%{{BusinessCategory}}","category"],
+	 BusinessTiming  : ["%{{BusinessTiming}}",null],
+	 AcceptablePaymentMethods  : ["%{{AcceptablePaymentMethods}}",null],
+	 PaymentMethodDiscount : ["%{{PaymentMethodDiscount}}",null]
 };
 
 
@@ -134,7 +134,7 @@ const getFbMessageSubscriberFormatted = (message, subscriberInfo)=>{
 	});
 };
 
-const getCustomerFormatted = (subscriberInfo, message)=>{
+const getCustomerFormatted = (message, subscriberInfo)=>{
 	CustomerController.getInfoUsingPage(subscriberInfo.page, (error, customerInfo)=>{
 		if(error){
 			callback(error, null);
@@ -144,17 +144,16 @@ const getCustomerFormatted = (subscriberInfo, message)=>{
 	});
 };
 
-const getBusinessFormatted = (subscriberInfo, message)=>{
-	BusinessController.getInfoUsingPage(subscriberInfo.page, (error, businessInfo)=>{
-		if(error){
-			callback(error, null);
-		}else{
-			callback(null, businessInfo);
-		}
+const getBusinessFormatted = (message, subscriberInfo)=>{
+	return new Promise((resolve, reject)=>{
+		BusinessController.getInfoUsingPage(subscriberInfo.page, (error, businessInfo)=>{
+			if(error) resolve(message);
+			resolve( replaceVariablesInMessage(message, Business, businessInfo) );
+		});
 	});
 };
 
-const getProductFormatted = (subscriberInfo, message)=>{
+const getProductFormatted = (message, subscriberInfo)=>{
 	ProductController.getInfoUsingPage(subscriberInfo.page, (error, productInfo)=>{
 		if(error){
 			callback(error, null);
@@ -164,7 +163,7 @@ const getProductFormatted = (subscriberInfo, message)=>{
 	});
 };
 
-const getServiceFormatted = (subscriberInfo, message)=>{
+const getServiceFormatted = (message, subscriberInfo)=>{
 	ServiceController.getInfoUsingPage(subscriberInfo.page, (error, serviceInfo)=>{
 		if(error){
 			callback(error, null);
@@ -174,7 +173,7 @@ const getServiceFormatted = (subscriberInfo, message)=>{
 	});
 };
 
-const getOrderFormatted = (subscriberInfo, message)=>{
+const getOrderFormatted = (message, subscriberInfo)=>{
 	OrderController.getInfoUsingPage(subscriberInfo.page, (error, orderInfo)=>{
 		if(error){
 			callback(error, null);
@@ -184,7 +183,7 @@ const getOrderFormatted = (subscriberInfo, message)=>{
 	});
 };
 
-const getInvoiceFormatted = (subscriberInfo, message)=>{
+const getInvoiceFormatted = (message, subscriberInfo)=>{
 	InvoiceController.getInfoUsingPage(subscriberInfo.page, (error, invoiceInfo)=>{
 		if(error){
 			callback(error, null);
@@ -198,49 +197,9 @@ const getInvoiceFormatted = (subscriberInfo, message)=>{
 
 const checkVariablesAndFormat = (message, subscriberInfo)=>{
 	return getFbMessageSubscriberFormatted(message, subscriberInfo).then((result)=>{
-		return getFbMessageSubscriberFormatted(result, subscriberInfo);
+		return getBusinessFormatted(result, subscriberInfo);
 	});
-
-
-
-
-
-
-
-
-
-	// if(foundInFbMessageSubscriber){
-	// 	message = getFbMessageSubscriberFormatted(subscriberInfo, message);
-	// }
-
-	// let foundInCustomer = variableExistsIn(Customer);
-	// if(foundInCustomer){
-	// 	message = getCustomerFormatted(subscriberInfo, message);
-	// }
-	// let foundInBusiness = variableExistsIn(Business);
-	// if(foundInBusiness){
-	// 	message = getBusinessFormatted(subscriberInfo, message);
-	// }
-	// let foundInOrder = variableExistsIn(Order);
-	// if(foundInOrder){
-	// 	message = getOrderFormatted(subscriberInfo, message);
-	// }
-	// let foundInInvoice = variableExistsIn(Invoice);
-	// if(foundInInvoice){
-	// 	message = getInvoiceFormatted(subscriberInfo, message);
-	// }
-	// let foundInProduct = variableExistsIn(Product);
-	// if(foundInProduct){
-	// 	message = getProductFormatted(subscriberInfo, message);
-	// }
-	// let foundInService = variableExistsIn(Service);
-	// if(foundInService){
-	// 	message = getServiceFormatted(subscriberInfo, message);
-	// }
-	// return message;
-
-	// callback(null, message)
-	// return message;
+	
 };
 
 

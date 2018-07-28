@@ -44,6 +44,9 @@ const fbMessageSubscriberSchema = new mongoose.Schema({
 		"type" : mongoose.Schema.Types.ObjectId,
 		"ref" : "Automation"
 	},
+	"infoQuery" : {
+		"type" : String
+	},
 	"page" : {
 		"type" : mongoose.Schema.Types.ObjectId,
 		"ref" : "Page",

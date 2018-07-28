@@ -32,9 +32,9 @@ const getFbGraphUrl = (url, accessToken, params = {})=>{
 }
 
 
-const getFbGraphEndpoint = (objectId, edge, accessToken)=>{
+const getFbGraphEndpoint = (objectId, edge, accessToken, params = {})=>{
 	let finalUrl = GRAPH_URL + "/" + objectId + "/" + edge;
-	finalUrl += getFbGraphParams(accessToken, {});
+	finalUrl += getFbGraphParams(accessToken, params);
 	return finalUrl;
 };
 
@@ -53,5 +53,9 @@ module.exports.updatePageMessengerPersistentMenu = (pageCategory, accessToken, c
 
 module.exports.whiteListAppDomainMessenger = (appDomains, pageAccessToken, callback)=>{
 	fbMessengerHelper.whitelistAppDomainForPage(appDomains, pageAccessToken, callback);
+};
+
+module.exports.pageInfo = (pageId, accessToken, callback)=>{
+	// request.get(getFbGraphEndpoint(pageId, "", accessToken), callback);
 };
 

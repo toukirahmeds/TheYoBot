@@ -73,8 +73,8 @@ router.post("/create", authenticate(),(req, res)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else if(pageSearchResult[0]){
-			if(pageSearchResult.user.toString() === req.authentication.user._id.toString()){
-				return responseHelper.successResponse(res, "Page already exists and connecting to the page", pageSearchResult);
+			if(pageSearchResult[0].user.toString() === req.authentication.user._id.toString()){
+				return responseHelper.successResponse(res, "Page already exists and connecting to the page", pageSearchResult[0]);
 			}else{
 				return responseHelper.conflictResponse(res, "Sorry Page is already being used by another user.", null);	
 			}

@@ -26,6 +26,6 @@ module.exports.getAutomationsWithTemplate = (query, callback)=>{
 	Automation.find(query).populate({
 		"path" : "template",
 		"model" : "Template"
-	}).exec(callback);
+	}).sort({"position" : 1}).exec(callback);
 };
 

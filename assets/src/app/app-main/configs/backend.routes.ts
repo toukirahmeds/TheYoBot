@@ -11,6 +11,7 @@ const PageUrl = BackendUrl + "/page/";
 const MembershipUrl = BackendUrl + "/membership/";
 const BroadcastUrl = BackendUrl + "/broadcast/";
 const PaymentUrl = BackendUrl + "/payment/";
+const MyBusinessUrl = BackendUrl + "/my-business/";
 /*=====  End of Declaration of backend parent routes  ======*/
 
 
@@ -72,4 +73,13 @@ export const PaymentBERoutes = {
 	"create" : PaymentUrl + "create",
 	"update" : PaymentUrl + "update",
 	"delete" : PaymentUrl + "delete" 
+};
+
+
+export const MyBusinessBERoutes = {
+	"details" : MyBusinessUrl + "details",
+	"list" : MyBusinessUrl + "list",
+	"create" : MyBusinessUrl + "create",
+	"update" : MyBusinessUrl + "update",
+	"delete" : MyBusinessUrl + "delete" 
 };

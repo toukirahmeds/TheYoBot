@@ -50,7 +50,7 @@ const getMessageBody = (template)=>{
 		messageBody['text'] = template.message;
 		if(template.quickReplies.length) messageBody['quick_replies'] = template.quickReplies;
 	}else if(template.attachment && template.attachment.properties && template.attachment.properties.length){
-		console.log(template.attachment.properties);
+		// console.log(template.attachment.properties);
 		messageBody['attachment'] = {
 			"type" : "template",
 			"payload" : fbMessageTemplateHelper.getMessageTemplate(template.templateType, template.attachment)
@@ -86,5 +86,8 @@ const getSendMessageRequest = (accessToken, messageType, recipientId, template)=
 }
 
 module.exports.sendMessage = (pageAccessToken, messageType, recipientId, messageTemplate, callback)=>{
-	request.post(getSendMessageRequest(pageAccessToken, messageType, recipientId, messageTemplate), callback);
+	request.post(getSendMessageRequest(pageAccessToken, messageType, recipientId, messageTemplate), /*callback*/(error, response, body)=>{
+		console.log(body);
+		callback(null, body);
+	});
 }

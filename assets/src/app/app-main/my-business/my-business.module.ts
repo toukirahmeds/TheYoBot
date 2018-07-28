@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from  '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { 
+  MatIconModule, 
+  MatInputModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatAutocompleteModule,
+  MatChipsModule,
+  MatButtonModule
+} from '@angular/material';
 
 import {MyBusinessFERoutes} from '../configs';
 
 import { MyBusinessProfileComponent } from './components/my-business-profile/my-business-profile.component';
-import { MyBusinessServiceLocationsComponent } from './components/my-business-service-locations/my-business-service-locations.component';
+import { MyBusinessService } from './services/my-business.service';
 
 /*=============================================
 =            Declaration of routes            =
@@ -13,9 +23,6 @@ import { MyBusinessServiceLocationsComponent } from './components/my-business-se
 const appRoutes : Routes = [{
 	"path" : MyBusinessFERoutes.profile,
 	"component" : MyBusinessProfileComponent
-},{
-	"path" : MyBusinessFERoutes.serviceLocations,
-	"component" : MyBusinessServiceLocationsComponent
 }];
 
 
@@ -26,9 +33,18 @@ const appRoutes : Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(appRoutes)
-
+    RouterModule.forChild(appRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule, 
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatButtonModule
   ],
-  declarations: [MyBusinessProfileComponent, MyBusinessServiceLocationsComponent]
+  declarations: [MyBusinessProfileComponent],
+  providers : [MyBusinessService]
 })
 export class MyBusinessModule { }

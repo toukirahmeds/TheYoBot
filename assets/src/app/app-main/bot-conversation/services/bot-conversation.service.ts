@@ -39,6 +39,7 @@ export class BotConversationService{
 	}
 
 	getAutomationList(conversationType : string):Observable<any>{
+		console.log(this.getParentInfo());
 		return this.automationService.getAutomationList(conversationType, this.getParentInfo()._id, {});
 	}
 

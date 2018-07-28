@@ -70,7 +70,7 @@ module.exports = [{
 },{
 	"template" : {
 		"type" : "fbMessenger",
-		"templateType" : "generic",
+		"templateType" : "list",
 		"title" : "Room List",
 		"attachment" : {
 			"type" : "template",

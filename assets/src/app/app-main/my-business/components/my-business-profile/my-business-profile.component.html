@@ -1,3 +1,106 @@
-<p>
-  my-business-profile works!
-</p>
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column" fusePerfectScrollbar>
+
+
+    <!-- CONTENT -->
+    <div class="content p-24" fxFlex="100" fxLayout="row">
+
+
+        <!-- <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" fxFlex="100"> -->
+
+
+            <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24"  fxFlex="100" fxLayout="column" fxLayoutAlign="start"
+                   name="form" [formGroup]="myBusinessForm">
+
+                <div class="h2 mb-24">My Business Profile</div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Business Name (disabled)" formControlName="name">
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                   <mat-form-field fxFlex="50">
+                        <input matInput placeholder="Contact No." formControlName="contactInfo.primaryPhone" required>
+                   </mat-form-field>
+
+                    <mat-form-field fxFlex="50">
+                        <input matInput placeholder="Email" formControlName="contactInfo.primaryEmail" required>
+                    </mat-form-field> 
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutWrap>
+
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Street" formControlName="contactInfo.primaryAddress.street" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Postal Code" formControlName="contactInfo.primaryAddress.street">
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="33">
+                        <input matInput placeholder="City" formControlName="contactInfo.primaryAddress.city" required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="34">
+                        <input matInput placeholder="State" formControlName="contactInfo.primaryAddress.state" required>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Country" formControlName="contactInfo.primaryAddress.country" required>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Business Locations" formControlName="businessLocations" required>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Payment Methods" formControlName="paymentMethods" required>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <button type="button" (click)="updateMyBusinessInfo()">SAVE</button>
+                </div>
+
+
+            </form>
+
+            
+
+            
+
+        <!-- </div> -->
+
+        
+
+        
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>
+
+
+

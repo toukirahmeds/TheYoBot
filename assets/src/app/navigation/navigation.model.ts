@@ -35,12 +35,6 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
                                 'type' : 'item',
                                 'icon' : 'info',
                                 'url' : FrontendRoutes.MyBusinessFEUrl + "/" + MyBusinessFERoutes.profile
-                            },{
-                                'id' : 'serviceLocations',
-                                'title' : 'Service Locations',
-                                'type' : 'item',
-                                'icon' : 'location_on',
-                                'url' : FrontendRoutes.MyBusinessFEUrl + "/" + MyBusinessFERoutes.serviceLocations
                             }
                         ]
                     },{

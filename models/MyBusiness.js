@@ -33,7 +33,8 @@ const MyBusinessSchema = new mongoose.Schema({
 		}
 	},
 	"category":{
-		"type" : String
+		"type" : String,
+		"required" : true
 	},
 	"businessLocations" : {
 		"type" : Array
@@ -41,9 +42,15 @@ const MyBusinessSchema = new mongoose.Schema({
 	"paymentMethods" : {
 		"type" : Array
 	},
-	"fbPage" : {
+	"page" : {
 		"type" : mongoose.Schema.Types.ObjectId,
-		"ref" : "Page"
+		"ref" : "Page",
+		"required" : true
+	},
+	"user" : {
+		"type" : mongoose.Schema.Types.ObjectId,
+		"ref" : "User",
+		"required" : true
 	}
 },{
 	"timestamps" : true
