@@ -1,24 +1,31 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import  "rxjs/Rx";
+import { Router } from '@angular/router';
+
 
 import { TokenService, ScopeService } from '../../auth2';
+import { CacheService } from '../../cache';
 
 import { AuthBERoutes, ClientCredentials } from '../../../../configs';
 
 
 @Injectable()
-export class HttpService{
+export class HttpService {
 	public static GET : string = "GET";
 	public static POST : string = "POST";
 	public static PUT : string = "PUT";
 	public static DELETE : string = "DELETE"; 
+	public static requestedUrl : string;
+	public static requestedBody : any;
 
 	constructor(
 		private http : HttpClient,
 		private tokenService : TokenService,
-		private scopeService : ScopeService
+		private cacheService : CacheService,
+		private scopeService : ScopeService,
+		private router : Router
 	){}
 
 
@@ -49,7 +56,6 @@ export class HttpService{
 	}
 
 	sendRequest(method : string, url : string, body : any):Observable<any>{
-		console.log("SEND HTTP REQUEST");
 		method = method.toUpperCase();
 		switch(method){
 			case HttpService.GET:
@@ -70,9 +76,7 @@ export class HttpService{
 	}
 
 	private sendPOSTRequest(url : string, body : any):Observable<any>{
-		console.log("SEND POST REQUEST");
 		let httpOptions = this.getHttpOptions();
-		console.log(httpOptions);
 		return this.http.post(url, body, httpOptions);
 	}
 
@@ -110,21 +114,18 @@ export class HttpService{
 	}
 
 	logout() : Observable<any>{
-		return this.http.post(AuthBERoutes.authenticate, {}).map((response)=>{
+		return this.http.post(AuthBERoutes.logout, {
+			"accessToken" : this.tokenService.getAccessToken(),
+			"refreshToken" : this.tokenService.getRefreshToken()
+		}).switchMap((response)=>{
 			this.tokenService.clearTokens();
-			return response;
-		},(errorResponse)=>{
-			return errorResponse;
+			return Observable.of(response);
 		});
 	}
 
-	private refreshAccessToken():Observable<any>{
-		if(this.tokenService.getRefreshToken()){
-			return this.http.post(AuthBERoutes.authenticate, {});
-		}else{
-			return this.logout();
-		}
-	}
+
+
+	
 
 	setTokens(accessToken : string, accessTokenExpireTime : Date, refreshToken : string, refreshTokenExpireTime : Date){
 		this.tokenService.setAccessToken(accessToken, accessTokenExpireTime);

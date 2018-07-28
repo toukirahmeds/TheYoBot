@@ -35,7 +35,6 @@ export class AppComponent
         this.translate.use('en');
 
         // Set the navigation model
-        console.log(new FuseNavigationModel());
         this.fuseNavigationService.setNavigationModel(new FuseNavigationModel());
 
         // Set the navigation translations

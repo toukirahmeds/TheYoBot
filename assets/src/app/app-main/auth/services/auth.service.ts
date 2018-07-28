@@ -1,41 +1,22 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Subscription } from "rxjs/Subscription";
 import { Router } from "@angular/router";
 
 import { HttpService, CacheService } from "../../shared-module";
 import { AuthBERoutes, UserBERoutes, FrontendRoutes, PageFERoutes, FbAcessTokenKey } from "../../configs";
 
-import { FuseConfigService } from '../../../core/services/config.service';
 
 @Injectable()
 export class AuthService{
 	constructor(
 		private httpService : HttpService,
 		private cacheService : CacheService,
-		private router : Router,
-		private fuseConfigService : FuseConfigService
-	){
+		private router : Router
+	){}
 
-	}
 
-	setFuseConfigs():void{
-		this.fuseConfigService.setSettings({
-            layout          : {
-                navigation      : 'none',       // 'right', 'left', 'top', none
-                navigationFolded: false,        // true, false
-                toolbar         : 'none',      // 'above', 'below', none
-                footer          : 'none',        // 'above', 'below', none
-                mode            : 'fullwidth'   // 'boxed', 'fullwidth'
-            },
-            colorClasses    : {
-                toolbar: 'mat-white-500-bg',
-                navbar : 'mat-fuse-dark-700-bg',
-                footer : 'mat-fuse-dark-900-bg'
-            },
-            customScrollbars: true,
-            routerAnimation : 'fadeIn'
-        });
-	}
 
 	signIn(signInInfo : any): Observable<any>{
 		this.cacheService.clearCache();
@@ -43,19 +24,16 @@ export class AuthService{
 	}
 
 	saveFbAccessToken(token : string){
-		console.log(token);
 		this.cacheService.set(FbAcessTokenKey, token);
-		console.log(this.cacheService.get(FbAcessTokenKey));
 	}
 
 
 	signUp(signUpInfo : any): Observable<any>{
-		console.log(UserBERoutes.create);
 		return this.httpService.signUp(UserBERoutes.create, signUpInfo);
 	}
 
 	signOut(): Observable<any>{
-		return this.httpService.sendRequest(HttpService.POST, AuthBERoutes.authenticate, {});
+		return this.httpService.logout();
 	}
 
 	sendPasswordRecoveryLink(forgotPasswordInfo : any) : Observable<any>{
@@ -75,8 +53,6 @@ export class AuthService{
 	redirectToLogin():void{
 		this.router.navigateByUrl(FrontendRoutes.AuthFEUrl);
 	}
-
-	
 
 
 }

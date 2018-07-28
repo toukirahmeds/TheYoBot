@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MessengerConversationService } from '../../services/messenger-conversation.service';
 import { FBMessengerType } from '../../../data/automation.types';
 
@@ -8,7 +8,7 @@ import { FBMessengerType } from '../../../data/automation.types';
   templateUrl: './messenger-conversation-main.component.html',
   styleUrls: ['./messenger-conversation-main.component.scss']
 })
-export class MessengerConversationMainComponent implements OnInit {
+export class MessengerConversationMainComponent implements OnInit, AfterViewInit {
 	public pageInfo : any = {};
   public conversationType : string = FBMessengerType;
   constructor(
@@ -16,7 +16,11 @@ export class MessengerConversationMainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  	this.pageInfo = this.messengerConversationService.getPageInfo();
+    this.pageInfo = this.messengerConversationService.getPageInfo();
+  }
+
+  ngAfterViewInit(){
+    this.messengerConversationService.setFuseConfigs();
   }
 
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PageService } from '../../services/page.service';
 import { fuseAnimations } from '../../../../core/animations';
 
+
+
 @Component({
   selector: 'app-page-list',
   templateUrl: './page-list.component.html',
@@ -16,7 +18,6 @@ export class PageListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  	this.pageService.setFuseConfigs();
   	this.pageService.getPageList((error, response)=>{
   		if(error){
   			console.log(error);
@@ -25,7 +26,6 @@ export class PageListComponent implements OnInit {
   			if(response.data){
   				this.pageList = response.data;
   			}
-        // console.clear();
       }
     });
 

@@ -29,9 +29,18 @@ const Response = oauth2Server.Response;
 =            Import of models            =
 ========================================*/
 const Oauth2Client = require("./models/Oauth2Client");
-
-
+const Oauth2AccessToken = require("./models/Oauth2AccessToken");
+const Oauth2RefreshToken = require("./models/Oauth2RefreshToken");
 /*=====  End of Import of models  ======*/
+
+
+/*========================================
+=            Import of config            =
+========================================*/
+const config = require("../../config/config.json");
+
+
+/*=====  End of Import of config  ======*/
 
 
 
@@ -69,7 +78,46 @@ router.post("/authenticate", (req, res)=>{
 =            Router for logout            =
 =========================================*/
 router.post("/logout", (req, res)=>{
+	let token;
+	let tokenSecret;
+	if(req.body.accessToken){
+		token = req.body.accessToken;
+		tokenSecret = config.jwt.accessTokenSecret;
+	}else{
+		token = req.body.accessToken;
+		tokenSecret = config.jwt.refreshTokenSecret;
+	}
+	jwt.verify(token, tokenSecret, (error, decoded)=>{
+		if(error){
+			return res.status(200).json({
+				"status" : true,
+				"message" : "successfully removed tokens"
+			});
+		}else{
+			const accessTokenRemovedPromise = new Promise((resolve, reject)=>{
+				Oauth2AccessToken.remove({
+					"user" : decoded.user._id
+				}).exec((error, removedAccessTokens)=>{
+					resolve(true);
+				});
+			});
 
+			const refreshTokenRemovedPromise = new Promise((resolve, reject)=>{
+				Oauth2RefreshToken.remove({
+					"user" : decoded.user._id
+				}).exec((error, removedRefreshTokens)=>{
+					resolve(true);
+				});
+			});
+
+			Promise.all([accessTokenRemovedPromise, refreshTokenRemovedPromise]).then((result)=>{
+				return res.status(200).json({
+					"status" : true,
+					"message" : "successfully removed tokens"
+				});
+			});
+		}
+	});
 });
 /*=====  End of Router for logout  ======*/
 

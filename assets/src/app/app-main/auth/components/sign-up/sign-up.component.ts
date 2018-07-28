@@ -25,7 +25,6 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.fbUserService.initFb(FBAppId);
-    this.authService.setFuseConfigs();
   	this.initSignInForm();
   }
 

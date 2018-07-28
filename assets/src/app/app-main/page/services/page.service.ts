@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
-import { FuseConfigService } from '../../../core/services/config.service';
+import { FuseConfigChangeService } from '../../services/fuseConfig.service';
 
 import { HttpService, FBPageService , CacheService} from '../../shared-module';
 import { PageInfoKey, FrontendRoutes, PageBERoutes, FbAcessTokenKey, MessengerConversationFERoutes } from '../../configs';
@@ -15,29 +15,16 @@ export class PageService{
 		private httpService : HttpService,
 		private cacheService : CacheService,
 		private fbPageService : FBPageService,
-		private fuseConfigService : FuseConfigService
+		private fuseConfigChangeService : FuseConfigChangeService
 	){
 		console.log("PAGE SERVICE");
 	}
 
-	setFuseConfigs(){
-		this.fuseConfigService.setSettings({
-            layout          : {
-                navigation      : 'none',       // 'right', 'left', 'top', none
-                navigationFolded: false,        // true, false
-                toolbar         : 'none',      // 'above', 'below', none
-                footer          : 'none',        // 'above', 'below', none
-                mode            : 'fullwidth'   // 'boxed', 'fullwidth'
-            },
-            colorClasses    : {
-                toolbar: 'mat-white-500-bg',
-                navbar : 'mat-fuse-dark-700-bg',
-                footer : 'mat-fuse-dark-900-bg'
-            },
-            customScrollbars: true,
-            routerAnimation : 'fadeIn'
-        });
+	setFuseConfig(){
+		this.fuseConfigChangeService.fuseSetSettingsLoggedIn();
 	}
+
+	
 
 	getFbAccessToken():any{
 		console.log(this.cacheService.get("FbAccessTokenKey"));

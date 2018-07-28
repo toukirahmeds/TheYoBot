@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../../services/auth.service';
 import { fuseAnimations } from '../../../../core/animations';
+import { FuseConfigChangeService } from '../../../services/fuseConfig.service';
+
 
 @Component({
   selector: 'app-sign-in',
@@ -14,18 +16,14 @@ import { fuseAnimations } from '../../../../core/animations';
 })
 export class SignInComponent implements OnInit {
 	public signInForm : FormGroup;
-  public fuseConfigs : any;
-  public onFuseConfigChange : Subscription;
   constructor(
   	private formBuilder : FormBuilder,
-    private authService  : AuthService
+    private authService  : AuthService,
+    private fuseConfigChangeService : FuseConfigChangeService
   ) {
   }
 
   ngOnInit() {
-  	console.log("THIS IS THE SIGN IN COMPONENT");
-    this.authService.setFuseConfigs();
-
     this.initSignInForm();
   }
 
@@ -38,12 +36,9 @@ export class SignInComponent implements OnInit {
 
   signIn(){
     this.authService.signIn(this.signInForm.value).subscribe((response)=>{
-      console.log(response);
       this.authService.saveFbAccessToken(response.body.user.fbAccessToken);
       this.authService.redirectToPage();
-    },(errorResponse)=>{
-      console.log(errorResponse);
-    });
+    },(errorResponse)=>{});
   }
 
 }

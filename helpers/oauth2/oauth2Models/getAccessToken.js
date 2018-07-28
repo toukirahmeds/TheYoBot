@@ -21,7 +21,7 @@ module.exports = (accessToken, callback)=>{
 	}).exec((error, accessTokenDoc)=>{
 		if(error){
 			callback(error, null);
-		}else{
+		}else if(accessTokenDoc[0]){
 			let client = accessTokenDoc[0].oauth2Client;
 			client["id"] = client._id.toString();
 			callback(null, {
@@ -31,6 +31,8 @@ module.exports = (accessToken, callback)=>{
 				"client" : client,
 				"user" : accessTokenDoc[0].user
 			});
+		}else{
+			callback(null,null);
 		}
 	});
 };

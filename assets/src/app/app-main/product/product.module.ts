@@ -1,8 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule} from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { 
+  MatTableModule, 
+  MatInputModule, 
+  MatButtonModule, 
+  MatCheckboxModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatFormFieldModule
+} from '@angular/material';
+
+
 
 import { ProductFERoutes } from '../configs';
+
+import { ProductService } from './services/product.service';
 
 
 
@@ -30,8 +44,18 @@ const appRoutes : Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(appRoutes)
+    RouterModule.forChild(appRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    MatTableModule, 
+    MatInputModule, 
+    MatButtonModule, 
+    MatCheckboxModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatFormFieldModule
   ],
-  declarations: [ProductListComponent, ProductFormComponent, TopProductsComponent, TopProductsMonthlySalesComponent]
+  declarations: [ProductListComponent, ProductFormComponent, TopProductsComponent, TopProductsMonthlySalesComponent],
+  providers : [ProductService]
 })
 export class ProductModule { }

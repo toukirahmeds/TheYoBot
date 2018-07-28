@@ -26,6 +26,7 @@ import {ProductModule} from './product/product.module';
 import {OrdersModule} from './orders/orders.module';
 import {InvoiceModule} from './invoice/invoice.module';
 import { AppMainService } from './services/app-main.service';
+import { FuseConfigChangeService } from './services/fuseConfig.service';
 
 
 
@@ -89,7 +90,7 @@ const appRoutes : Routes = [{
     InvoiceModule
   ],
   declarations: [],
-  providers : [ AppMainService ],
+  providers : [ AppMainService, FuseConfigChangeService ],
   exports : [  ]
 })
 export class AppMainModule { }

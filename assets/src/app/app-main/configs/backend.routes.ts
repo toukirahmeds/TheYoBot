@@ -24,7 +24,8 @@ export const UserBERoutes = {
 };
 export const AuthBERoutes = {
 			"authenticate" : AuthenticationUrl + "authenticate/",
-			"authorize" : AuthenticationUrl + "authorize"
+			"authorize" : AuthenticationUrl + "authorize",
+			"logout" : AuthenticationUrl + "logout"
 };
 
 export const TemplateBERoutes =  {

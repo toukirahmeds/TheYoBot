@@ -6,7 +6,7 @@
 	"jwt" : {
 		"passwordSecret" : "I am the password secret.",
 		"accessTokenSecret" : "I am the secret for access token.",
-		"accessTokenExpiresIn" : "2h",
+		"accessTokenExpiresIn" : "30m",
 		"refreshTokenSecret" : "I am the secret for refresh token.",
 		"refreshTokenExpiresIn" : "6h",
 		"authorizationCodeSecret" : "I am the secret for authorization code.",
