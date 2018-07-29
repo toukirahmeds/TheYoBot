@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { OrderFERoutes } from '../configs';
+import { AuthGuardService } from '../services/auth-guard.service';
+
 
 import { PendingOrdersComponent } from './components/pending-orders/pending-orders.component';
 import { CompletedOrdersComponent } from './components/completed-orders/completed-orders.component';
@@ -13,7 +15,9 @@ import { OrderListComponent } from './components/order-list/order-list.component
 =============================================*/
 const appRoutes : Routes = [{
 	path : OrderFERoutes.orderList,
-	component : OrderListComponent
+	component : OrderListComponent,
+  	canActivate : [AuthGuardService],
+  	data : { "full" : false }
 }]
 
 

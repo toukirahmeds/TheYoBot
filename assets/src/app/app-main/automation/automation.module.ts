@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { FlexModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule, MatInputModule, MatSelectModule, MatChipsModule, MatIconModule } from '@angular/material';
 
 import { AutomationService } from './services/automation.service';
@@ -16,7 +16,7 @@ import { FbPostAutomationComponent } from './components/fb-post-automation/fb-po
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexModule,
+    FlexLayoutModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,

@@ -37,7 +37,11 @@ export class SignInComponent implements OnInit {
   signIn(){
     this.authService.signIn(this.signInForm.value).subscribe((response)=>{
       this.authService.saveFbAccessToken(response.body.user.fbAccessToken);
-      this.authService.redirectToPage();
+      if(response.body.user.currentPage){
+        this.authService.saveCurrentPage(response.body.user.currentPage);
+      }else{
+        this.authService.redirectToPage();
+      }
     },(errorResponse)=>{});
   }
 

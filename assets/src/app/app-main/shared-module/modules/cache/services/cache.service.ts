@@ -14,7 +14,11 @@ export class CacheService{
 	private securityKeysSaltRounds : number = 3;
 	private securityKeysCacheKey : string = "rands";
 	constructor(){
-		this.getSecurityKeysFromLocalStorage();
+		try{
+			this.getSecurityKeysFromLocalStorage();
+		}catch(error){
+			if(error) this.clearCache();
+		}
 	}
 
 	decodeSecurityKey(securityString : string):string{

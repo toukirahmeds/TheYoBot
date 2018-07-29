@@ -27,6 +27,8 @@ import {OrdersModule} from './orders/orders.module';
 import {InvoiceModule} from './invoice/invoice.module';
 import { AppMainService } from './services/app-main.service';
 import { FuseConfigChangeService } from './services/fuseConfig.service';
+import { AuthGuardService } from './services/auth-guard.service';
+
 
 
 
@@ -42,31 +44,49 @@ const appRoutes : Routes = [{
   loadChildren : './auth/auth.module#AuthModule'
 },{
   path : FrontendRoutes.PageFEUrl,
-  loadChildren : './page/page.module#PageModule'
+  loadChildren : './page/page.module#PageModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : true }
 },{
   path : FrontendRoutes.MyProfileFEUrl,
-  loadChildren : './my-profile/my-profile.module#MyProfileModule'
+  loadChildren : './my-profile/my-profile.module#MyProfileModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
   path : FrontendRoutes.AnalyticsFEUrl,
-  loadChildren : './analytics/analytics.module#AnalyticsModule'
+  loadChildren : './analytics/analytics.module#AnalyticsModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
   path : FrontendRoutes.MessengerConversationFEUrl,
-  loadChildren : './messenger-conversation/messenger-conversation.module#MessengerConversationModule'
+  loadChildren : './messenger-conversation/messenger-conversation.module#MessengerConversationModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
   path : FrontendRoutes.FBPostConversationFEUrl,
-  loadChildren : './fb-post/fb-post.module#FbPostModule'
+  loadChildren : './fb-post/fb-post.module#FbPostModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
   path : FrontendRoutes.MyBusinessFEUrl,
-  loadChildren : './my-business/my-business.module#MyBusinessModule'
+  loadChildren : './my-business/my-business.module#MyBusinessModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
   path : FrontendRoutes.ProductFEUrl,
-  loadChildren : './product/product.module#ProductModule'
+  loadChildren : './product/product.module#ProductModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
   path : FrontendRoutes.OrderFEUrl,
-  loadChildren : './orders/orders.module#OrdersModule'
+  loadChildren : './orders/orders.module#OrdersModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
   path : FrontendRoutes.InvoiceFEUrl,
-  loadChildren: './invoice/invoice.module#InvoiceModule'
+  loadChildren: './invoice/invoice.module#InvoiceModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 }];
 
 
@@ -90,7 +110,7 @@ const appRoutes : Routes = [{
     InvoiceModule
   ],
   declarations: [],
-  providers : [ AppMainService, FuseConfigChangeService ],
+  providers : [ AppMainService, FuseConfigChangeService, AuthGuardService ],
   exports : [  ]
 })
 export class AppMainModule { }

@@ -4,15 +4,21 @@ import { RouterModule, Routes} from '@angular/router';
 
 import { FbPostConversationFERoutes } from '../configs';
 
+import { AuthGuardService } from '../services/auth-guard.service';
+
 /*=============================================
 =            Declaration of routes            =
 =============================================*/
 const appRoutes : Routes = [{
 	path : FbPostConversationFERoutes.postConversationFlow,
-	component : PostConversationComponent
+	component : PostConversationComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
 	path : FbPostConversationFERoutes.postList,
-	component : PostListComponent
+	component : PostListComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 }];
 
 

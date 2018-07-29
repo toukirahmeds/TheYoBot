@@ -8,7 +8,7 @@ import { FuseNavigationModel } from './navigation/navigation.model';
 import { locale as navigationEnglish } from './navigation/i18n/en';
 import { locale as navigationTurkish } from './navigation/i18n/tr';
 
-import { FbService, FBAppId } from './app-main';
+import { FbService, FBAppId, AppMainService } from './app-main';
 
 @Component({
     selector   : 'fuse-root',
@@ -22,7 +22,8 @@ export class AppComponent
         private fuseSplashScreen: FuseSplashScreenService,
         private translate: TranslateService,
         private translationLoader: FuseTranslationLoaderService,
-        private fbService : FbService
+        private fbService : FbService,
+        private appMainService : AppMainService
     )
     {
         // Add languages
@@ -42,5 +43,6 @@ export class AppComponent
     
         // Init FB Service
         this.fbService.initFb(FBAppId);
+        this.appMainService.checkUserLoggedIn();
     }
 }

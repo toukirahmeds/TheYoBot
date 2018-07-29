@@ -4,7 +4,7 @@ import { RouterModule, Routes} from '@angular/router';
 
 import { AnalyticsFERoutes } from '../configs';
 
-
+import { AuthGuardService } from '../services/auth-guard.service';
 import { MessengerComponent } from './messenger/messenger.component';
 import { PostComponent } from './post/post.component';
 import { AudienceComponent } from './audience/audience.component';
@@ -20,16 +20,24 @@ import { MonthlyRevenueChartComponent } from './components/monthly-revenue-chart
 ============================================*/
 const appRoutes : Routes = [{
 	path : AnalyticsFERoutes.dailyVisitors,
-	component : DailyVisitorsChartComponent
+	component : DailyVisitorsChartComponent,
+	canActivate : [AuthGuardService],
+	data : { "full" : false }
 },{
 	path : AnalyticsFERoutes.monthlyVisitors,
-	component : MonthlyVisitorsChartComponent
+	component : MonthlyVisitorsChartComponent,
+  	canActivate : [AuthGuardService],
+  	data : { "full" : false }
 },{
 	path : AnalyticsFERoutes.monthlySalesChart,
-	component : MonthlySalesChartComponent
+	component : MonthlySalesChartComponent,
+  	canActivate : [AuthGuardService],
+  	data : { "full" : false }
 },{
 	path : AnalyticsFERoutes.monthlyRevenueChart,
-	component : MonthlyRevenueChartComponent
+	component : MonthlyRevenueChartComponent,
+  	canActivate : [AuthGuardService],
+  	data : { "full" : false }
 }];
 
 

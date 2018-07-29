@@ -35,28 +35,23 @@ export class BotConversationMainComponent implements OnInit {
 
   ngOnInit() {
     this.botConversationService.setParentInfo(this.parentInfo);
-	  // this.initConversationFlow();
     this.getAutomationList();  	
   }
 
   getAutomationList(){
     this.botConversationService.getAutomationList(this.conversationType).subscribe((response)=>{
-      console.log(response);
       this.automationList = response.data;
+      console.log(this.automationList);
       if(this.automationList.length === 0){
         this.botConversationService.initConversation().subscribe((response)=>{
-          console.log(response);
           this.getAutomationList();
         },(errorResponse)=>{
-          console.log(errorResponse);
         });
 
       }else{
-        console.log(this.automationList);
         this.initConversationFlow();
       }
     },(errorResponse)=>{
-      console.log(errorResponse);
     });
   }
 
@@ -89,7 +84,6 @@ export class BotConversationMainComponent implements OnInit {
   }
 
   initTree(){
-  		
   		this.visTreeService.initTree(this.container);
       this.visTreeService.setVisTreeClickEvent((properties)=>{
         this.onClickProperties = properties;

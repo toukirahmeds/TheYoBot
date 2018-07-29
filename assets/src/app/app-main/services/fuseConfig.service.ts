@@ -12,7 +12,7 @@ export class FuseConfigChangeService implements OnDestroy{
         layout          : {
             navigation      : 'left', // 'right', 'left', 'top', 'none'
             navigationFolded: false, // true, false
-            toolbar         : 'above', // 'above', 'below', 'none'
+            toolbar         : 'below', // 'above', 'below', 'none'
             footer          : 'none', // 'above', 'below', 'none'
             mode            : 'fullwidth' // 'boxed', 'fullwidth'
         },
@@ -22,7 +22,7 @@ export class FuseConfigChangeService implements OnDestroy{
             footer : 'mat-fuse-dark-900-bg'
         },
         customScrollbars: true,
-        routerAnimation : 'fadeIn' // fadeIn, slideUp, slideDown, slideRight, slideLeft, none
+        routerAnimation : 'fullwidth' // fadeIn, slideUp, slideDown, slideRight, slideLeft, none
     };
 
     private static fuseLoggedOutSettings : any = {

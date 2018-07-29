@@ -39,7 +39,6 @@ export class BotConversationService{
 	}
 
 	getAutomationList(conversationType : string):Observable<any>{
-		console.log(this.getParentInfo());
 		return this.automationService.getAutomationList(conversationType, this.getParentInfo()._id, {});
 	}
 
@@ -50,11 +49,9 @@ export class BotConversationService{
 
 	createAutomation(automationInfo : any):Observable<any>{
 		automationInfo["page"] = this.getParentInfo()._id;
-		// console.log(automationInfo);
 		if(automationInfo.template && !automationInfo.template.page){
 			automationInfo.template.page = this.getParentInfo()._id;
 		}
-		// console.log(automationInfo);
 		return this.automationService.createAutomation(automationInfo);
 	}
 

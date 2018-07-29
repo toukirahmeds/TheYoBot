@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { InvoiceFERoutes } from '../configs';
+import { AuthGuardService } from '../services/auth-guard.service';
+
 
 import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
 import { InvoiceViewComponent } from './components/invoice-view/invoice-view.component';
@@ -12,7 +14,9 @@ import { InvoiceViewComponent } from './components/invoice-view/invoice-view.com
 =============================================*/
 const appRoutes : Routes = [{
 	path : InvoiceFERoutes.invoiceList,
-	component : InvoiceListComponent
+	component : InvoiceListComponent,
+  	canActivate : [AuthGuardService],
+  	data : { "full" : false }
 }];
 
 

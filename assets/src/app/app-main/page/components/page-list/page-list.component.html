@@ -6,14 +6,13 @@
     </div>
 
     <!-- BOARD LIST -->
-    <div class="board-list" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center" fxLayoutWrap
-         *fuseIfOnDom [@animateStagger]="{value:'50'}">
+    <div class="board-list" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center" fxLayoutWrap *fuseIfOnDom [@animateStagger]="{value:'50'}" >
 
         <!-- BOARD -->
-        <div class="board-list-item" *ngFor="let page of pageList" (click)="connectToPage(page);" fxLayout="column" fxLayoutAlign="center center"
+        <div class="board-list-item" *ngFor="let page of pageList" (click)="connectToPage(page);"  fxLayout="column" fxLayoutAlign="center center"
              [@animate]="{value:'*',params:{y:'100%'}}">
             <!-- <mat-icon class="s-64">assessment</mat-icon> -->
-            <img src="{{page.picture.data.url}}">
+            <img src="{{page.picture.data.url}}" >
             <div class="board-name">{{page.name}}</div>
         </div>
         <!-- / BOARD -->

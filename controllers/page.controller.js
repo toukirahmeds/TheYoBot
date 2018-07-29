@@ -17,6 +17,7 @@ const Page = require("../models/Page");
 const AutomationController = require("../controllers/automation.controller");
 const TemplateController = require("../controllers/template.controller");
 const MyBusinessController = require("../controllers/business.controller");
+const UserController = require("../controllers/user.controller");
 /*=====  End of Import of controllers  ======*/
 
 
@@ -78,6 +79,7 @@ module.exports.createPage = (pageInfo, callback)=>{
 						createPredefinedConversation(pageDoc, commonCallback);
 						pageMessengerWhitelistDomains(["https://www.theyobot.com"], llAccessToken, commonCallback);
 						createPageBusinessInfo(pageDoc, commonCallback);
+						updateUserCurrentPage(pageDoc.user, pageDoc._id, commonCallback);
 						callback(null, pageDoc);
 					
 					}
@@ -163,6 +165,14 @@ const createPageBusinessInfo = (pageInfo, callback)=>{
 
 const getPageAbout = module.exports.getPageAbout = (pageId, pageAccessToken, callback)=>{
 	// fbPageHelper.pageInfo(pageId, pageAccessToken, callback);
+};
+
+const updateUserCurrentPage = (userId, pageId, callback)=>{
+	UserController.updateUser({
+		"_id" : userId
+	},{
+		"currentPage" : pageId
+	}, callback);
 };
 
 

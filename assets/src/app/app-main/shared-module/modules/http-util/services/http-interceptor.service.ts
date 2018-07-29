@@ -32,6 +32,10 @@ export class HttpInterceptorService implements HttpInterceptor{
 		return this.http.post(AuthBERoutes.logout, {
 			"accessToken" : this.tokenService.getAccessToken(),
 			"refreshToken" : this.tokenService.getRefreshToken()
+		}).finally(()=>{
+			this.tokenService.clearTokens();
+			this.cacheService.clearCache();
+			this.router.navigateByUrl("/");
 		});
 	}
 
@@ -55,10 +59,6 @@ export class HttpInterceptorService implements HttpInterceptor{
 					return next.handle(req);
 				}).catch((error)=>{
 					return this.logout();
-				}).finally(()=>{
-					this.tokenService.clearTokens();
-					this.cacheService.clearCache();
-					this.router.navigateByUrl("/");
 				});
 
 			}else{

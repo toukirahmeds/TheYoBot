@@ -59,7 +59,8 @@ router.post("/authenticate", (req, res)=>{
 			"user" : {
 				"username" : token.user.username,
 				"email" : token.user.email,
-				"fbAccessToken" : token.user.fbAccessToken
+				"fbAccessToken" : token.user.fbAccessToken,
+				"currentPage" : token.user.currentPage
 			},
 			"scope" : token.scope
 		});

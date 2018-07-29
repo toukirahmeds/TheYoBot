@@ -12,6 +12,9 @@ import {
   MatButtonModule
 } from '@angular/material';
 
+import { AuthGuardService } from '../services/auth-guard.service';
+
+
 import {MyBusinessFERoutes} from '../configs';
 
 import { MyBusinessProfileComponent } from './components/my-business-profile/my-business-profile.component';
@@ -22,7 +25,9 @@ import { MyBusinessService } from './services/my-business.service';
 =============================================*/
 const appRoutes : Routes = [{
 	"path" : MyBusinessFERoutes.profile,
-	"component" : MyBusinessProfileComponent
+	"component" : MyBusinessProfileComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 }];
 
 

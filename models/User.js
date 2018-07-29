@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
 	"scope" : {
 		"type" : String
 	},
+	"currentPage" : {
+		"type" : mongoose.Schema.Types.ObjectId,
+		"ref" : "Page"
+	},
 	"status" : {
 		"type" : String,
 		"required" : true,

@@ -118,8 +118,11 @@ export class HttpService {
 			"accessToken" : this.tokenService.getAccessToken(),
 			"refreshToken" : this.tokenService.getRefreshToken()
 		}).switchMap((response)=>{
-			this.tokenService.clearTokens();
 			return Observable.of(response);
+		}).finally(()=>{
+			this.tokenService.clearTokens();
+			this.cacheService.clearCache();
+			this.router.navigateByUrl("/");
 		});
 	}
 

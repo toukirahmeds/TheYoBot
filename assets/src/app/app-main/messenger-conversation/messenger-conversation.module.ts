@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BotConversationModule } from '../bot-conversation';
 
+import { AuthGuardService } from '../services/auth-guard.service';
 
 import { MessengerConversationMainComponent } from './components/messenger-conversation-main/messenger-conversation-main.component';
 
@@ -18,10 +19,14 @@ import { PersistentMenuComponent } from './components/persistent-menu/persistent
 ============================================*/
 const appRoutes : Routes = [{
 	path : MessengerConversationFERoutes.messengerConversationFlow,
-	component : MessengerConversationMainComponent
+	component : MessengerConversationMainComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
 	path : MessengerConversationFERoutes.persistentMenu,
-	component : PersistentMenuComponent
+	component : PersistentMenuComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 }];
 
 

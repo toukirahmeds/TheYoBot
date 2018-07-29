@@ -13,7 +13,7 @@ import {
 } from '@angular/material';
 
 
-
+import { AuthGuardService } from '../services/auth-guard.service';
 import { ProductFERoutes } from '../configs';
 
 import { ProductService } from './services/product.service';
@@ -31,10 +31,14 @@ import { TopProductsMonthlySalesComponent } from './components/top-products-mont
 =============================================*/
 const appRoutes : Routes = [{
 	path : ProductFERoutes.productList,
-	component : ProductListComponent
+	component : ProductListComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 },{
 	path : ProductFERoutes.topProducts,
-	component : TopProductsComponent
+	component : TopProductsComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 }];
 
 

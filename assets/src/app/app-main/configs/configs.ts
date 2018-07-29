@@ -7,3 +7,4 @@ export const ClientCredentials = {
 
 export const FbAcessTokenKey = "FbAccessTokenKey";
 export const PageInfoKey = "PageInfoKey";
+export const LastVisitedUrlKey = "LastVisitedUrl";

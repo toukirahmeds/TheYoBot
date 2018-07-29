@@ -16,6 +16,8 @@ export class MessengerConversationService{
 		this.setFuseConfigs();
 	}
 
+
+
 	setFuseConfigs(){
 		this.fuseConfigChangeService.fuseSetSettingsLoggedIn();
 	}

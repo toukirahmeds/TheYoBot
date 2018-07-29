@@ -21,7 +21,10 @@ module.exports = (username, password, callback)=>{
 		},{
 			"email" : username
 		}]
-	},(error, userDoc)=>{
+	}).populate({
+		"path" : "currentPage",
+		"model" : "Page"
+	}).exec((error, userDoc)=>{
 		if(error){
 			callback(error, null);
 		}else if(userDoc[0]){
