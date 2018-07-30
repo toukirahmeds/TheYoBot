@@ -136,4 +136,18 @@ export class HttpService {
 	}
 
 
+	refreshAccessToken():Observable<any>{
+		const httpHeaders = new HttpHeaders({
+			'Content-Type' : 'application/x-www-form-urlencoded'
+		});
+		const requestBody = new HttpParams()
+				.set("grant_type","refresh_token")
+				.append("client_id",ClientCredentials.clientId)
+				.append("client_secret",ClientCredentials.clientSecret)
+				.append("refresh_token", this.tokenService.getRefreshToken());
+		
+		return this.http.post(AuthBERoutes.authenticate, requestBody, { headers : httpHeaders });
+	}
+
+
 }

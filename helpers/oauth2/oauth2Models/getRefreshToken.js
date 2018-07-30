@@ -10,6 +10,7 @@ const User = require("../../../models/User");
 
 
 module.exports = (refreshToken, callback)=>{
+	// console.log("GET REFRESH TOKEN");
 	Oauth2RefreshToken.find({
 		"refreshToken" : refreshToken
 	}).populate({
@@ -21,16 +22,18 @@ module.exports = (refreshToken, callback)=>{
 	}).exec((error, refreshTokenDoc)=>{
 		if(error){
 			callback(error, null);
-		}else{
+		}else if(refreshTokenDoc[0]){
 			let client = refreshTokenDoc[0].oauth2Client;
 			client["id"] = client._id.toString();
 			callback(null, {
-				"refreshToken" : refreshTokenDoc[0].accessToken,
+				"refreshToken" : refreshTokenDoc[0].refreshToken,
 				"refreshTokenExpiresAt"  : refreshTokenDoc[0].expires,
 				"scope" : refreshTokenDoc[0].scope,
 				"client" : client,
 				"user" : refreshTokenDoc[0].user
 			});
+		}else{
+			callback(null, null);
 		}
 	});
 };

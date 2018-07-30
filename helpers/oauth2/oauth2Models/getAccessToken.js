@@ -10,6 +10,7 @@ const User = require("../../../models/User");
 
 
 module.exports = (accessToken, callback)=>{
+	// console.log("GET ACCESS TOKEN");
 	Oauth2AccessToken.find({
 		"accessToken" : accessToken
 	}).populate({

@@ -65,6 +65,7 @@ router.post("/authenticate", (req, res)=>{
 			"scope" : token.scope
 		});
 	}).catch((error)=>{
+		// console.log(error);
 		res.status(404).json({
 			"message" : "Unauthorized"
 		});

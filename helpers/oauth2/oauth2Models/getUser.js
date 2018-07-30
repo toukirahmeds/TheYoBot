@@ -15,6 +15,7 @@ const User = require("../../../models/User");
 
 
 module.exports = (username, password, callback)=>{
+	// console.log("GET USER");
 	User.find({
 		"$or" : [{
 			"username" : username
@@ -28,6 +29,7 @@ module.exports = (username, password, callback)=>{
 		if(error){
 			callback(error, null);
 		}else if(userDoc[0]){
+			// console.log("USER FOUND");
 			if(bcrypt.compareSync(password, userDoc[0]['password'])){
 				callback(null, userDoc[0]);
 			}else{
