@@ -9,6 +9,8 @@ import { Auth2Module } from "./modules/auth2";
 import { CacheModule } from "./modules/cache";
 // import { BottomSheetModule } from './modules/bottom-sheet';
 import { BottomSheetModule } from "./modules/bottom-sheet";
+import { DataTableModule } from './modules/data-table';
+import { ChartsModule } from './modules/charts';
 
 
 @NgModule({
@@ -20,9 +22,11 @@ import { BottomSheetModule } from "./modules/bottom-sheet";
     FbModule,
     HttpUtilModule,
     Auth2Module,
-    CacheModule
+    CacheModule,
+    DataTableModule,
+    ChartsModule
   ],
-  exports : [ DialogModule, MatModule, FlexLayoutModule, FbModule],
+  exports : [ DialogModule, MatModule, FlexLayoutModule, FbModule, HttpUtilModule, Auth2Module, CacheModule, DataTableModule, ChartsModule ],
   declarations: [],
   entryComponents : []
 })

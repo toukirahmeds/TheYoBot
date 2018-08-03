@@ -1,0 +1,12 @@
+<mat-card>
+	<mat-card-header>
+		<h2>{{heading}}</h2>
+	</mat-card-header>
+	<mat-card-content>
+		<mat-selection-list #shoes>
+		  <mat-list-option *ngFor="let option of options">
+		    {{option.name}}
+		  </mat-list-option>
+		</mat-selection-list>
+	</mat-card-content>
+</mat-card>

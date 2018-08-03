@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes} from '@angular/router';
 
+import {  } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ChartsModule } from '../shared-module';
+
+
 import { AnalyticsFERoutes } from '../configs';
 
 import { AuthGuardService } from '../services/auth-guard.service';
@@ -47,7 +52,9 @@ const appRoutes : Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(appRoutes)
+    RouterModule.forChild(appRoutes),
+    FlexLayoutModule,
+    ChartsModule
   ],
   declarations: [MessengerComponent, PostComponent, AudienceComponent, AnalyticsMainComponent, DailyVisitorsChartComponent, MonthlyVisitorsChartComponent, MonthlySalesChartComponent, MonthlyRevenueChartComponent]
 })

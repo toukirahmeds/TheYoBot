@@ -1,3 +1,51 @@
-<p>
-  daily-visitors-chart works!
-</p>
+<div id="dashboard-analytics" class="page-layout blank grey-100-bg" fusePerfectScrollbar>
+
+    
+
+    <div class="content">
+
+        <div class="left mr-32">
+
+
+            <!-- Widget 5 -->
+            <div class="pt-48 pb-24 font-size-18 font-weight-300">
+                How many pages your users visit?
+            </div>
+
+            <div class="fuse-card auto-width">
+
+                <!-- <div class="position-relative p-24"
+                     fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                        <span class="h2">Visitors & Page views</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                             (click)="widget5SelectedDay = 'yesterday'"
+                             [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
+                            Yesterday
+                        </div>
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                             (click)="widget5SelectedDay = 'today'"
+                             [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
+                            Today
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="position-relative h-368 pb-16">
+                    <app-line-chart></app-line-chart>
+                </div>
+
+            </div>
+            <!-- / Widget 5 -->
+
+            
+
+        </div>
+
+        
+
+    </div>
+
+</div>

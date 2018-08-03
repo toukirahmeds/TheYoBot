@@ -12,6 +12,10 @@ import {
   MatFormFieldModule
 } from '@angular/material';
 
+import { DataTableModule } from '../shared-module';
+import { SideOptionModule } from '../shared-module';
+
+
 
 import { AuthGuardService } from '../services/auth-guard.service';
 import { ProductFERoutes } from '../configs';
@@ -57,7 +61,9 @@ const appRoutes : Routes = [{
     MatCheckboxModule,
     MatIconModule,
     MatSidenavModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    DataTableModule,
+    SideOptionModule
   ],
   declarations: [ProductListComponent, ProductFormComponent, TopProductsComponent, TopProductsMonthlySalesComponent],
   providers : [ProductService]

@@ -1,0 +1,28 @@
+<p>
+  line-chart works!
+</p>
+<!-- [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
+        [labels]="widgets.widget5.labels"
+        [colors]="widgets.widget5.colors"
+        [options]="widgets.widget5.options" -->
+
+<ngx-charts-line-chart 
+[view]="lineChart.view"
+[scheme]="lineChart.colorScheme"
+[results]="data"
+[gradient]="lineChart.gradient"
+[xAxis]="lineChart.showXAxis"
+[yAxis]="lineChart.showYAxis"
+[legend]="lineChart.showLegend"
+[showXAxisLabel]="lineChart.showXAxisLabel"
+[showYAxisLabel]="lineChart.showYAxisLabel"
+[xAxisLabel]="lineChart.xAxisLabel"
+[yAxisLabel]="lineChart.yAxisLabel"
+[autoScale]="lineChart.autoScale"
+[timeline]="lineChart.timeline"
+(select)="onSelect($event)">
+</ngx-charts-line-chart>
+<!-- <canvas baseChart
+[chartType]="lineChart.chartType"
+>
+</canvas> -->

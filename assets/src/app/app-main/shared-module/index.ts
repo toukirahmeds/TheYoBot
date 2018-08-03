@@ -6,3 +6,6 @@ export * from './modules/mat-module';
 export * from './modules/cache';
 export * from './modules/bottom-sheet';
 export * from './modules/auth2';
+export * from './modules/data-table';
+export * from './modules/side-option';
+export * from './modules/charts';

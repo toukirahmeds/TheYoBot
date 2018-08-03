@@ -3,7 +3,7 @@ const router = require("express").Router();
 /*====================================================
 =            Router to get a payment info            =
 ====================================================*/
-router.get("/:id", ()=>{
+router.get("/details/:id", ()=>{
 
 });
 
@@ -13,7 +13,7 @@ router.get("/:id", ()=>{
 /*==================================================
 =            Router to get payment list            =
 ==================================================*/
-router.get("/", ()=>{
+router.get("/list/:pageId", ()=>{
 
 });
 
