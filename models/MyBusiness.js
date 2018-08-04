@@ -57,4 +57,4 @@ const MyBusinessSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("MyBusiness",MyBusinessSchema);
+module.exports = mongoose.model("MyBusiness",MyBusinessSchema,"myBusinesses");

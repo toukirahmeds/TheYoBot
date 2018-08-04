@@ -1,11 +1,18 @@
 const router = require('express').Router();
 
 
+/*=========================================
+=            Import of helpers            =
+=========================================*/
+const responseHelper = require("response-utilities");
+const authenticate = require("../helpers/oauth2").authenticate;
+/*=====  End of Import of helpers  ======*/
+
 /*==================================================
 =            Router to get a membership            =
 ==================================================*/
 
-router.get('/:id', ()=>{
+router.get('/:id', authenticate(), (req, res)=>{
 
 });
 
@@ -17,7 +24,7 @@ router.get('/:id', ()=>{
 =            Router to get membership list            =
 =====================================================*/
 
-router.get('/', ()=>{
+router.get('/', authenticate(), (req, res)=>{
 
 });
 
@@ -29,7 +36,7 @@ router.get('/', ()=>{
 ===================================================*/
 
 
-router.post('/create', ()=>{
+router.post('/create', authenticate(), (req, res)=>{
 
 });
 
@@ -41,7 +48,7 @@ router.post('/create', ()=>{
 =            Router to update membership info            =
 ========================================================*/
 
-router.put('/update/:id', ()=>{
+router.put('/update/:id', authenticate(), (req, res)=>{
 
 });
 
@@ -52,7 +59,7 @@ router.put('/update/:id', ()=>{
 =            Router to delete a membership            =
 =====================================================*/
 
-router.delete('/delete/:id',()=>{
+router.delete('/delete/:id', authenticate(), (req, res)=>{
 
 });
 

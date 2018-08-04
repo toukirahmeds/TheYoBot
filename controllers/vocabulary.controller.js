@@ -15,3 +15,5 @@ module.exports.createVocabulary = (vocabularyInfo, callback)=>{
 module.exports.createManyVocabularies = (vocabularyList, callback)=>{
 	Vocabulary.create(vocabularyList, callback);
 };
+
+

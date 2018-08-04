@@ -10,84 +10,82 @@ const authenticate = require("../helpers/oauth2").authenticate;
 /*=============================================
 =            Import of controllers            =
 =============================================*/
-const ProductController = require("../controllers/product.controller");
+const OrderController = require("../controllers/order.controller");
 
 
 /*=====  End of Import of controllers  ======*/
 
 
 /*====================================================
-=            Router to get a product info            =
+=            Router to get a order info            =
 ====================================================*/
-router.get("/details/:pageId/:productId", authenticate(), (req, res)=>{
-	ProductController.getProductInfo({
-		"_id" : req.params.productId,
+router.get("/details/:pageId/:orderId", authenticate(), (req, res)=>{
+	OrderController.getOrderInfo({
+		"_id" : req.params.orderId,
 		"page" : req.params.pageId,
 		"user" : req.authentication.user._id
-	}, (error, productInfo)=>{
+	}, (error, orderInfo)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Product info found successfully.", productInfo);
+			return responseHelper.successResponse(res, "Order info found successfully.", orderInfo);
 		}
 	});
 });
 
 
-/*=====  End of Router to get a product info  ======*/
+/*=====  End of Router to get a order info  ======*/
 
 
 /*==================================================
-=            Router to get product list            =
+=            Router to get order list            =
 ==================================================*/
 router.get("/list/:pageId", authenticate(), (req, res)=>{
-	ProductController.getProductList({
+	OrderController.getOrderList({
 		"page" : req.params.pageId,
 		"user" : req.authentication.user._id
-	}, (error, productList)=>{
+	}, (error, orderList)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Product list found successfully.", productList);
+			return responseHelper.successResponse(res, "Order list found successfully.", orderList);
 		}
 	});
 });
 
 
-/*=====  End of Router to get product list  ======*/
+/*=====  End of Router to get order list  ======*/
 
 
 /*======================================================
-=            Router to create a new product            =
+=            Router to create a new order            =
 ======================================================*/
 router.post("/create", authenticate(), (req, res)=>{
 	req.body.user = req.authentication.user._id;
-	ProductController.createProduct(req.body, (error, productDoc)=>{
+	OrderController.createOrder( req.body, (error, orderDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Product created successfully.", productDoc);
+			return responseHelper.successResponse(res, "Order created successfully.", orderDoc);
 		}
 	});
 });
-
-
-/*=====  End of Router to create a new product  ======*/
+/*=====  End of Router to create a new order  ======*/
 
 
 /*========================================
 =            Router to update            =
 ========================================*/
-router.post("/update/:pageId/:productId", authenticate(), (req, res)=>{
-	ProductController.updateProduct({
-		"_id" : req.params.productId,
+router.post("/update/:pageId/:orderId", authenticate(), (req, res)=>{
+	OrderController.updateOrder({
+		"_id" : req.params.orderId,
 		"page" : req.params.pageId,
 		"user" : req.authentication.user._id
-	}, req.body, (error, updatedProductDoc)=>{
+	}, req.body, (error, updatedOrderDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Product updated successfully.", null);
+			return responseHelper.successResponse(res, "Order list found successfully.", null);
 		}
 	});
 });
@@ -98,24 +96,24 @@ router.post("/update/:pageId/:productId", authenticate(), (req, res)=>{
 
 
 /*================================================
-=            Router to delete product            =
+=            Router to delete order            =
 ================================================*/
-router.delete("/delete/:pageId/:productId", authenticate(), (req, res)=>{
-	ProductController.deleteProduct({
-		"_id" : req.params.productId,
+router.delete("/delete/:pageId/:orderId", authenticate(), (req, res)=>{
+	OrderController.deleteOrder({
+		"_id" : req.params.orderId,
 		"page" : req.params.pageId,
 		"user" : req.authentication.user._id
-	}, (error, deletedProductDoc)=>{
+	}, (error, deletedOrderDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Product deleted successfully.", null);
+			return responseHelper.successResponse(res, "Order deleted successfully.", null);
 		}
 	});
 });
 
 
-/*=====  End of Router to delete product  ======*/
+/*=====  End of Router to delete order  ======*/
 
 
 module.exports = router;

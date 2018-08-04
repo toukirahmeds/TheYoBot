@@ -10,7 +10,7 @@ const router = require("express").Router();
 =========================================*/
 const responseHelper = require("response-utilities");
 const mongooseAssist = require("mongoose-assist");
-
+const authenticate = require("../helpers/oauth2").authenticate;
 const fbGraphHelper = require('../helpers/fbGraphHelper');
 /*=====  End of Import of helpers  ======*/
 
@@ -35,7 +35,7 @@ const User = require("../models/User");
 /*==========================================
 =            Router to get user            =
 ==========================================*/
-router.get("/details/:id", (req, res)=>{
+router.get("/details/:id", authenticate(), (req, res)=>{
 	User.findById(req.params.id, (error, userDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
@@ -53,7 +53,7 @@ router.get("/details/:id", (req, res)=>{
 /*===============================================
 =            Router to get user list            =
 ===============================================*/
-router.get("/list", (req, res)=>{
+router.get("/list", authenticate(), (req, res)=>{
 	let searchQuery = mongooseAssist.initSearchQuery(req.query);
 	User.find(searchQuery.searchFields, searchQuery.queryFields).skip(searchQuery.from).limit(searchQuery.limit).exec((error, userList)=>{
 		if(error){
@@ -102,7 +102,7 @@ router.post("/create", (req, res)=>{
 /*=============================================
 =            Router to update user            =
 =============================================*/
-router.put("/update/:id", (req, res)=>{
+router.put("/update/:id", authenticate(), (req, res)=>{
 	User.findByIdAndUpdate(req.params.id, req.body, (error, userDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
@@ -119,7 +119,7 @@ router.put("/update/:id", (req, res)=>{
 /*=============================================
 =            Router to delete user            =
 =============================================*/
-router.delete("/delete/:id", (req, res)=>{
+router.delete("/delete/:id", authenticate(), (req, res)=>{
 	User.findByIdAndRemove(req.params.id, (error, userDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
