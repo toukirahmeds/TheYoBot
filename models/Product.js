@@ -19,7 +19,8 @@ const ProductSchema = new mongoose.Schema({
 		}
 	},
 	"quantityAvailable" : {
-		"type" : Number
+		"type" : Number,
+		"required" : true
 	},
 	"name" : {
 		"type" : String,

@@ -41,6 +41,7 @@ router.get("/details/:pageId/:productId", authenticate(), (req, res)=>{
 =            Router to get product list            =
 ==================================================*/
 router.get("/list/:pageId", authenticate(), (req, res)=>{
+	console.log(req.query);
 	ProductController.getProductList({
 		"page" : req.params.pageId,
 		"user" : req.authentication.user._id
@@ -61,6 +62,7 @@ router.get("/list/:pageId", authenticate(), (req, res)=>{
 =            Router to create a new product            =
 ======================================================*/
 router.post("/create", authenticate(), (req, res)=>{
+	console.log(req.body);
 	req.body.user = req.authentication.user._id;
 	ProductController.createProduct(req.body, (error, productDoc)=>{
 		if(error){

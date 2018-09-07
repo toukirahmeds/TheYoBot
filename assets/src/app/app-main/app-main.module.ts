@@ -23,12 +23,12 @@ import {MyProfileModule} from './my-profile/my-profile.module';
 import {MyBusinessModule} from './my-business/my-business.module';
 import {AnalyticsModule} from './analytics/analytics.module';
 import {ProductModule} from './product/product.module';
-import {OrdersModule} from './orders/orders.module';
 import {InvoiceModule} from './invoice/invoice.module';
+import {BusinessServiceModule} from './business-service/business-service.module';
+import {OrderModule} from './order/order.module';
 import { AppMainService } from './services/app-main.service';
 import { FuseConfigChangeService } from './services/fuseConfig.service';
 import { AuthGuardService } from './services/auth-guard.service';
-
 
 
 
@@ -79,12 +79,17 @@ const appRoutes : Routes = [{
   data : { "full" : false }
 },{
   path : FrontendRoutes.OrderFEUrl,
-  loadChildren : './orders/orders.module#OrdersModule',
+  loadChildren : './order/order.module#OrderModule',
   canActivate : [AuthGuardService],
   data : { "full" : false }
 },{
   path : FrontendRoutes.InvoiceFEUrl,
   loadChildren: './invoice/invoice.module#InvoiceModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
+},{
+  path : FrontendRoutes.ServiceFEUrl,
+  loadChildren: './business-service/business-service.module#BusinessServiceModule',
   canActivate : [AuthGuardService],
   data : { "full" : false }
 }];
@@ -106,8 +111,9 @@ const appRoutes : Routes = [{
     AnalyticsModule,
     MyBusinessModule,
     ProductModule,
-    OrdersModule,
-    InvoiceModule
+    InvoiceModule,
+    OrderModule,
+    BusinessServiceModule
   ],
   declarations: [],
   providers : [ AppMainService, FuseConfigChangeService, AuthGuardService ],

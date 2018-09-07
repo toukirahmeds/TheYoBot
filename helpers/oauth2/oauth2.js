@@ -18,5 +18,5 @@ module.exports = new oauth2Server({
 		// "validateScope" : require("./oauth2Models/validateScope"),
 		"verifyScope" : require("./oauth2Models/verifyScope")
 	},
-	"accessTokenLifetime" : 60*60*2
+	"accessTokenLifetime" : 60*60*4
 });

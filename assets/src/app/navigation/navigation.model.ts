@@ -8,7 +8,8 @@ import {
     AnalyticsFERoutes,
     ProductFERoutes,
     OrderFERoutes,
-    InvoiceFERoutes
+    InvoiceFERoutes,
+    ServiceFERoutes
 } from '../app-main/configs';
 
 export class FuseNavigationModel implements FuseNavigationModelInterface
@@ -92,6 +93,21 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
                                 'type' : 'item',
                                 'url' : '/products/top-products-monthly-sales'
                             }*/
+
+                        ]
+                    },{
+                        'id' : 'services',
+                        'title' : 'Services',
+                        'type' : 'collapse',
+                        'icon' : 'shop',
+                        'children' : [
+                            {
+                                'id' : 'serviceList',
+                                'title' : 'Service List',
+                                'type' : 'item',
+                                'icon' : 'list',
+                                'url' : FrontendRoutes.ServiceFEUrl + "/" + ServiceFERoutes.serviceList
+                            }
 
                         ]
                     },{

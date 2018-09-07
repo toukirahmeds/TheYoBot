@@ -1,23 +1,18 @@
-<ngx-datatable
-[columnMode]="columnMode"
-[count]="count"
-[externalPaging]="externalPaging"
-[externalSorting]="externalSorting"
-[footerHeight]="footerHeight"
-[cssClasses]="cssClasses" 
-[messages]="messages"
-[loadingIndicator]="false"
-[columns]="columnHeaders" 
-[rows]="data" 
-class="material" 
-(activate)="activated($event)" 
-(sort)="sorted($event)"
-(detailToggle)="detailToggled($event)"
-(page)="paged($event)"
-(reorder)="reordered($event)"
-(resize)="resized($event)"
-(tableContextmenu)="tableContextmenud($event)"
-(scroll)="scrolled($event)"
-(select)="selected($event)">
-	
-</ngx-datatable>
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8 overflow-y">
+  <table mat-table [dataSource]="dataSource" matSort>
+  	<ng-container *ngFor="let columnItem of tableColumns" matColumnDef="{{columnItem}}">
+  	  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnItem}} </th>
+  	  <td mat-cell *matCellDef="let row" > {{row[columnItem]}} </td>
+  	</ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+    <tr class="data-row" mat-row *matRowDef="let row; columns: tableColumns;" (click)="onRowClicked($event, row)">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

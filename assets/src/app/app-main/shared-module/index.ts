@@ -9,3 +9,4 @@ export * from './modules/auth2';
 export * from './modules/data-table';
 export * from './modules/side-option';
 export * from './modules/charts';
+export * from './modules/data-search'

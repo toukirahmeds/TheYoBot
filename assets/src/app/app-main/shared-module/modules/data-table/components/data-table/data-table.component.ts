@@ -1,67 +1,46 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { MatPaginator, MatTableDataSource} from '@angular/material';
-
+import {Component, OnInit, ViewChild, EventEmitter, Input, Output} from '@angular/core';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-data-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss']
+  styleUrls: ['./data-table.component.scss'],
+  templateUrl: './data-table.component.html'
 })
-export class DataTableComponent implements OnInit {
-  @Input('columnHeaders') columnHeaders : string[] = [];
-  @Input('data') data : any[] = [];
-  @Input('columnMode') columnMode : string = "standard"; 
-  @Input('count') count : number = 0;
-  @Input('externalPaging') externalPaging : boolean = false;
-  @Input('externalSorting') externalSorting : boolean = false;
-  @Input('footerHeight') footerHeight : string = "10px";
-  @Input('messages') messages : any = {
-  	'emptyMessage' : 'No data to display',
-  	'totalMessage' : 'Total'
-  };
-  @Input('cssClasses') cssClasses : any = {
-  	sortAscending: 'datatable-icon-down',
-	sortDescending: 'datatable-icon-up',
-	pagerLeftArrow: 'datatable-icon-left',
-	pagerRightArrow: 'datatable-icon-right',
-	pagerPrevious: 'datatable-icon-prev',
-	pagerNext: 'datatable-icon-skip'
-  };
-
-  @Output('activate') activate : EventEmitter<any> = new EventEmitter<any>();
-
-
+export class DataTableComponent implements OnInit{
+  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
+  dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  @Input('tableColumns') public  tableColumns : string[] = [];
+  @Input('tableData') public  tableData  : EventEmitter<any>;
+  @Output('rowClicked') public rowClicked : EventEmitter<any> = new EventEmitter<any>();
+  constructor() {}
 
-  ngOnInit(){}
-
-  activated(event){
-  	console.log(event);
+  ngOnInit() {
+    this.tableData.subscribe((response)=>{
+      this.dataSource = new MatTableDataSource(response);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
-  sorted(event){
-  	console.log(event);
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
-  detailToggled(event){
-  	console.log(event);
-  }
 
-  paged(event){
-  	console.log(event);
+  onRowClicked(event, row){
+    console.log(event);
+    console.log(row);
+    this.rowClicked.emit(row);
   }
-
-  resized(event){
-  	console.log(event);
-  }
-
-  selected(event){
-  	console.log(event);
-  }
-
 
 
 }

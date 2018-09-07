@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-
-import { InvoiceFERoutes } from '../configs';
-import { AuthGuardService } from '../services/auth-guard.service';
-
+import { Routes, RouterModule} from '@angular/router';
 import { DialogModule } from '../shared-module';
 import { 
   MatInputModule, 
@@ -18,16 +14,21 @@ import {  FlexLayoutModule } from '@angular/flex-layout';
 
 import { DataSearchModule } from '../shared-module';
 
+import { AuthGuardService } from '../services/auth-guard.service';
 
-import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
-import { InvoiceViewComponent } from './components/invoice-view/invoice-view.component';
-import { InvoiceService } from './services/invoice.service';
+import { OrderFERoutes } from '../configs';
+
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderService } from './services/order.service';
+
+
+
 /*=============================================
 =            Declaration of routes            =
 =============================================*/
 const appRoutes : Routes = [{
-	path : InvoiceFERoutes.invoiceList,
-	component : InvoiceListComponent,
+	path : OrderFERoutes.orderList,
+	component : OrderListComponent,
   	canActivate : [AuthGuardService],
   	data : { "full" : false }
 }];
@@ -35,21 +36,20 @@ const appRoutes : Routes = [{
 
 /*=====  End of Declaration of routes  ======*/
 
-
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(appRoutes),
-    DialogModule,
-    MatInputModule,
+    MatInputModule, 
     MatButtonModule, 
     MatCheckboxModule,
     MatIconModule,
     MatFormFieldModule,
+    DialogModule,
     FlexLayoutModule,
     DataSearchModule
   ],
-  declarations: [InvoiceListComponent, InvoiceViewComponent],
-  providers: [InvoiceService]
+  declarations: [OrderListComponent],
+  providers : [OrderService]
 })
-export class InvoiceModule { }
+export class OrderModule { }

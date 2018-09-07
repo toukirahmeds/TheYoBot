@@ -1,67 +1,36 @@
-<div id="contacts" class="page-layout simple left-sidenav inner-sidenav">
+<app-data-search class="full-page" 
+[tableColumns]="tableColumns" 
+[tableData]="tableData"
+addButtonTitle="Add New Product"
+(addButtonClicked)="openProductFormModal()"
+(tableRowClicked)="openProductFormModal()"
+></app-data-search>
+<ng-template #productFormTemplate>
+    <form class="mat-white-bg  p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" [formGroup]="productForm">
+        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field fxFlex="50">
+                <input matInput formControlName="name" placeholder="Type Name Here" />
+            </mat-form-field>
+            <mat-form-field fxFlex="50">
+                <input matInput formControlName="model" placeholder="Type Model Here" />
+            </mat-form-field>
 
-    <!-- HEADER -->
-    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start"
-         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+        </div>
 
-        <!-- APP TITLE -->
-        <!-- <div fxLayout="row" fxLayoutAlign="start center">
-
-            <button mat-button class="mat-icon-button sidenav-toggle mr-12"
-                    fuseMatSidenavToggler="contacts-main-sidenav"
-                    fxHide.gt-md>
-                <mat-icon>menu</mat-icon>
-            </button>
-
-            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box</mat-icon>
-                <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Contacts</span>
-            </div>
-
-        </div> -->
-        <!-- / APP TITLE -->
-
-        <!-- SEARCH -->
-        <div class="search-input-wrapper mt-16 ml-8 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
-            <label for="search" class="mr-8">
-                <mat-icon>search</mat-icon>
-            </label>
-            <mat-form-field mat-no-float class="m-0" floatPlaceholder="never">
-                <input matInput [formControl]="searchInput" id="search" placeholder="Search for anything">
+        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field fxFlex="50">
+                <input matInput formControlName="type" placeholder="Type Name Here" />
             </mat-form-field>
         </div>
-        <!-- / SEARCH -->
 
-    </div>
-    <!-- / HEADER -->
-    <div>
-        <button mat-button>+ Add New Product</button>
-    </div>
-
- 
-
-    <mat-sidenav-container style="width:100%;">
-
-        <!-- SIDENAV -->
-        <mat-sidenav  align="start" opened="true" mode="side">
-
-            <app-side-option [options]="sideCardOptions" [heading]="'Categories'"></app-side-option>
-
-        </mat-sidenav>
-        <!-- / SIDENAV -->
-
-        <!-- CENTER -->
-        <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar style="width:100%">
-
-            <!-- CONTENT -->
-            <div class="content" style="width:100%;height:100%;">
-	           <app-data-table [data]="tableData" [columnHeaders]="tableColumnHeaders" style="width:100%"></app-data-table>
-            </div>
-            <!-- / CONTENT -->
-
+        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field fxFlex="50">
+                <input matInput formControlName="price" type="number" placeholder="Type Name Here" />
+            </mat-form-field>
+            <mat-form-field fxFlex="50">
+                <input matInput formControlName="quantityAvailable" type="number" placeholder="Type Model Here" />
+            </mat-form-field>
         </div>
-        <!-- / CENTER -->
 
-    </mat-sidenav-container>
-
-</div>
+    </form>
+</ng-template>

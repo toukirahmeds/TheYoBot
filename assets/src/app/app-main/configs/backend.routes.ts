@@ -12,6 +12,10 @@ const MembershipUrl = BackendUrl + "/membership/";
 const BroadcastUrl = BackendUrl + "/broadcast/";
 const PaymentUrl = BackendUrl + "/payment/";
 const MyBusinessUrl = BackendUrl + "/my-business/";
+const ProductUrl = BackendUrl + "/product/";
+const ServiceUrl = BackendUrl + "/service/";
+const InvoiceUrl = BackendUrl + "/invoice/";
+const OrderUrl = BackendUrl + "/order/";
 /*=====  End of Declaration of backend parent routes  ======*/
 
 
@@ -83,4 +87,37 @@ export const MyBusinessBERoutes = {
 	"create" : MyBusinessUrl + "create",
 	"update" : MyBusinessUrl + "update",
 	"delete" : MyBusinessUrl + "delete" 
+};
+
+export const ProductBERoutes = {
+	"details" : ProductUrl + "details",
+	"list" : ProductUrl + "list",
+	"create" : ProductUrl + "create",
+	"update" : ProductUrl + "update",
+	"delete" : ProductUrl + "delete" 
+};
+
+
+export const ServiceBERoutes = {
+	"details" : ServiceUrl + "details",
+	"list" : ServiceUrl + "list",
+	"create" : ServiceUrl + "create",
+	"update" : ServiceUrl + "update",
+	"delete" : ServiceUrl + "delete" 
+};
+
+export const InvoiceBERoutes = {
+	"details" : InvoiceUrl + "details",
+	"list" : InvoiceUrl + "list",
+	"create" : InvoiceUrl + "create",
+	"update" : InvoiceUrl + "update",
+	"delete" : InvoiceUrl + "delete" 
+};
+
+export const OrderBERoutes = {
+	"details" : OrderUrl + "details",
+	"list" : OrderUrl + "list",
+	"create" : OrderUrl + "create",
+	"update" : OrderUrl + "update",
+	"delete" : OrderUrl + "delete" 
 };

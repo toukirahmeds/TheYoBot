@@ -12,8 +12,9 @@ export const FrontendRoutes = {
 	PaymentFEUrl : "payment",
 	MyBusinessFEUrl : "my-business",
 	ProductFEUrl : "product",
-	OrderFEUrl : "orders",
-	InvoiceFEUrl : "invoice"
+	OrderFEUrl : "order",
+	InvoiceFEUrl : "invoice",
+	ServiceFEUrl : "service"
 };
 /*=====  End of Declaration of frontend parent routes  ======*/
 
@@ -68,6 +69,10 @@ export const MyBusinessFERoutes = {
 export const ProductFERoutes = {
 	"productList" : "product-list",
 	"topProducts" : "top-products"
+};
+
+export const ServiceFERoutes = {
+	"serviceList" : "service-list"
 };
 
 export const OrderFERoutes = {
