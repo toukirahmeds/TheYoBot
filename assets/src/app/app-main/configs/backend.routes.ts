@@ -16,6 +16,8 @@ const ProductUrl = BackendUrl + "/product/";
 const ServiceUrl = BackendUrl + "/service/";
 const InvoiceUrl = BackendUrl + "/invoice/";
 const OrderUrl = BackendUrl + "/order/";
+const FbMessageSubscriberUrl = BackendUrl + "/fb-message-subscriber/";
+const CustomerUrl = BackendUrl + "/customer/";
 /*=====  End of Declaration of backend parent routes  ======*/
 
 
@@ -120,4 +122,20 @@ export const OrderBERoutes = {
 	"create" : OrderUrl + "create",
 	"update" : OrderUrl + "update",
 	"delete" : OrderUrl + "delete" 
+};
+
+export const FbMessageSubscriberBERoutes = {
+	"details" : FbMessageSubscriberUrl + "details",
+	"list" : FbMessageSubscriberUrl + "list",
+	"create" : FbMessageSubscriberUrl + "create",
+	"update" : FbMessageSubscriberUrl + "update",
+	"delete" : FbMessageSubscriberUrl + "delete" 
+};
+
+export const CustomerBERoutes = {
+	"details" : CustomerUrl + "details",
+	"list" : CustomerUrl + "list",
+	"create" : CustomerUrl + "create",
+	"update" : CustomerUrl + "update",
+	"delete" : CustomerUrl + "delete" 
 };

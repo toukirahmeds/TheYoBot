@@ -12,10 +12,15 @@ export class BSService {
 		private cacheService : CacheService
 	){
 		BSService.pageInfo = this.cacheService.get(PageInfoKey);
+		console.log(BSService.pageInfo)
 	}
 
 	getServiceList():Observable<any>{
 		return this.httpService.sendRequest(HttpService.GET, ServiceBERoutes.list + "/" + BSService.pageInfo._id, {});
+	}
+
+	getService(serviceId):Observable<any>{
+		return this.httpService.sendRequest(HttpService.GET, ServiceBERoutes.details + "/" + BSService.pageInfo._id + "/" + serviceId, {});
 	}
 
 	createService(serviceInfo : any) : Observable<any>{
@@ -23,9 +28,9 @@ export class BSService {
 		return this.httpService.sendRequest(HttpService.POST, ServiceBERoutes.create, serviceInfo);
 	}
 	updateService(serviceInfo : any) : Observable<any>{
-		return this.httpService.sendRequest(HttpService.PUT, ServiceBERoutes.update, serviceInfo);
+		return this.httpService.sendRequest(HttpService.PUT, ServiceBERoutes.update + "/" + BSService.pageInfo._id + "/" + serviceInfo._id, serviceInfo);
 	}
 	deleteService(serviceId : string) : Observable<any>{
-		return this.httpService.sendRequest(HttpService.DELETE, ServiceBERoutes.delete + "/" + serviceId, {});
+		return this.httpService.sendRequest(HttpService.DELETE, ServiceBERoutes.delete + "/" + BSService.pageInfo._id + "/" + serviceId, {});
 	}
 }

@@ -10,7 +10,7 @@ const authenticate = require("../helpers/oauth2").authenticate;
 /*=============================================
 =            Import of controllers            =
 =============================================*/
-const ServiceController = require("../controllers/service.controller");
+const FbMessageSubscriberController = require("../controllers/fbMessageSubscriber.controller");
 
 
 /*=====  End of Import of controllers  ======*/
@@ -19,16 +19,15 @@ const ServiceController = require("../controllers/service.controller");
 /*====================================================
 =            Router to get a service info            =
 ====================================================*/
-router.get("/details/:pageId/:serviceId", authenticate(), (req, res)=>{
-	ServiceController.getServiceInfo({
-		"_id" : req.params.serviceId,
-		"page" : req.params.pageId,
-		"user" : req.authentication.user._id
+router.get("/details/:pageId/:fbMessageSubscriberId", authenticate(), (req, res)=>{
+	FbMessageSubscriberController.getFbMessageSubscriberInfo({
+		"_id" : req.params.fbMessageSubscriberId,
+		"page" : req.params.pageId
 	},(error, serviceDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Service info found successfully.", serviceDoc);
+			return responseHelper.successResponse(res, "Fb Subscriber info found successfully.", serviceDoc);
 		}
 	});
 });
@@ -41,14 +40,13 @@ router.get("/details/:pageId/:serviceId", authenticate(), (req, res)=>{
 =            Router to get service list            =
 ==================================================*/
 router.get("/list/:pageId", authenticate(), (req, res)=>{
-	ServiceController.getServiceList({
-		"page" : req.params.pageId,
-		"user" : req.authentication.user._id
-	},(error, serviceList)=>{
+	FbMessageSubscriberController.getFbMessageSubscriberList({
+		"page" : req.params.pageId
+	},(error, fbMessageSubscriberList)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Service list found successfully.", serviceList);
+			return responseHelper.successResponse(res, "Fb Subscriber list found successfully.", fbMessageSubscriberList);
 		}
 	});
 });
@@ -62,11 +60,11 @@ router.get("/list/:pageId", authenticate(), (req, res)=>{
 ======================================================*/
 router.post("/create", authenticate(), (req, res)=>{
 	req.body.user = req.authentication.user._id;
-	ServiceController.createService(req.body,(error, serviceDoc)=>{
+	FbMessageSubscriberController.createFbMessageSubscriber(req.body,(error, serviceDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Service created successfully.", serviceDoc);
+			return responseHelper.successResponse(res, "Fb Subscriber created successfully.", serviceDoc);
 		}
 	});
 });
@@ -78,16 +76,15 @@ router.post("/create", authenticate(), (req, res)=>{
 /*========================================
 =            Router to update            =
 ========================================*/
-router.put("/update/:pageId/:serviceId", authenticate(), (req, res)=>{
-	ServiceController.updateService({
-		"_id" : req.params.serviceId,
-		"page" : req.params.pageId,
-		"user" : req.authentication.user._id
+router.put("/update/:pageId/:fbMessageSubscriberId", authenticate(), (req, res)=>{
+	FbMessageSubscriberController.updateFbMessageSubscriber({
+		"_id" : req.params.fbMessageSubscriberId,
+		"page" : req.params.pageId
 	},req.body,(error, updatedServiceDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Service updated successfully.", null);
+			return responseHelper.successResponse(res, "Fb Subscriber updated successfully.", null);
 		}
 	});
 });
@@ -100,16 +97,15 @@ router.put("/update/:pageId/:serviceId", authenticate(), (req, res)=>{
 /*================================================
 =            Router to delete service            =
 ================================================*/
-router.delete("/delete/:pageId/:serviceId",  authenticate(), (req, res)=>{
-	ServiceController.deleteService({
-		"_id" : req.params.serviceId,
-		"page" : req.params.pageId,
-		"user" : req.authentication.user._id
+router.delete("/delete/:pageId/:fbMessageSubscriberId",  authenticate(), (req, res)=>{
+	FbMessageSubscriberController.deleteService({
+		"_id" : req.params.fbMessageSubscriberId,
+		"page" : req.params.pageId
 	}, (error, deletedServiceDoc)=>{
 		if(error){
 			return responseHelper.errorResponse(res, null);
 		}else{
-			return responseHelper.successResponse(res, "Service deleted successfully.", null);
+			return responseHelper.successResponse(res, "Fb Subscriber deleted successfully.", null);
 		}
 	});
 });

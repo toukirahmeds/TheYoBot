@@ -9,16 +9,25 @@ import {
   MatSelectModule,
   MatAutocompleteModule,
   MatChipsModule,
-  MatButtonModule
+  MatButtonModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import { AuthGuardService } from '../services/auth-guard.service';
-
-
 import {MyBusinessFERoutes} from '../configs';
+
+import { DialogModule } from '../shared-module';
+
+import {  FlexLayoutModule } from '@angular/flex-layout';
+
+import { DataSearchModule } from '../shared-module';
+
+
 
 import { MyBusinessProfileComponent } from './components/my-business-profile/my-business-profile.component';
 import { MyBusinessService } from './services/my-business.service';
+import { FbPageSubscribersComponent } from './components/fb-page-subscribers/fb-page-subscribers.component';
+import { CustomersComponent } from './components/customers/customers.component';
 
 /*=============================================
 =            Declaration of routes            =
@@ -26,6 +35,16 @@ import { MyBusinessService } from './services/my-business.service';
 const appRoutes : Routes = [{
 	"path" : MyBusinessFERoutes.profile,
 	"component" : MyBusinessProfileComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
+},{
+  "path" : MyBusinessFERoutes.fbPageSubscribers,
+  "component" : FbPageSubscribersComponent,
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
+},{
+  "path" : MyBusinessFERoutes.customers,
+  "component" : CustomersComponent,
   canActivate : [AuthGuardService],
   data : { "full" : false }
 }];
@@ -47,9 +66,13 @@ const appRoutes : Routes = [{
     MatSelectModule,
     MatAutocompleteModule,
     MatChipsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule,
+    FlexLayoutModule,
+    DialogModule,
+    DataSearchModule
   ],
-  declarations: [MyBusinessProfileComponent],
+  declarations: [MyBusinessProfileComponent, FbPageSubscribersComponent, CustomersComponent],
   providers : [MyBusinessService]
 })
 export class MyBusinessModule { }

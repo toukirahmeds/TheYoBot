@@ -5,6 +5,10 @@ const CustomerSchema = new mongoose.Schema({
 		"type" : String,
 		"enum" : ["facebook","instagram","youtube"]
 	},
+	"name" : {
+		"type" : String,
+		"required" : true
+	},
 	"contactInfo" : {
 		"email" : {
 			"type" : String
@@ -73,7 +77,14 @@ const CustomerSchema = new mongoose.Schema({
 	},
 	"fbMessageSubscriber" : {
 		"type" : mongoose.Schema.Types.ObjectId,
-		"ref" : "FbMessageSubscriber"
+		"ref" : "FbMessageSubscriber",
+		"unique" : true,
+		"required" : true
+	},
+	"page" : {
+		"type" : mongoose.Schema.Types.ObjectId,
+		"ref" : "Page",
+		"required" : true
 	}
 },{
 	"timestamps" : true

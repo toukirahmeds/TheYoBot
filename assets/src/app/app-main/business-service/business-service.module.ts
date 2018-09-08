@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule} from '@angular/router';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { BusinessServiceTableComponent } from './components/business-service-table/business-service-table.component';
 import { BSService } from './services/businessService.service';
 import { DialogModule } from '../shared-module';
@@ -9,7 +10,8 @@ import {
   MatButtonModule, 
   MatCheckboxModule,
   MatIconModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatSelectModule
 } from '@angular/material';
 
 import {  FlexLayoutModule } from '@angular/flex-layout';
@@ -38,10 +40,13 @@ const appRoutes : Routes = [{
   imports: [
     CommonModule,
     RouterModule.forChild(appRoutes),
+    ReactiveFormsModule,
+    FormsModule,
     MatInputModule, 
     MatButtonModule, 
     MatCheckboxModule,
     MatIconModule,
+    MatSelectModule,
     MatFormFieldModule,
     FlexLayoutModule,
     DataSearchModule

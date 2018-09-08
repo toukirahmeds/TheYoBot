@@ -2,7 +2,7 @@ const Order = require("../models/Order");
 const mongooseAssist = require("mongoose-assist");
 
 module.exports.getOrderInfo = (findQuery, callback)=>{
-	Order.findOne(findQuery, callback);
+	Order.find(findQuery, callback);
 };
 
 module.exports.getOrderList = (findQuery, callback)=>{

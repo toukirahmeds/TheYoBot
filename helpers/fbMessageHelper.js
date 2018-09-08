@@ -43,13 +43,13 @@ const getFbGraphEndpoint = (objectId, edge, accessToken)=>{
 
 
 const getMessageBody = (template)=>{
-	console.log("GET MESSAGE BODY");
-	console.log(template);
+	// console.log("GET MESSAGE BODY");
+	// console.log(template);
 	let messageBody = {};
-	if(template.message){
+	if(template && template.message){
 		messageBody['text'] = template.message;
-		if(template.quickReplies.length) messageBody['quick_replies'] = template.quickReplies;
-	}else if(template.attachment && template.attachment.properties && template.attachment.properties.length){
+		if(template.quickReplies && template.quickReplies.length) messageBody['quick_replies'] = template.quickReplies;
+	}else if(template && template.attachment && template.attachment.properties && template.attachment.properties.length){
 		// console.log(template.attachment.properties);
 		messageBody['attachment'] = {
 			"type" : "template",

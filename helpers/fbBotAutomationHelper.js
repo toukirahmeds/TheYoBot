@@ -1,16 +1,26 @@
 const AutomationController = require("../controllers/automation.controller");
 const fbBotMessageFormatHelper = require("./fbBotMessageFormatHelper");
 const fbBotMessengerSubscriberHelper = require("./fbBotMessengerSubscriberHelper");
+const fbBotPageTypeHelpers = require("./fbBotPageTypeHelpers");
+const fbBusinessKeywords = require("./fbBusinessKeywords");
 const franc = require("franc");
 
 
 const getNextFbMessengerReply = module.exports.getNextFbMessengerReply = (subscriberInfo, message, callback)=>{
-	console.log(message);
+	console.log("getNextFbMessengerReply");
+	// console.log(message);
 	let keyword = "";
-	console.log("FRANC CHECK");
-
 	if(subscriberInfo.language && subscriberInfo.language.currentLanguage){
 		keyword = formatRequestKeyword(message);
+		// if(checkKeywordMatched(keyword)){
+		// 	console.log("check keyword matched");
+		// 	let automationList = [{
+		// 		"trigger" : {
+		// 			"triggerKeywords" : [keyword]
+		// 		}
+		// 	}];
+		// 	getBusinessDecision(automationList, subscriberInfo, callback);
+		// }else 
 		if(subscriberInfo.currentMessengerAutomation && keyword){
 			AutomationController.getAutomationsWithTemplate({
 				"previousAutomation" : subscriberInfo.currentMessengerAutomation
@@ -20,7 +30,14 @@ const getNextFbMessengerReply = module.exports.getNextFbMessengerReply = (subscr
 				}else if(automationList[0] && automationList[0]["trigger"]["triggerKeywords"].indexOf(keyword)>=0){
 					getAutomationTriggerMatchedDecision(automationList, subscriberInfo, callback);
 				}else{
-					getAutomationTriggerNotMatchedDecision(automationList, subscriberInfo, callback);
+					console.log("previous message not found");
+					let tempAutomationList = [{
+						"trigger" : {
+							"triggerKeywords" : [keyword]
+						}
+					}];
+					getBusinessDecision(tempAutomationList, subscriberInfo, callback);
+					// getAutomationTriggerNotMatchedDecision(automationList, subscriberInfo, callback);
 				}
 			});
 		}else{
@@ -42,16 +59,30 @@ const getNextFbMessengerReply = module.exports.getNextFbMessengerReply = (subscr
 	}
 };
 
+const checkKeywordMatched = (keyword)=>{
+	let keywordList = Object.values(fbBusinessKeywords);
+	for(let i in keywordList){
+		if(keyword.indexOf(keywordList[i])>=0) return true;
+	}
+
+	return false;
+};
+
 const formatRequestKeyword = (message)=>{
+	console.log("formatRequestKeyword");
+	console.log(message);
 	if(message.quick_reply && message.quick_reply.payload) return message.quick_reply.payload.trim().toLowerCase();
+	else if(message.payload) return message.payload.trim().toLowerCase();
 	else if(message.text) return message.text.trim().toLowerCase();
 };
 
 const getAutomationTriggerMatchedDecision = (automationList, subscriberInfo, callback)=>{
+	console.log("getAutomationTriggerMatchedDecision");
 	if(automationList[0].template.message){
 		getFormattedAutomationMessage(automationList, subscriberInfo, callback);
 	}else{
-		callback(null, [automationList[0].template]);
+		getBusinessDecision(automationList, subscriberInfo, callback);
+		
 	}
 	fbBotMessengerSubscriberHelper.updateFbMessageSubscriberAutomation(subscriberInfo._id, automationList[0]._id);
 };
@@ -60,6 +91,12 @@ const getAutomationTriggerMatchedDecision = (automationList, subscriberInfo, cal
 const getNoCurrentAutomationDecision = (automationList, subscriberInfo, callback)=>{
 	getFormattedAutomationMessage(automationList, subscriberInfo, callback);
 };
+
+const getBusinessDecision = (automationList, subscriberInfo, callback)=>{
+	fbBotPageTypeHelpers(subscriberInfo.page.category, automationList, subscriberInfo, (error, result)=>{
+		callback(null, result);
+	});
+}
 
 const getFormattedAutomationMessage = (automationList, subscriberInfo, callback)=>{
 	let promiseArray = [];

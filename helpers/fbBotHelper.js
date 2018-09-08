@@ -51,6 +51,7 @@ module.exports.sendPageMessengerReply = (recipientId, senderId, message, callbac
 		if(error){
 			callback(error, null);
 		}else if(pageDoc[0]){
+
 			fbBotMessengerSubscriberHelper.checkSubscriber(senderId, pageDoc[0], (error, fbMessageSubscriberDoc)=>{
 				if(error){
 					callback(error, null);

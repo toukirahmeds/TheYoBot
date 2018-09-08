@@ -1,0 +1,20 @@
+module.exports = {
+	"roomList" : "room_list",
+	"foodMenu" : "food_menu",
+	"serviceList" : "service_list",
+	"packageList" : "package_list",
+	"currentPromotions" : "current_promotions",
+	"contactUs" : "contact_us",
+	"information" : "information",
+	"ourLocation" : "our_location",
+	"buyProduct" : "buy_product",
+	"buyService" : "buy_service",
+	"sellProduct" : "sell_product",
+	"sellService" : "sell_service",
+	"bookService" : "book_service",
+	"boolProduct" : "book_product",
+	"cancel" : "cancel",
+	"wait" : "wait",
+	"checkout" : "checkout",
+	"payVia" : "pay_via"
+};

@@ -21,6 +21,7 @@ export class DataSearchComponent implements OnInit {
   }
 
   rowClickTrigger(rowData : any){
+    console.log(rowData);
   	this.tableRowClicked.emit(rowData);
   }
 

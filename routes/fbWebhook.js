@@ -49,6 +49,7 @@ router.post("/", (req, res)=>{
 			let senderId = req.body.entry[0].messaging[0].sender.id;
 			let recipientId = req.body.entry[0].messaging[0].recipient.id;
 			if(req.body.entry[0].messaging){
+				// console.log(req.body.entry[0].messaging);
 				if(req.body.entry[0].messaging[0].message){
 					let message = req.body.entry[0].messaging[0].message;
 					res.status(200).send({
@@ -59,6 +60,14 @@ router.post("/", (req, res)=>{
 						if(error) console.error(error);
 					});
 					
+				}else if(req.body.entry[0].messaging[0].postback){
+					let postback = req.body.entry[0].messaging[0].postback;
+					res.status(200).send({
+						"recipient_id" : senderId
+					});
+					fbBotHelper.sendPageMessengerReply(recipientId, senderId, postback, (error, sentResultDoc)=>{
+						if(error) console.error(error);
+					});
 				}else if(req.body.entry[0].messaging[0].delivery){
 					res.status(200).send({
 							"recipient_id" : senderId,

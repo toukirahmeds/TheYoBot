@@ -1,11 +1,22 @@
 const FbMessageSubscriber = require("../models/FbMessageSubscriber");
 const mongooseAssist = require("mongoose-assist");
 
+module.exports.getFbMessageSubscriberList = (findQuery, callback)=>{
+	FbMessageSubscriber.find(findQuery, callback);
+};
+
+module.exports.getFbMessageSubscriberInfo = (findQuery, callback)=>{
+	FbMessageSubscriber.find(findQuery, callback);
+};
+
 module.exports.getInfoUsingPsid = (psid, pageId, callback)=>{
 	FbMessageSubscriber.find({
 		"psid" : psid,
 		"page" : pageId
-	},callback);
+	}).populate({
+		"path" : "page",
+		"model" : "Page"
+	}).exec(callback);
 };
 
 module.exports.createFbMessageSubscriber = (fbMessageSubscriberInfo, callback)=>{

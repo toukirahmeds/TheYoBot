@@ -36,9 +36,21 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
                                 'type' : 'item',
                                 'icon' : 'info',
                                 'url' : FrontendRoutes.MyBusinessFEUrl + "/" + MyBusinessFERoutes.profile
+                            },{
+                                'id' : 'myBusinessFbPageSubscribers',
+                                'title' : 'Facebook Subscribers',
+                                'type' : 'item',
+                                'icon' : 'person',
+                                'url' : FrontendRoutes.MyBusinessFEUrl + "/" + MyBusinessFERoutes.fbPageSubscribers
+                            },{
+                                'id' : 'myBusinessCustomers',
+                                'title' : 'Customers',
+                                'type' : 'item',
+                                'icon' : 'person',
+                                'url' : FrontendRoutes.MyBusinessFEUrl + "/" + MyBusinessFERoutes.customers
                             }
                         ]
-                    },{
+                    },/*{
                         'id' : 'analytics',
                         'title' : 'Analytics',
                         'type' : 'collapse',
@@ -70,7 +82,7 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
                                 'url' : FrontendRoutes.AnalyticsFEUrl + "/" + AnalyticsFERoutes.monthlyRevenueChart
                             }
                         ]
-                    },{
+                    },*/{
                         'id' : 'products',
                         'title' : 'Products',
                         'type' : 'collapse',
@@ -153,14 +165,14 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
                             'type' : 'item',
                             'icon' : 'message',
                             'url' : FrontendRoutes.MessengerConversationFEUrl + "/" + MessengerConversationFERoutes.messengerConversationFlow
-                        },{
+                        }/*,{
                             'id' : 'fbMessengerPersistentMenu',
                             'title' : 'Persistent Menu',
                             'type' : 'item',
                             'icon' : 'menu',
                             'url' : FrontendRoutes.MessengerConversationFEUrl + "/" + MessengerConversationFERoutes.persistentMenu
-                        }]
-                    },{
+                        }*/]
+                    }/*,{
                         'id':'fbPost',
                         'title' : 'FB Post',
                         'type' : 'collapse',
@@ -172,7 +184,7 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
                             'icon' : 'list',
                             'url' : FrontendRoutes.FBPostConversationFEUrl + "/" + FbPostConversationFERoutes.postList
                         }]
-                    }
+                    }*/
                 ]
             }
         ];

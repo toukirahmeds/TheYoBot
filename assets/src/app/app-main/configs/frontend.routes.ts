@@ -63,6 +63,8 @@ export const AnalyticsFERoutes = {
 
 export const MyBusinessFERoutes = {
 	"profile" : "profile",
+	"fbPageSubscribers" : "fb-page-subscribers",
+	"customers" : "customers",
 	"serviceLocations" : "service-locations"
 };
 

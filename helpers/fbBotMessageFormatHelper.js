@@ -204,6 +204,9 @@ const checkVariablesAndFormat = (message, subscriberInfo)=>{
 
 
 const formatTemplateMessage = module.exports.formatTemplateMessage =  (message, subscriberInfo)=>{
+	// console.log("FORMAT TEMPLATE MESSAGE ---------------------");
+	// console.log(message);
+	// console.log(subscriberInfo);
 	return new Promise((resolve, reject)=>{
 		if(message){
 			checkVariablesAndFormat(message, subscriberInfo).then((result)=>{

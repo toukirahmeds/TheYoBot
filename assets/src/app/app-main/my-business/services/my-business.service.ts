@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService, CacheService } from '../../shared-module';
-import { PageInfoKey, MyBusinessBERoutes } from '../../configs';
+import { PageInfoKey, MyBusinessBERoutes, FbMessageSubscriberBERoutes, CustomerBERoutes } from '../../configs';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -13,7 +13,9 @@ export class MyBusinessService{
 	constructor(
 		private httpService : HttpService,
 		private cacheService : CacheService
-	){}
+	){
+		MyBusinessService.fbPageInfo  = this.cacheService.get(PageInfoKey);
+	}
 
 
 	setPageInfo(){
@@ -40,6 +42,15 @@ export class MyBusinessService{
 
 	updateMyBusinessInfo(updatedMyBusinessInfo : any): Observable<any>{
 		return this.httpService.sendRequest(HttpService.PUT, MyBusinessBERoutes.update + "/" + updatedMyBusinessInfo._id, updatedMyBusinessInfo);
+	}
+
+
+	getFbPageSubscriberList():Observable<any>{
+		return this.httpService.sendRequest(HttpService.GET, FbMessageSubscriberBERoutes.list + "/" + MyBusinessService.fbPageInfo._id, {});
+	}
+
+	getCustomerList(): Observable<any>{
+		return this.httpService.sendRequest(HttpService.GET, CustomerBERoutes.list + "/" + MyBusinessService.fbPageInfo._id, {});
 	}
 
 

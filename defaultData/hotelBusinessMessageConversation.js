@@ -34,7 +34,7 @@ module.exports = [{
 		},{
 			"content_type" : "text",
 			"title" : "Reserve Room(s)",
-			"payload" : "reserve_room"
+			"payload" : "room_list"
 		},{
 			"content_type" : "text",
 			"title" : "Reserve For Meal",
@@ -144,7 +144,7 @@ module.exports = [{
 		"type" : "fbMessenger",
 		"trigger" : {
 			"triggerType" : "keyword",
-			"triggerKeywords" : ["reserve_room"]
+			"triggerKeywords" : ["room_list"]
 		},
 		"position" : 2,
 		"previousPosition" : 1,
