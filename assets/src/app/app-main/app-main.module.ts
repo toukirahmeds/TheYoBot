@@ -26,6 +26,7 @@ import {ProductModule} from './product/product.module';
 import {InvoiceModule} from './invoice/invoice.module';
 import {BusinessServiceModule} from './business-service/business-service.module';
 import {OrderModule} from './order/order.module';
+import {BookingModule} from './booking/booking.module';
 import { AppMainService } from './services/app-main.service';
 import { FuseConfigChangeService } from './services/fuseConfig.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -92,6 +93,11 @@ const appRoutes : Routes = [{
   loadChildren: './business-service/business-service.module#BusinessServiceModule',
   canActivate : [AuthGuardService],
   data : { "full" : false }
+},{
+  path : FrontendRoutes.BookingFEUrl,
+  loadChildren: './booking/booking.module#BookingModule',
+  canActivate : [AuthGuardService],
+  data : { "full" : false }
 }];
 
 
@@ -113,7 +119,8 @@ const appRoutes : Routes = [{
     ProductModule,
     InvoiceModule,
     OrderModule,
-    BusinessServiceModule
+    BusinessServiceModule,
+    BookingModule
   ],
   declarations: [],
   providers : [ AppMainService, FuseConfigChangeService, AuthGuardService ],

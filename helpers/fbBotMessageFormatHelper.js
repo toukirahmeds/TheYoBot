@@ -146,9 +146,11 @@ const getCustomerFormatted = (message, subscriberInfo)=>{
 
 const getBusinessFormatted = (message, subscriberInfo)=>{
 	return new Promise((resolve, reject)=>{
-		BusinessController.getInfoUsingPage(subscriberInfo.page, (error, businessInfo)=>{
+		BusinessController.findMyBusiness({
+			"page" : subscriberInfo.page._id
+		}, (error, businessInfo)=>{
 			if(error) resolve(message);
-			resolve( replaceVariablesInMessage(message, Business, businessInfo) );
+			resolve( replaceVariablesInMessage(message, Business, businessInfo[0]) );
 		});
 	});
 };
@@ -204,9 +206,6 @@ const checkVariablesAndFormat = (message, subscriberInfo)=>{
 
 
 const formatTemplateMessage = module.exports.formatTemplateMessage =  (message, subscriberInfo)=>{
-	// console.log("FORMAT TEMPLATE MESSAGE ---------------------");
-	// console.log(message);
-	// console.log(subscriberInfo);
 	return new Promise((resolve, reject)=>{
 		if(message){
 			checkVariablesAndFormat(message, subscriberInfo).then((result)=>{

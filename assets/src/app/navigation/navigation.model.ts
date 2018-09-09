@@ -9,7 +9,8 @@ import {
     ProductFERoutes,
     OrderFERoutes,
     InvoiceFERoutes,
-    ServiceFERoutes
+    ServiceFERoutes,
+    BookingFERoutes
 } from '../app-main/configs';
 
 export class FuseNavigationModel implements FuseNavigationModelInterface
@@ -133,6 +134,23 @@ export class FuseNavigationModel implements FuseNavigationModelInterface
                             'type' : 'item',
                             'icon' : 'list',
                             'url' : FrontendRoutes.OrderFEUrl + "/" + OrderFERoutes.orderList
+                        }/*,{
+                            'id' : 'completed orders',
+                            'title' : 'Completed Orders',
+                            'type' : 'item',
+                            'url' : '/orders/completed-orders'
+                        }*/]
+                    },{
+                        'id' : 'booking',
+                        'title' : 'Bookings',
+                        'type' : 'collapse',
+                        'icon' : 'shopping_basket',
+                        'children' : [{
+                            'id' : 'bookingList',
+                            'title' : 'Booking List',
+                            'type' : 'item',
+                            'icon' : 'list',
+                            'url' : FrontendRoutes.BookingFEUrl + "/" + BookingFERoutes.bookingList
                         }/*,{
                             'id' : 'completed orders',
                             'title' : 'Completed Orders',

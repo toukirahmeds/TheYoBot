@@ -104,20 +104,18 @@ const getHotelBusinessPersistentMenu = ()=>{
 		          "title":"Our Services",
 		          "type":"nested",
 		          "call_to_actions":[
-		            {
+			        {
+		              "title":"Main Menu",
+		              "type":"postback",
+		              "payload":"main_menu"
+		            },{
 		              "title":"Rooms",
 		              "type":"postback",
-		              "payload":"MAIN_DISH"
-		            },
-		            {
-		              "title" : "Bar",
+		              "payload":"room_list"
+		            },{
+		              "title" : "Food Menu",
 		              "type" : "postback",
-		              "payload" : "BAR"
-		            },
-		            {
-		              "title":"Restaurant",
-		              "type":"postback",
-		              "payload":"RESTAURANT"
+		              "payload" : "food_menu"
 		            }
 		          ]
 		        },
@@ -128,12 +126,12 @@ const getHotelBusinessPersistentMenu = ()=>{
 		            {
 		              "title":"Our Address",
 		              "type":"postback",
-		              "payload":"ADDRESS"
+		              "payload":"our_address"
 		            },
 		            {
-		              "title":"Contact Info",
+		              "title":"Contact Us Now",
 		              "type":"postback",
-		              "payload":"CONTACT_INFO"
+		              "payload":"contact_us"
 		            }
 		          ]
 		        }

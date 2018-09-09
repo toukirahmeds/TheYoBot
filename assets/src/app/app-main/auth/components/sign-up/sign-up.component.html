@@ -3,16 +3,15 @@
     <div id="register-intro" fxFlex fxHide fxShow.gt-xs>
 
         <div class="logo" *fuseIfOnDom [@animate]="{value:'*',params:{scale:'0.2'}}">
-            <img src="assets/images/logos/fuse.svg">
+            <img src="assets/images/logos/yobot_logo_512.png">
         </div>
 
         <div class="title" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
-            Welcome to the FUSE!
+            Welcome to the Yo Bot!
         </div>
 
         <div class="description" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper nisl erat,
-            vel convallis elit fermentum pellentesque. Sed mollis velit facilisis facilisis viverra.
+            Your ultimate selling solution in total comfort zone.
         </div>
 
     </div>
@@ -62,13 +61,33 @@
                     <img src="assets/images/customs/fb/continueWithFb.png" (click)="connectToFb()">
                 </div>
 
-                <div class="terms" fxLayout="row" fxLayoutAlign="center center">
+                <!-- <div class="terms" fxLayout="row" fxLayoutAlign="center center">
                     <mat-checkbox name="terms" aria-label="Accept" required>
                         <span>Accept</span>
                     </mat-checkbox>
                     <a href="#">terms and conditions</a>
+                </div> -->
+                <div class="terms pointer" fxLayout="row" fxLayoutAlign="center center" *ngIf="connectingToFacebook">
+                    <div style="color:green;">
+                        <p>Connecting to Facebook. Please wait ...</p>
+                    </div>
                 </div>
-
+                <div class="terms pointer" fxLayout="row" fxLayoutAlign="center center" *ngIf="accountCreationFailed">
+                    <div style="color:red;">
+                        <p>Account Creation Failed....</p>
+                    </div>
+                </div>
+                <div class="terms pointer" fxLayout="row" fxLayoutAlign="center center" *ngIf="creatingAccount">
+                    <div style="color:green;">
+                        <p>Creating account. Please wait ....</p>
+                    </div>
+                </div>
+                <div class="terms pointer" fxLayout="row" fxLayoutAlign="center center" *ngIf="signUpSuccess">
+                    <div style="color:green;">
+                        <p>Your account has been successfully created</p>
+                        <p>Redirecting you to the login page</p>
+                    </div>
+                </div>
                 <button mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
                         [disabled]="userSignUpForm.invalid" (click)="signUp()">
                     CREATE AN ACCOUNT

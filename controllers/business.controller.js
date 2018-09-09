@@ -9,7 +9,7 @@ module.exports.getInfoUsingPage = (pageId, callback)=>{
 };
 
 module.exports.findMyBusiness = (findQuery, callback)=>{
-	MyBusiness.findOne(findQuery, callback);
+	MyBusiness.find(findQuery, callback);
 };
 
 module.exports.createMyBusiness = (businessInfo, callback)=>{

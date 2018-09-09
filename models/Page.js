@@ -29,6 +29,14 @@ const pageSchema = new mongoose.Schema({
 	},
 	"status" : {
 		"type" : Boolean
+	},
+	"customerMessages" : {
+		"type" : Object,
+		"default" : {}
+	},
+	"supportedLanguages" : {
+		"type" : Array,
+		"default" : ["english"]
 	}
 },{
 	"timestamps" : true

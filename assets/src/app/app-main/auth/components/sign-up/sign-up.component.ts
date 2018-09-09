@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { FBUserService } from '../../../shared-module';
 
@@ -17,10 +18,15 @@ import { FBAppId } from '../../../configs';
 })
 export class SignUpComponent implements OnInit {
 	public userSignUpForm : FormGroup;
+  public signUpSuccess : boolean = false;
+  public creatingAccount : boolean = false;
+  public accountCreationFailed : boolean = false;
+  public connectingToFacebook  : boolean = false;
   constructor(
   	private formBuilder : FormBuilder,
   	private fbUserService : FBUserService,
-    private authService : AuthService
+    private authService : AuthService,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -74,6 +80,7 @@ export class SignUpComponent implements OnInit {
         if(loggedInStatus.status === "connected"){
           this.setFbAccessToken(loggedInStatus.authResponse.accessToken);
           this.getCurrentUserInfo();
+          this.connectingToFacebook = false;
         }
   		}
   	});
@@ -81,6 +88,7 @@ export class SignUpComponent implements OnInit {
 
 
   connectToFb(){
+    this.connectingToFacebook = true;
   	this.fbUserService.loginStatus((error, loggedInStatus)=>{
   		if(error){
   			console.log(error);
@@ -88,6 +96,7 @@ export class SignUpComponent implements OnInit {
   			if(loggedInStatus.status === "connected"){
           this.setFbAccessToken(loggedInStatus.authResponse.accessToken);
   				this.getCurrentUserInfo();
+          this.connectingToFacebook = false;
   			}else{
   				this.loginFb();
   			}
@@ -98,9 +107,19 @@ export class SignUpComponent implements OnInit {
 
 
   signUp(){
+    this.creatingAccount = true;
+    this.signUpSuccess = false;
+    this.accountCreationFailed = false;
     this.setUsername();
     this.authService.signUp(this.userSignUpForm.value).subscribe((response)=>{
       console.log(response);
+      this.creatingAccount = false;
+      this.signUpSuccess = true;
+      this.router.navigateByUrl("");
+    },(errorResponse)=>{
+      console.log(errorResponse);
+      this.creatingAccount = false;
+      this.accountCreationFailed = true;
     });
   }
 

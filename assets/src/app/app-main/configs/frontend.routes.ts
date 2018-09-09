@@ -14,7 +14,8 @@ export const FrontendRoutes = {
 	ProductFEUrl : "product",
 	OrderFEUrl : "order",
 	InvoiceFEUrl : "invoice",
-	ServiceFEUrl : "service"
+	ServiceFEUrl : "service",
+	BookingFEUrl : "booking"
 };
 /*=====  End of Declaration of frontend parent routes  ======*/
 
@@ -83,4 +84,8 @@ export const OrderFERoutes = {
 
 export const InvoiceFERoutes = {
 	"invoiceList" : "invoice-list"
+};
+
+export const BookingFERoutes = {
+	"bookingList" : "booking-list"
 };

@@ -6,7 +6,10 @@ module.exports.getOrderInfo = (findQuery, callback)=>{
 };
 
 module.exports.getOrderList = (findQuery, callback)=>{
-	Order.find(findQuery, callback);
+	Order.find(findQuery).populate({
+		"path" : "fbMessageSubscriber",
+		"model" : "FbMessageSubscriber"
+	}).exec(callback);
 };
 
 

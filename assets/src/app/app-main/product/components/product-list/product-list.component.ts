@@ -62,7 +62,8 @@ export class ProductListComponent implements OnInit {
       "model" : ["", [Validators.required]],
       "type" : ["", [Validators.required]],
       "quantityAvailable" : [0, [Validators.required]],
-      "price" : [0, [Validators.required]]
+      "price.currency" : ["USD",[Validators.required]],
+      "price.amount" : [0, [Validators.required]]
     });
   }
 
@@ -78,6 +79,18 @@ export class ProductListComponent implements OnInit {
 
   setTableData(data : any){
     this.tableData.emit(data);
+  }
+
+  getFormattedProductData(data : any){
+    return {
+      "_id" : data._id,
+      "name" : data.name,
+      "model" : data.model,
+      "type" : data.type,
+      "quantityAvailable" : data.quantityAvailable,
+      "price.currency" : data["price.currency"],
+      "price.amount" : data["price.amount"]
+    }
   }
 
 

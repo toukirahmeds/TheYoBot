@@ -21,14 +21,20 @@ export class MyBusinessProfileComponent implements OnInit {
 
   ngOnInit() {
   	this.initMyBusinessForm();
-  	this.myBusinessService.getMyBusinessInfo().subscribe((response)=>{
-	  	for(let i in response.data){
-        this.myBusiness[i] = response.data[i];
+    this.getMyBusinessInfo();
+  }
+
+  getMyBusinessInfo(){
+    this.myBusinessService.getMyBusinessInfo().subscribe((response : any)=>{
+      for(let i in response.data[0]){
+
+        this.myBusiness[i] = response.data[0][i];
       }
       this.initMyBusinessForm(this.myBusiness);
-  	},(errorResponse)=>{
-  		console.log(errorResponse);
-  	});
+    },(errorResponse)=>{
+      console.log(errorResponse);
+    });
+
   }
 
  
@@ -53,7 +59,7 @@ export class MyBusinessProfileComponent implements OnInit {
   }
 
   updateMyBusinessInfo(){
-    console.log(this.myBusinessForm.value);
+    // console.log(this.myBusinessForm.value);
     let updatedMyBusinessInfo = {
           "_id" : this.myBusinessForm.value['_id'],
           "page" : this.myBusinessForm.value['page'],

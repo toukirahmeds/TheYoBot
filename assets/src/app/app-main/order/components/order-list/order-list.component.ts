@@ -10,7 +10,7 @@ import { OrderService } from '../../services/order.service';
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements OnInit {
-	public tableColumns : string[] = [];
+	public tableColumns : string[] = ["customer name","total products", "created At", "status"];
 	public tableDataEvent : EventEmitter<any> = new EventEmitter<any>();
   	private orderList : any[] = [];
   constructor(
@@ -19,20 +19,32 @@ export class OrderListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+      this.getOrderList();
   }
 
 
   getFormattedData(data : any){
-  	return {};
+  	return {
+      "customer name" : data.fbMessageSubscriber.firstName + " " + data.fbMessageSubscriber.lastName,
+      "total products" : data.products.length, 
+      "created At" : data.orderedAt, 
+      "status" : data.orderStatus
+    };
   }
 
-  setTableData(data : any){
-  	this.tableDataEvent.emit(data);
+  setTableData(){
+    let tableList = [];
+    for(let i in this.orderList){
+      tableList.push(this.getFormattedData(this.orderList[i]));
+    }
+    this.tableDataEvent.emit(tableList);
   }
 
   getOrderList(){
   	this.orderService.getOrderList().subscribe((response)=>{
   		console.log(response);
+      this.orderList = response.data;
+      this.setTableData();
   	},(errorResponse)=>{
   		console.log(errorResponse);
   	});

@@ -6,11 +6,14 @@ const OrderSchema = new mongoose.Schema({
 		"default" : []
 	},	
 	"orderedAt" : {
-		"type" : Date
+		"type" : Date,
+		"default" : new Date,
+		"required" : true
 	},
 	"orderStatus" : {
 		"type" : String,
-		"enum" : ["delivered","pending","processing","onWay"]
+		"enum" : ["delivered","pending","processing","onWay"],
+		"default" : "pending"
 	},
 	"deliveryAddress" : {
 		"street" : {
@@ -24,6 +27,12 @@ const OrderSchema = new mongoose.Schema({
 		},
 		"country" : {
 			"type" : String
+		},
+		"longitude" : {
+			"type" : Number
+		},
+		"latitude" : {
+			"type" : Number
 		}
 	},
 	"estimatedDeliveryTime" : {
@@ -31,11 +40,18 @@ const OrderSchema = new mongoose.Schema({
 	},
 	"customer" : {
 		"type" : mongoose.Schema.Types.ObjectId,
-		"ref" : "Customer"
+		"ref" : "Customer",
+		"required" : true
+	},
+	"fbMessageSubscriber" : {
+		"type" : mongoose.Schema.Types.ObjectId,
+		"ref" : "FbMessageSubscriber",
+		"required" : true
 	},
 	"page" : {
 		"type" : mongoose.Schema.Types.ObjectId,
-		"ref" : "Page"
+		"ref" : "Page",
+		"required" : true
 	}
 },{
 	"timestamps" : true

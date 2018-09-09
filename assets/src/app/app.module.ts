@@ -25,10 +25,6 @@ const appRoutes: Routes = [
     {
         path : '',
         loadChildren : "./app-main/app-main.module#AppMainModule"
-    },
-    {
-        path      : '**',
-        redirectTo: 'sample'
     }
 ];
 

@@ -7,20 +7,11 @@ const franc = require("franc");
 
 
 const getNextFbMessengerReply = module.exports.getNextFbMessengerReply = (subscriberInfo, message, callback)=>{
-	console.log("getNextFbMessengerReply");
+	// console.log("getNextFbMessengerReply");
 	// console.log(message);
-	let keyword = "";
+	let keyword;
 	if(subscriberInfo.language && subscriberInfo.language.currentLanguage){
 		keyword = formatRequestKeyword(message);
-		// if(checkKeywordMatched(keyword)){
-		// 	console.log("check keyword matched");
-		// 	let automationList = [{
-		// 		"trigger" : {
-		// 			"triggerKeywords" : [keyword]
-		// 		}
-		// 	}];
-		// 	getBusinessDecision(automationList, subscriberInfo, callback);
-		// }else 
 		if(subscriberInfo.currentMessengerAutomation && keyword){
 			AutomationController.getAutomationsWithTemplate({
 				"previousAutomation" : subscriberInfo.currentMessengerAutomation
@@ -69,11 +60,18 @@ const checkKeywordMatched = (keyword)=>{
 };
 
 const formatRequestKeyword = (message)=>{
-	console.log("formatRequestKeyword");
-	console.log(message);
+	// console.log("formatRequestKeyword");
+	// console.log(message);
+
 	if(message.quick_reply && message.quick_reply.payload) return message.quick_reply.payload.trim().toLowerCase();
 	else if(message.payload) return message.payload.trim().toLowerCase();
 	else if(message.text) return message.text.trim().toLowerCase();
+	else if(message.attachments){
+		console.log(message.attachments[0]);
+		if(message.attachments[0] && message.attachments[0].payload){
+			return message.attachments[0].payload;
+		}	
+	}
 };
 
 const getAutomationTriggerMatchedDecision = (automationList, subscriberInfo, callback)=>{

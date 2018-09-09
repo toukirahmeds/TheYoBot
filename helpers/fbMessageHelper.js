@@ -57,7 +57,7 @@ const getMessageBody = (template)=>{
 		};
 	}
 
-	console.log(messageBody);
+	// console.log(messageBody);
 
 	return messageBody;
 };
@@ -87,7 +87,6 @@ const getSendMessageRequest = (accessToken, messageType, recipientId, template)=
 
 module.exports.sendMessage = (pageAccessToken, messageType, recipientId, messageTemplate, callback)=>{
 	request.post(getSendMessageRequest(pageAccessToken, messageType, recipientId, messageTemplate), /*callback*/(error, response, body)=>{
-		console.log(body);
 		callback(null, body);
 	});
 }

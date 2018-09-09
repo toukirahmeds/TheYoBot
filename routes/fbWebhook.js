@@ -68,6 +68,8 @@ router.post("/", (req, res)=>{
 					fbBotHelper.sendPageMessengerReply(recipientId, senderId, postback, (error, sentResultDoc)=>{
 						if(error) console.error(error);
 					});
+				}else if(req.body.entry[0].messaging[0].standby){
+					// console.log(req.body.entry[0].messaging[0].standby);
 				}else if(req.body.entry[0].messaging[0].delivery){
 					res.status(200).send({
 							"recipient_id" : senderId,

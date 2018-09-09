@@ -18,22 +18,8 @@ export class MyBusinessService{
 	}
 
 
-	setPageInfo(){
-		return MyBusinessService.fbPageInfo = this.cacheService.get(PageInfoKey);
-	}
-
-	getPageInfo(){
-		if(MyBusinessService.fbPageInfo){
-			return MyBusinessService.fbPageInfo;
-		}else{
-			return this.setPageInfo();
-		}
-	}
-
-
 	getMyBusinessInfo() : Observable<any>{
-		console.log(MyBusinessBERoutes.details + "/" + this.getPageInfo()._id);
-		return this.httpService.sendRequest(HttpService.GET, MyBusinessBERoutes.details + "/" + this.getPageInfo()._id, {});
+		return this.httpService.sendRequest(HttpService.GET, MyBusinessBERoutes.details + "/" + MyBusinessService.fbPageInfo._id, {});
 	}
 
 	createMyBusinessInfo(){

@@ -25,6 +25,7 @@ router.use("/product", require('./product'));
 router.use("/service", require('./service'));
 router.use("/invoice", require('./invoice'));
 router.use("/customer", require('./customer'));
+router.use("/booking", require('./booking'));
 router.use("/order", require('./order'));
 router.use("/fb-message-subscriber", require('./fbMessageSubscriber'));
 router.use("/my-business", require('./myBusiness'));

@@ -19,17 +19,24 @@ addButtonTitle="Add New Product"
 
         <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field fxFlex="50">
-                <input matInput formControlName="type" placeholder="Type Name Here" />
+                <input matInput formControlName="type" placeholder="Type type Here" />
+            </mat-form-field>
+            <mat-form-field fxFlex="50">
+                <input matInput formControlName="quantityAvailable" type="number" placeholder="Type Quantity Here" />
             </mat-form-field>
         </div>
 
         <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field fxFlex="50">
-                <input matInput formControlName="price" type="number" placeholder="Type Name Here" />
+                <mat-select formControlName="price.currency" placeholder="Currency">
+                    <mat-option value="USD">USD</mat-option>
+                    <mat-option value="BDT">BDT</mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field fxFlex="50">
-                <input matInput formControlName="quantityAvailable" type="number" placeholder="Type Model Here" />
+                <input matInput formControlName="price.amount" type="number" placeholder="Type Price Here" />
             </mat-form-field>
+            
         </div>
 
     </form>

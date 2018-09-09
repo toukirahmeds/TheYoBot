@@ -6,7 +6,10 @@ module.exports.getBookingInfo = (findQuery, callback)=>{
 };
 
 module.exports.getBookingList = (findQuery, callback)=>{
-	Booking.find(findQuery, callback);
+	Booking.find(findQuery).populate({
+		"path" : "fbMessageSubscriber",
+		"model" : "FbMessageSubscriber"
+	}).exec(callback);
 };
 
 
