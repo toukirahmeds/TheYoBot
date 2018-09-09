@@ -32,6 +32,7 @@ class LineChart{
 export class LineChartComponent implements OnInit {
 	@Input('config') public config : any;
 	public lineChart : LineChart = new LineChart();
+  public data : any[] = [];
   constructor() { }
 
   ngOnInit() {
