@@ -13,7 +13,7 @@
 		"authorizationCodeExpiresIn" : "10h"
 	},
 	"app" : {
-		"fbAppId" : "144561372878271",
-		"fbAppSecret" : "b9aa8cad6425ed731188652e4fb991f3"
+		"fbAppId" : "[FB_APP_ID]",
+		"fbAppSecret" : "[FB_APP_SECRET]"
 	}
 }
