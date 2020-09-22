@@ -17,6 +17,7 @@
     "franc": "^4.0.0",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.2.1",
+    "lodash": "^4.17.20",
     "mongoose": "^5.0.10",
     "mongoose-assist": "^1.0.1",
     "morgan": "~1.9.0",
